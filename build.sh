@@ -5,7 +5,7 @@ set -e
 rm -f bin/aethopica
 rm -rf out
 mkdir out
-mkdir out/site out/links out/media 
+mkdir out/links out/media 
 
 cp -r data/links/* out/links
 cp -r data/media/* out/media

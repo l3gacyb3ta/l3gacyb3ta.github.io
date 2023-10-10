@@ -356,7 +356,6 @@ fppict(FILE *f, char *filename, char *caption, int header, int link)
 			scat(dst, buf);
 			scat(dst, ".png");
 			img = getfile(path, name, dst, "r");
-                // printf("path: %s, name %s.%s\n", path,ext, name);
 			if(!img)
 				continue;
 			if(count > 0)
