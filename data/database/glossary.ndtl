@@ -1,0 +1,18 @@
+; The glossary is a collection of lists
+
+; Books
+; TODO
+
+; Languages
+HUMAN LANGUAGES
+	English (American) : Fluent
+	<a href="french.html">{French}</a> (Belgian) : Fluent
+	<a href="german.html">{German}</a> (Hoch) : Fluent
+	Spanish : Basic
+
+C compilers
+	GCC : The GNU C Compiler. 
+	Clang : A compiler made made by the LLVM project.
+	MSVC : A freeware C/C++ compiler made by MicroSoft.
+	TCC : The Tiny C Compiler, built to be as fast and light as possible.
+	LCC : A Retargetable Compiler for ANSI C. 

@@ -1,0 +1,450 @@
+; The lexicon is a collection of terms.
+
+INDEX
+	HOST : INDEX
+	BREF : Main portal.
+	BODY
+		Welcome to aethopica! This is {arcade my} Memex, the extension of {mental my mind}. 
+
+
+ABOUT
+	HOST : INDEX
+	BREF : About anything
+	BODY
+		This page is about this page, and this site, and the {arcade entity} writing this (Hi!).
+
+ARCADE
+	HOST : about
+	BREF : About me
+	BODY
+		{^html hcard}
+
+		{^list human languages}
+
+HISTORY
+	HOST : arcade
+	BREF : Where I come from
+	BODY
+		My family is from the southeast United States. 
+		As far back as I have traced it, my mother's family came from England in the 17th or 18th century, as were farmers.
+
+		## Location history:
+		| *Place* | *Date I Arrived* |
+		| Born in Pensacola, FL | Dec, 2006 |
+		| Moved to Tampa, FL | Jun, 2009 |
+		| Moved to Pensacola, FL | Jul, 2010 |
+		| Moved to Tampa, FL | Mar, 2011 |
+		| Moved to Norfolk, VA | Oct, 2012 |
+		| Moved to Bruxells, Belgium | Aug, 2014 |
+		> Learned {French}
+		| Moved to Stuttgart, Germany | Aug, 2015 |
+		> Learned {German}
+		| Moved to Roswell, GA | Jul, 2018 |
+
+		## Education history
+
+		| *School* | *Date I Left / Graduated* |
+		| Homeschool Pensa->Norfolk | Aug, 2014 |
+		| École du Bonheur | Aug, 2015 |
+		| Deutsch-Französische Grundschule Stuttgart-Sillenbuch | Aug, 2016 |
+		| Wagenburg Gymnasium | Aug, 2018 |
+		| Crabapple Middle School | Aug, 2021 |
+		| Innovation Academy | < Current > |
+
+
+META
+	HOST : about
+	BREF : About this place
+	BODY
+		Meta is a stupid word now, given its recuperation by the Entity Formerly Known As Facebook™️
+		So, what does it mean here?
+		In this case,<br>it follows the definition given by the New Oxford American Dictionary:
+		"(Of a creative work) referring to itself or to the conventions of its genre; self-referential."
+		- New Oxford American Dictionary
+
+		This is a fork of {https://nchrs.xyz/site/meta.html nchrs}, which itself is a fork of {https://wiki.xxiivv.com/site/oscean.html oscean}, back when oscean was still an ANSI C program.
+		My fork has some custom features, such as a much more customizible `main.c` and is stripped in a couple places where I didn't need features anymore. It also includes some minor cosmetic changes, currently mostly on links.
+		I have also reverted back the codebase back to {C89} compatible, from C99, so that I can build it on some retro devices as a benchmark.
+
+; The index contains an auto-generated part, where it lists all terms.
+REFERENCE
+	HOST : meta
+	BREF : Everything
+	BODY
+		Unlike some other site, this does _not_ contain all text possible to write. This is just all the text I have written.
+
+; Programming, for software!
+PROGRAMMING
+	HOST : INDEX
+	BREF : Mastery over the digital
+	BODY
+		Hello! This isn't much yet.
+
+C89
+	HOST : programming
+	BREF : The ANSI C Programming Language
+	BODY
+		C is a programming language first implemented in 1972, is a general purpose programming language with wide hardware support, and many different compilers:
+		{^list c compilers}
+
+		C is also at the core of the Linux opperating system, as is it at the core of most developer tools. 
+		C is a language that rides the line of complexity and simplicity well.
+
+		### Hello World in C
+		{^code helloworld.c}
+
+	LINKS
+		Wikipedia : https://en.wikipedia.org/wiki/C_(programming_language)
+
+PYTHON
+	HOST : programming
+	BREF : Sssss snake language
+	BODY
+		Python is a modern-ish semi-compiled scripting language. I like to use python to protype larger projects, but it is not something I try to use as a main part of a project.
+		Python also happens to have its main implementation written in {c89 C}.
+
+		### Hello World in Python
+		> print("Hello World")
+
+OCAML
+	HOST : stump
+	BREF : functional
+	BODY
+		{stump}
+
+RACKET
+	HOST : stump
+	BREF : fancy scheme
+	BODY
+		{stump}
+
+ESOLANGS
+	HOST : programming
+	BREF : programming language designed to experiment with weird ideas, be a joke, or suck to write in
+	BODY
+		Esolangs are programming languages designed to experiment with weird ideas, be a joke, or suck to write in. There are many interesting ones! 
+		Here are some I have written about, and some resource to explore:
+	LINKS
+		Esolang Wiki : https://esolangs.org/wiki/Main_Page
+
+BRAINFUCK
+	HOST : esolangs
+	BREF : funny simple ESOLANG
+	BODY
+		Brainfuck is a super simple {esolangs esolang}, designed in the 80s to have the smallest possible compiler.
+		It is based around an array of 30k byte-sized cells, and a pointer into that array (basically the index that the "brainfuck machine" is currently at). It can be helpful to think about the language as a little machine that runs on a track around 30k little whiteboards, where you can change the instructions the machine follows.
+		In brainfuck, code and data are stored seperatly, i.e. a Harvard Architecture vs. a Von Neumann Architecture. 
+
+		There are 8 main operations, and a common ASCII representation of that code.
+		| Instruction | Code | What it does! |
+		| Increment Memory Pointer | `>` | Basically, moves the "brainfuck machine" to the right along the track of the memory array. |
+		| Decrement Memory Pointer | `<` | Same as incrementing, but moving to the left. |
+		| Incease value at pointer | `+` | Increases the value at the place the machine is. |
+		| Decrease value at pointer | `-` | Decreases the value at the place the machine is. |
+		| Start loop | `[` | This tells the brainfuck machine to start a loop. It doesn't do anything to the current memory cell, or the position the "machine" is, but it will when you close the loop |
+		| End/Check loop | `]` | When the brainfuck machine hits this, it will check if the current value (number on the whiteboard), and if it's not zero, start the instructions back at where you started the loop |
+		| Read character in | `,` | The machine will write the ascii value of an inputted character on the current cell. | 
+		| Output character | `.` | Write the current cell out as the ascii character represented by the number. |
+
+
+
+
+
+
+; ----------- PROJECTS ---------
+
+PROJECTS
+	HOST : INDEX
+	BREF : Things I have built [WIP]
+	BODY
+		This is {stump a work in progress}
+
+SOFTWARE
+	HOST : projects
+	BREF : Software, squishy, squishy ware.
+	BODY
+		I write software primarily in {C89 C}, Golang, {Python}, and Crystal.
+		Writing software is something I love, because of how accessible it is. All you need is a keyboard, a screen, and a computing device; from a chromebook to a top of the line gaming PC. The vast majority of good programmming software is free and open source, which makes a great ecosystem for begineers.
+
+FUCC
+	HOST : software
+	BREF : An optimizing Brainfuck Compiler
+	BODY
+		This is an optimizing {brainfuck} compiler, writen in {ocaml}.
+		I use basic compiler techniques, like loop unwrapping and offloading the work to a C compiler
+
+SUPER16
+	HOST : software
+	BREF : A small, broken, ISA
+	BODY
+		I am pretty sure that this isn't turing complete.
+		It also has no way to access memory!
+		It has an emulator and very basic assembler, written in {python}.
+
+		One instruction is composed of 32 bits, making up 3 catagories; Opcode, Register and data. The opcode is two hexadecimal digits, the register is another two, and the data is a 4-digit hexadecimal number split into two two-digit numbers. Here is an example instruction loading ```0xf988``` into ```r5```:  
+		| *Opcode* | *Register* | *Data 1* | *Data 2* |
+		| `0x20`   | `0x05`     | `0xf9`   | `0x88`   |
+
+		The full list of opcodes, as well as an example, the instruction & explaination are as follows:  
+		| *Opcode* | *Instruction* |                                                                             |
+		| `0x10`   | store       | store reg reg2                                                              |
+		|        |             | Copy value from one reg to another                                          |
+		| `0x20`   | load        | load reg val                                                                |
+		|        |             | Load a value into a reg                                                     |
+		| `0x30`   | add         | add reg val                                                                 |
+		|        |             | Add value to reg                                                            |
+		| `0x31`   | addr        | addr reg reg2                                                               |
+		|        |             | Adds reg2 to reg                                                            |
+		| `0x40`   | sub         | sub reg val                                                                 |
+		|        |             | Subtracts val from reg                                                      |
+		| `0x41`   | subr        | subr reg reg2                                                               |
+		|        |             | Subtracts reg2 from reg                                                     |
+		| `0x50`   | mul         | mul reg val                                                                 |
+		|        |             | Multipy register by value                                                   |
+		| `0x51`   | mulr        | mul reg reg2                                                                |
+		|        |             | Multiply reg by reg 2                                                       |
+		| `0x60`   | div         | div reg val                                                                 |
+		|        |             | Intiger divides the register by the value                                   |
+		| `0x61`   | divr        | div reg reg2                                                                |
+		|        |             | Initger devides reg by rg2                                                  |
+		| `0xff`   | prt         | prt 0x0000 0x0000                                                           |
+		|        |             | Print ascii value in p0 reg                                                 |
+		| `0x0f`   | scrn        | scrn 0x0000 val                                                             |
+		|        |             | Set pixel in x8 and y9 regs to the value (0: black) (1: white)              |
+		| `0xdd`   | drw         | drw 0x0000 0x0000                                                           |
+		|        |             | Draw screen buffer                                                          |
+		| `0xf0`   | cmp         | cmp reg reg2                                                                |
+		|        |             | Set cm reg to 0x0001 if bigger, 0x0000 if smaller, and 0xffff if they're equal |
+		| `0xb0`   | branch      | branch val label                                                            |
+		|        |             | Branch to loop if cm is val                                                 |
+		| `0xb1`   | nbranch     | nbranch val label                                                           |
+		|        |             | Branch to loop if cm is not val                                             |
+		| `0xbb`   | jump        | jump 0x0000 label                                                           |
+		|        |             | Jump to label                                                               |
+		| `0x00`   | noop        | noop 0x000 0x000                                                            |
+		|        |             | Literally does nothing                                                      |
+		| `0xfe`   | halt        | halt 0x0000 0x0000                                                          |
+		|        |             | Halts the cpu                                                               |
+
+		I plan on making a much better version of this soon.
+	LINKS
+		Source : https://github.com/l3gacyb3ta/super16
+
+CORGI
+	HOST : software
+	BREF : A CLI for doggo.ninja
+	BODY
+		This is a CLI for my friend {https://kognise.dev/ Kognise's} service {https://doggo.ninja}.
+		It is written in {Python}.
+
+; --------- Writing -----------
+
+WRITING
+	HOST : projects
+	BREF : Words on a screen
+	BODY
+		Wow! I have written words!
+
+GOBLINS
+	HOST : writing
+	BREF : Spritely's Goblins and How They're Gonna Steal The World
+	BODY
+		{^html goblins}
+		The code in this article was using {racket}
+	LINKS
+		Spritely Institute : https://spritely.institute/
+		Christine : https://dustycloud.org/
+
+ZOMBIE 
+	HOST : writing
+	BREF : Zombie Authors
+	BODY
+		So, for this whole thing to work, I'm gonna have to introduce you to Mr. Barthes.
+		Roland Barthes was 20th century french literary theorist, someone who talks about how books *work*.
+		One of his most major contributions to his field was that of "The Death of The Author"
+		(French: "La mort de l'auteur"). This concept proposes that once a work has been written, the
+		author can be considered "dead" for the purpose of critique and examination, because the text remains
+		the same, no matter what the author does next. 
+
+		### Dude if you think about it, we're all authors. wooooah.
+		Another point of his is that every time a text is read, the reader "rewrites" it in their own head
+		with the current cultural context. For example, a french peasant in the 18th century would have read
+		a text about the king way differently than, for example, the king himself (not that he would be reading with those eyes much longer).
+		Now some (meeee) would argue that this includes what the author of the text has done since the original writing (* cough J.K. Rowling cough *),
+		but for the purpose of this post, we're going to stick with Rolly's original idea.
+
+		## Why is code not a book? They both suck to write.
+
+		Now, most (normal) people apply this concept to the arts, but I'm not most people. (yes I am seeing a therapist)
+
+		&lt;tangent&gt;  
+		### Wait what even is art
+		When people think of "the arts", they usually think of things like film, music, literature, theater, that are generally considered entertainment. 
+		But art can be so much more! For example, architecture is a form of art, and that, while it can be entertaining to the right kind of person, is mostly useful.
+		Another form of art is tool making! Like, if I put time and effort into making a nice looking and functional hammer, that's a piece of art, for ~~whacking people~~ hitting nails.  
+		&lt;/tangent&gt;  
+
+		Now because of this, code falls into an interesting place. Usually it isn't static, like a hammer or a painting or a book are. It is dynamic, it runs, it updates, it gets pushed and pulled and forked and merged, so can we even consider the author "dead"?
+
+		## And who wrote that code 
+		Introducing: Zombie programmers! They're here finally.  
+
+		In the case of code and it's authors "mortality", it can be effectively summarized as undead. This means that when looking at code, we have to consider the author far more than we would
+		with, say a movie. A piece of code is ever-changing, like us, the undead authors. This puts our community in an interesting place, in that they have to deal with using software with undead misogynists.
+
+		### Undead misogynists TW: sexual assault, child abuse, general terribleness
+
+		Soooooo why did I write this. I had recently been made aware of the _many_ accusations of terrible and unforgivable things levied against an important member of the open source and free software world, Richard M. Stallman.
+		Mr. Stallman has publicly defended child abuse, and has made unwanted sexual advances on women over whom he had a position of power.
+		I, as a male-passing person, do not have any sort of context for this sort of abuse, and am urging you all to {https://selamjie.medium.com/remove-richard-stallman-fec6ec210794 read} {https://thenewstack.io/why-almost-everyone-wants-richard-stallman-cancelled/ more} from people 100x more qualified to talk about than I am.
+
+		The reason I bring RMS up is that he has been a core member of the FSF and the GNU project for many decades, and because of the undead nature of code, we can't just dismiss his involvement as inconsequential.
+		I am currently writing this on a laptop running GNU/Linux with code licensed under the GPL, and I feel as though us, the free and open software community _must_ talk more about the people who write our software.
+
+		## Dang, that got heavy.
+
+		In the end, this is less of a discussion of code analysis and literary theory and more a call to action for accountability in the open source community. Please go out and make an amazing place just that much better by getting rid of these stupid people who hold us back.
+		I have also attached some basic resources for further reading on this. Thanks for sticking around y'all!
+	LINKS
+		Fight Racism in Open Source : https://cucumber.io/blog/open-source/tackling-structural-racism-(and-sexism)-in-open-so
+		Fight Sexism in Open Source : https://www.computerweekly.com/blog/Open-Source-Insider/How-to-keep-sexism-out-of-open-source
+
+
+
+; ----------- LANGUAGES ---------
+
+LANGUAGES
+	HOST : INDEX
+	BREF : Systems of communication.
+	BODY
+		Languages are amazing, they are so versitile in their uses and yet so diverse in their implementation, human and machine alike.
+		I personally prefer machine languages, because they follow much stricter rules (grammar and syntax), but human ones are also a {mental special interest}.
+
+FRENCH
+	HOST : Languages
+	BREF : Oh-hon-hon🇫🇷
+	BODY
+		French is a language I learned while {history living in belgium}.
+		French is a heavily gendered language (eww), with an interesting adjective order that I'm sure exists in other languages, but havent seen for myself.
+		In most cases, in french, the adjective comes after the nice.
+		> English: The green cat
+		> French: Le chat vert (The cat green)
+
+GERMAN
+	HOST : Languages
+	BREF : Aber ja, Gunter.
+	BODY
+		German is my favorite natural language, despite its lack of gender neutral pronouns.
+		I learned German while in {history Stuttgart}.
+		I continue my German education at the {https://www.germanschoolatlanta.com/ German School of Atlanta}
+
+; ###############----------- STUMPS ---------------################
+
+STUMP
+	HOST : INDEX
+	BREF : [WIP]
+	BODY
+		STUMP is the host for some lexicon entries that I have not yet completed, so if you found this, congrats!
+
+MENTAL
+	HOST : arcade
+	BREF : How our brains can break
+	BODY
+		I have {ADHD}, {depression}, and probably some form of {autism}.
+
+ADHD
+	HOST : mental
+	BREF : Attention Deficit Hyperactivity Disorder, aka. my superpower and curse.
+	BODY
+		ADHD is something I have struggled with since I was a small child, at least if my parents are to trust (which I think they are).
+		ADHD has 2 types defined in the DSM (Diganostic and Statistic Manual, basically *the* book on mental illness):
+		+ Inattentive
+		> This is the one I have the most experience with, as I have it. It is characterized by a lack of attention to detail that doesnt seem like it matters, as well as horrible short term memory for tasks.
+		+ Hyperactive-Impulsive
+		> Charcterized by the typical fidgeting and impulsiveness that can seem childish at first, but is infact a very important symptom of ADHD.
+		+ Combined Presentation
+		> This has both Hyperactive-Impulsive symptoms and Inattentive ones! I have a couple of friends who are Combined Presentation, and they describe it as a horrible mix of not paying attention and wanting to be a part of the conversation.
+		ADHD is also comorbid with {autism ASD} in a lot of cases.
+
+AUTISM
+	HOST : mental
+	BREF : Autism Spectrum Disorder
+	BODY
+		I have not been dignosed with any ASD, but based on some preliminary self-analysis, I probably have some form. It also is comorbid with {ADHD}, which I do have a clinical diagnosis for.
+
+DEPRESSION
+	HOST : mental
+	BREF : The Big Sad
+	BODY
+		Depression is characterized by my depressive episodes. During these times I shut down and start losing motivation, start closing social connections.
+
+MARBLES
+	HOST : arcade
+	BREF : My life, and how much of it is left!
+	BODY
+		Life is overvalued in my opinion, what one does with it, on the other hand, is undervalued. That's why I am a big proponent of (responisble) {hedonism}.
+		This is a {stump}
+		{^marbles }
+
+
+; ----- PHILIOSOPHY ------
+
+PHILIOSOPHY
+	HOST : stump
+	BREF : My personal philiosophy
+	TYPE : img_portal
+	BODY
+		I have a few core beliefs:
+		+ {Anarchism}
+		+ {Empiricism}
+		+ {Degrowth}
+		+ {Hedonism}
+
+ANARCHISM
+	HOST : philiosophy
+	BREF : TODO
+	BODY
+		This is a {stump}.
+
+EMPIRICISM
+	HOST : philiosophy
+	BREF : TODO
+	BODY
+		This is a {stump}.
+
+HEDONISM
+	HOST : philiosophy
+	BREF : TODO
+	BODY
+		This is a {stump}.
+
+DEGROWTH
+	HOST : philiosophy
+	BREF : Line go down?
+	BODY
+		"Degrowth ({French}: décroissance) is a term used for both a political, economic, and social movement as well as a set of theories that critiques the paradigm of economic growth.
+
+; -------- INVENTORY ----------
+
+; --------- MISC ----------------
+
+INVENTORY
+	HOST : stump
+	BREF : Press [E] to open.
+	BODY
+		Stuff I own
+
+CARYOPHYLLUS
+	HOST : inventory
+	BREF : A top of lap
+	BODY
+		As much as I hate {anarchism apple}, they do make a damn fine laptop.
+		I primarily use asahi linux, but heavily modified macos is also good. I am a big fan of stickers, so the back is is covered in them.
+		(Remind {arcade me} to upload a picture) 
+
+JOURNAL
+	HOST : stump
+	BREF : What I'm doing!
+	BODY
+		Subscribe using the Neon Kiosk (LINK TODO)
+		{^html now}

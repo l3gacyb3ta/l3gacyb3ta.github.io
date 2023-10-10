@@ -1,0 +1,247 @@
+
+<p>So, the <a href="https://spritely.institute/" rel="nofollow">Spritely Institute</a> has been working on
+  some very interesting tech in the distributed computing (The part of computer science dealing with systems of computers that are
+  heterogynous, that is to say, they are made of many different, seperate parts
+  that all have to work together) space.</p>
+<p>I want to introduce y'all to goblins, so here's an intro through the writing of
+  a little program.</p>
+<p>(Note, because I love to do this, if you just copy and paste the code as it is
+  presented in this article into a file, it should work with no modifications.
+  That being said, the whole source is linked at the bottom ;3 )</p>
+<p>(Also, this post relies heavily on code, it might look bad on mobile)</p>
+<h2 id="user-content-the-intro"><a class="heading-link" href="#the-intro">The intro<span aria-hidden="true"
+      class="octicon octicon-link"></span></a></h2>
+<div class="highlight highlight-source-lisp">
+  <pre><span class="pl-c1">#lang</span> racket
+
+(require goblins
+         goblins/actor-lib/methods
+         racket/struct)</pre>
+</div>
+<p>Well, now that we've got what we need, let's write smth!</p>
+<p>...</p>
+<p>wait what are we going to write?<br>
+  A todo app of course!</p>
+<div class="highlight highlight-source-lisp">
+  <pre>(define a-vat
+  (make-vat))</pre>
+</div>
+<p>Well that's not a todo app. It's goblins! In goblins, different objects need to
+  live in a vat. Objects in vats can interact with eachother synchronously
+  (through the <code>$</code> operator), or asynchronously (through the <code>&lt;-</code> operator).
+  Objects in the same vat can be connected synchronously or asynchronously, whereas
+  objects in seperate vats have to be connected asynchronously.</p>
+<p>Goblins is <a href="https://en.wikipedia.org/wiki/Capability-based_security" rel="nofollow">capability-based</a>
+  , which means that we define what the program can do with data, rather than just
+  what the data can do.</p>
+<p>Capability-Based Security follows the priniciple of least authority:</p>
+<blockquote>
+  <p>The Principle of Least Authority (POLA) says that code should be granted only
+    the authority it needs to perform its task and no more.
+    Code has a lot of power. Code can read your files, encrypt your files,
+    delete your files, send your files (and all of the information within them) to
+    someone else, record your keystrokes, use your laptop camera, steal your
+    identity, hold your computer for ransom, steal your cryptocurrency, drain your
+    bank account, and more. But most of the code that we write doesn't need to do
+    any of those things – so why do we give it the authority to do so?<br>
+    POLA is ultimately about eliminating both ambient and excess authority.
+    It's not a motto that is meant to be inspirational;
+    POLA can actually be achieved. But how?</p>
+</blockquote>
+<p>– Kate Sills, <a href="https://medium.com/agoric/pola-would-have-prevented-the-event-stream-incident-45653ecbda99"
+    rel="nofollow">POLA Would Have Prevented the Event-Stream Incident</a></p>
+<p>The official Goblins spec has a great <a
+    href="https://spritely.institute/static/papers/spritely-core.html#caps-as-programming"
+    rel="nofollow">explination</a>
+  of this system.</p>
+<p>Back to the code!</p>
+<p>Let's make a function that will give us the capabilites to edit and read a list
+  of todos!</p>
+<div class="highlight highlight-source-lisp">
+  <pre>(define (spawn-todo-reader-<span class="pl-k">and</span>-writer)
+  (define todos (spawn ^cell '())) <span class="pl-c"><span class="pl-c">;</span>; Here's a big list of all the todos. Note that I can't actually get at this from the normal environment.</span>
+
+  (struct todo (id value completed) <span class="pl-c"><span class="pl-c">;</span>; We need todos to track some info, so here we have 3 fields: id (a number), value (the thing to do), and completed (a bool to track the status)!</span>
+    <span class="pl-c1">#:methods</span> gen:custom-write
+    [(define write-proc <span class="pl-c"><span class="pl-c">;</span>; Over here we'll write some racket to make pretty printing work.</span>
+       (make-constructor-style-printer
+        (<span class="pl-c1">lambda</span> (obj) 'todo)
+        (<span class="pl-c1">lambda</span> (obj) (<span class="pl-c1">list</span> (todo-id obj) (todo-value obj) (todo-completed obj)))
+        )
+       )
+     ]
+    )
+  
+  (define counter (spawn ^cell <span class="pl-c1">0</span>)) <span class="pl-c"><span class="pl-c">;</span>; I don't want todos to have the same index, so let's make a counter!</span></pre>
+</div>
+<p>So now we've got all the data storage of the todo list. Let's write some capabilities!</p>
+<p>First, let's think about what we need to be able to do with a todo list:</p>
+<ol>
+  <li>Read them, so we can check what we've done</li>
+  <li>Write them, so we can update them and add new ones!</li>
+</ol>
+<p>Ok. Reading seems simpler, so let's write a reader.</p>
+<div class="highlight highlight-source-lisp">
+  <pre>(define (^reader _bcom) <span class="pl-c"><span class="pl-c">;</span>; A reader can read all the todos, just like we want.</span>
+  (methods
+    [ (read-todos) ($ todos) ] <span class="pl-c"><span class="pl-c">;</span>; Because `todos` is an object, we need to tell the computer we're acting on it! (the `$` operation from earlier)</span>
+    )
+  )</pre>
+</div>
+<p>And that's it! That was supprisingly simple.
+  One thing I don't go through here is the <code>bcom</code> (become) mechanism.
+  It basically allows goblins objects to mutate themselves by "becomeing" a new version!</p>
+<p>Here's a cool little demo from the docs (written in <a href="https://www.draketo.de/software/wisp"
+    rel="nofollow">wisp</a>)</p>
+<div class="highlight highlight-source-clojure">
+  <pre>define (<span class="pl-en">^cell</span> bcom val)
+  methods            <span class="pl-c"><span class="pl-c">;</span> syntax for first-argument-symbol-based dispatch</span>
+    (<span class="pl-en">get</span>)            <span class="pl-c"><span class="pl-c">;</span> takes no arguments</span>
+      . val          <span class="pl-c"><span class="pl-c">;</span> returns current value</span>
+    (<span class="pl-en">set</span> new-val)    <span class="pl-c"><span class="pl-c">;</span> takes one argument, new-val</span>
+      bcom : ^cell bcom new-val  <span class="pl-c"><span class="pl-c">;</span> become a cell with the new value</span></pre>
+</div>
+<p>Ok. Now that we've got the reader, let's write the editor! This will be a tad
+  more complex :3</p>
+<div class="highlight highlight-source-lisp">
+  <pre>(define (^editor _bcom) <span class="pl-c"><span class="pl-c">;</span>; An editor can edit all the todos, because of course we need to be able to update them!</span>
+  (methods
+    [(add-item valye) <span class="pl-c"><span class="pl-c">;</span>; Just slap a new todo onto there!</span>
+     (define old-todos ($ todos)) <span class="pl-c"><span class="pl-c">;</span>; Get the old values</span>
+     (define old-counter ($ counter)) <span class="pl-c"><span class="pl-c">;</span>; Get the old counter</span>
+     ($ counter (+ old-counter <span class="pl-c1">1</span>)) <span class="pl-c"><span class="pl-c">;</span>; Increment the counter</span>
+     ($ todos (<span class="pl-c1">append</span> old-todos (<span class="pl-c1">list</span> (todo (+ old-counter <span class="pl-c1">1</span>) value <span class="pl-c1">#f</span>))))] <span class="pl-c"><span class="pl-c">;</span>; add the new todo</span></pre>
+</div>
+<p>While the comments are great (in my unbiased opinion /s), let's walk through that!</p>
+<ol>
+  <li>First we define a capability, in this case the editor.</li>
+  <li>
+    <code>methods</code> will let us define a bunch of methods for the capability!
+  </li>
+  <li>We create an add-item function
+    <ul>
+      <li>This takes in a value (the description)</li>
+      <li>It keeps copies of the old state</li>
+      <li>Update to the new state!</li>
+    </ul>
+  </li>
+</ol>
+<p>Ok, so it seems like we're forgetting something... oh right! We need to be able
+  to change the status of items.</p>
+<p>Here is some pseudocode that describes how that works:</p>
+<div class="highlight highlight-source-python">
+  <pre><span class="pl-k">def</span> <span class="pl-en">update</span>(<span class="pl-s1">index</span>, <span class="pl-s1">new</span> <span class="pl-s1">completion</span>):
+    <span class="pl-s1">old</span><span class="pl-c1">-</span><span class="pl-s1">todos</span> <span class="pl-c1">=</span> <span class="pl-s1">current</span> <span class="pl-s1">todos</span>
+    <span class="pl-s1">old</span><span class="pl-c1">-</span><span class="pl-s1">item</span> <span class="pl-c1">=</span> <span class="pl-s1">get</span> <span class="pl-s1">index</span> <span class="pl-k">from</span> <span class="pl-s1">old</span><span class="pl-c1">-</span><span class="pl-s1">todos</span>
+
+    <span class="pl-s1">set</span> <span class="pl-s1">todos</span> <span class="pl-s1">to</span> <span class="pl-s1">old</span><span class="pl-c1">-</span><span class="pl-s1">todos</span> <span class="pl-s1">where</span>:
+        <span class="pl-s1">the</span> <span class="pl-s1">value</span> <span class="pl-s1">at</span> <span class="pl-s1">index</span> <span class="pl-c1">is</span> <span class="pl-s1">a</span> <span class="pl-s1">todo</span> <span class="pl-s1">item</span> <span class="pl-s1">with</span>:
+          <span class="pl-s1">the</span> <span class="pl-s1">same</span> <span class="pl-s1">id</span>
+          <span class="pl-s1">the</span> <span class="pl-s1">same</span> <span class="pl-s1">name</span>
+          <span class="pl-s1">and</span> <span class="pl-s1">the</span> <span class="pl-s1">new</span> <span class="pl-s1">completion</span> <span class="pl-s1">value</span></pre>
+</div>
+<p>and here we go in racket!</p>
+<div class="highlight highlight-source-lisp">
+  <pre>[(update-item index new-completed) <span class="pl-c"><span class="pl-c">;</span>; this will set the todo list to a todo list with the newer value</span>
+  (define old-todos ($ todos))
+  (define old-item (list-ref old-todos index))
+  ($ todos (
+            list-set old-todos index <span class="pl-c"><span class="pl-c">;</span>; Set the todo at the index that we want to update to...</span>
+                      (todo <span class="pl-c"><span class="pl-c">;</span>; a todo ...</span>
+                      (todo-id old-item) <span class="pl-c"><span class="pl-c">;</span>; with the same id ...</span>
+                      (todo-value old-item) <span class="pl-c"><span class="pl-c">;</span>; same value ...</span>
+                      new-completed) <span class="pl-c"><span class="pl-c">;</span>; and the new completion!</span>
+                      )
+      )
+]))</pre>
+</div>
+<p>Now all we have to do is return it!</p>
+<div class="highlight highlight-source-lisp">
+  <pre>  <span class="pl-c"><span class="pl-c">;</span>; Now that we have the actually buisness, we need ot actually give the end user something! So here we give ...</span>
+  (define editor (spawn ^editor)) <span class="pl-c"><span class="pl-c">;</span>; the capability to edit all the todos ...</span>
+  (define reader (spawn ^reader)) <span class="pl-c"><span class="pl-c">;</span>; and the capability to read the todos!</span>
+
+  (values editor reader)) <span class="pl-c"><span class="pl-c">;</span>; Then, return!</span></pre>
+</div>
+<h3 id="user-content-lets-use-it-3"><a class="heading-link" href="#lets-use-it-3">Let's use it :3<span
+      aria-hidden="true" class="octicon octicon-link"></span></a></h3>
+<p>To be able to interact with this, let's enter into the vat we created earlier!</p>
+<div class="highlight highlight-source-lisp">
+  <pre>(a-vat 'run (<span class="pl-c1">lambda</span> () </pre>
+</div>
+<p>Ok, now it's time to create our list!</p>
+<div class="highlight highlight-source-lisp">
+  <pre>(define-values (todo-editor todo-reader) (spawn-todo-reader-<span class="pl-k">and</span>-writer))</pre>
+</div>
+<p>Oh right! We don't actually get the list, we get a reader and an editor.</p>
+<p>Let's add a couple of todos :3</p>
+<div class="highlight highlight-source-lisp">
+  <pre>($ todo-editor 'add-item <span class="pl-s"><span class="pl-pds">"</span>finish code<span class="pl-pds">"</span></span>)
+($ todo-editor 'add-item <span class="pl-s"><span class="pl-pds">"</span>write blog post<span class="pl-pds">"</span></span>)
+($ todo-editor 'add-item <span class="pl-s"><span class="pl-pds">"</span>shop for groceries<span class="pl-pds">"</span></span>)</pre>
+</div>
+<p>And now we wanna read what we've got so far!</p>
+<div class="highlight highlight-source-lisp">
+  <pre>(println ( $ todo-reader 'read-todos ))
+<span class="pl-c"><span class="pl-c">;</span>; $- '(#&lt;todo: 1 "finish code" #f&gt; #&lt;todo: 2 "write blog post" #f&gt; #&lt;todo: 3 "shop for groceries" #f&gt;)</span></pre>
+</div>
+<p>Wow, it's working :3</p>
+<p>A bit later... and we've finished the blog post!</p>
+<div class="highlight highlight-source-lisp">
+  <pre>($ todo-editor 'update-item <span class="pl-c1">1</span> <span class="pl-c1">#t</span>) <span class="pl-c"><span class="pl-c">;</span>; (Don't forget to index from 0!)</span>
+(println ( $ todo-reader 'read-todos ))
+<span class="pl-c"><span class="pl-c">;</span>; $- '(#&lt;todo: 1 "finish code" #f&gt; #&lt;todo: 2 "write blog post" #f&gt; #&lt;todo: 3 "shop for groceries" #t&gt;)</span></pre>
+</div>
+<p>Great :3</p>
+<p>Well hm. We've got a problem! I want my partner to be able to update a specific
+  task, but I don't want them to accidentally overwrite all my other todos!
+  We should write some code to fix this :3</p>
+<div class="highlight highlight-source-lisp">
+  <pre>(define (spawn-editor-for-one-item index editor) <span class="pl-c"><span class="pl-c">;</span>; So we need an editor for one thing, that means that we need to have an editor that can edit that one thing to start with! as well as the thing we want to edit.</span>
+  (define (^single-editor _bcom index) <span class="pl-c"><span class="pl-c">;</span>; here's that editor, we don't need to be able to spawn it outside this function, so we'll define it here.</span>
+    (methods
+    [(update-item value) <span class="pl-c"><span class="pl-c">;</span>; all it needs to be able to do is update one thing</span>
+      ($ editor 'update-item index value) <span class="pl-c"><span class="pl-c">;</span>; index is hard-coded into this call! that means that my partner can't just edit anything.</span>
+      ]
+    )
+    )
+
+  (define s-editor (spawn ^single-editor index)) <span class="pl-c"><span class="pl-c">;</span>; create the new editor</span>
+  (values s-editor) <span class="pl-c"><span class="pl-c">;</span>; and give it back!</span>
+  )</pre>
+</div>
+<p>This is the magic of capabilities. Just by writing some code, we can make it so
+  that all you need to create new behavior is existing behaviour!</p>
+<p>Let's give my partner this ability using this new restricted editor.</p>
+<div class="highlight highlight-source-lisp">
+  <pre>(define-values (grocery-editor-for-partner) (spawn-editor-for-one-item <span class="pl-c1">2</span> todo-editor))</pre>
+</div>
+<p>Look! they can edit index number two only.</p>
+<p>Theoretically, we could have now sent that capability over the network
+  (I'm not going to write netcode yet).</p>
+<h4 id="user-content-on-their-computer-after-shopping"><a class="heading-link"
+    href="#on-their-computer-after-shopping">On their computer after shopping<span aria-hidden="true"
+      class="octicon octicon-link"></span></a></h4>
+<div class="highlight highlight-source-lisp">
+  <pre>($ grocery-editor-for-partner 'update-item <span class="pl-c1">#t</span>)</pre>
+</div>
+<p>And it works!</p>
+<h4 id="user-content-back-at-home"><a class="heading-link" href="#back-at-home">Back at home<span aria-hidden="true"
+      class="octicon octicon-link"></span></a></h4>
+<div class="highlight highlight-source-lisp">
+  <pre>(println ( $ todo-reader 'read-todos ))))
+<span class="pl-c"><span class="pl-c">;</span>; '(#&lt;todo: 1 "finish code" #f&gt; #&lt;todo: 2 "write blog post" #f&gt; #&lt;todo: 3 "shop for groceries" #t&gt;)</span></pre>
+</div>
+<p>Oh perfect! They finished the shopping. :3</p>
+<h2 id="user-content-the-end"><a class="heading-link" href="#the-end">The end!<span aria-hidden="true"
+      class="octicon octicon-link"></span></a></h2>
+<p>Thank you so much for reading, if you have any index, just send me some feedback!
+  My contact info is on my <a href="/">index</a> page</p>
+<h2 id="user-content-all-of-the-code"><a class="heading-link" href="#all-of-the-code">All of the code<span
+      aria-hidden="true" class="octicon octicon-link"></span></a></h2>
+<p><a href="https://paste.sr.ht/~arcade/bd22683e8a1c082e811fca173a2546ba017fcb40" rel="nofollow">Here it is</a>
+  in case you want to run it yourself!</p>
+<h2 id="user-content-thanks-sm-3"><a class="heading-link" href="#thanks-sm-3">Thanks sm :3<span aria-hidden="true"
+      class="octicon octicon-link"></span></a></h2>
+<p>This was all introduced to me by Christine Lemmer-Webber
+</p>
