@@ -1,0 +1,28 @@
+<p>I CAN&#39;T BELIEVE ITS NOT FORTH! is a forth-like stack-based language, with a web UI and a goal of being used to
+    make little widgets everywhere.</p>
+<p>Currently, it isn&#39;t well documented, but look at all the <code>builtin.ts</code> files to see the avaliable
+    builtin functions.</p>
+<h2 id="demo"><a href="https://arcades.agency/ICBINF/?loadfile=https://doggo.ninja/VoPUzO.icbinf">Demo</a></h2>
+<h2 id="examples">Examples</h2>
+<h3 id="loop">Loop</h3>
+<pre><code>( start stop )
+0 10 do 
+    i . ( print index )
+loop
+</code></pre>
+<h3 id="word-definition">Word definition</h3>
+<pre><code>: addone ( n - n+1 )
+    1 + ;
+
+1 addone .
+</code></pre>
+<h3 id="if-statement">If Statement</h3>
+<pre><code>1 1 = if &quot;one and one are equal&quot; else &quot;never reached&quot; then .
+1 2 = if &quot;true (never reached)&quot; else &quot;false&quot; then .
+</code></pre>
+<h3 id="keyvalue-store">Key/Value store</h3>
+<pre><code>&quot;Arcade&quot; #name #set kv
+
+&quot;Hello &quot; #name #get kv  ( &quot;Hello &quot; &quot;Arcade&quot; )
+concat .
+</code></pre>
