@@ -76,111 +76,30 @@ REFERENCE
 ; Programming, for software!
 PROGRAMMING
 	HOST : INDEX
-	BREF : Mastery over the digital
+	BREF : Wierder math
 	BODY
 		Hello! This isn't much yet.
 
-C89
-	HOST : programming
-	BREF : The ANSI C Programming Language
-	BODY
-		C is a programming language first implemented in 1972, is a general purpose programming language with wide hardware support, and many different compilers:
-		{^list c compilers}
-
-		C is also at the core of the Linux opperating system, as is it at the core of most developer tools. 
-		C is a language that rides the line of complexity and simplicity well.
-
-		### Hello World in C
-		{^code helloworld.c}
-
-	LINKS
-		Wikipedia : https://en.wikipedia.org/wiki/C_(programming_language)
-
-PYTHON
-	HOST : programming
-	BREF : Sssss snake language
-	BODY
-		Python is a modern-ish semi-compiled scripting language. I like to use python to protype larger projects, but it is not something I try to use as a main part of a project.
-		Python also happens to have its main implementation written in {c89 C}.
-
-		### Hello World in Python
-		> print("Hello World")
-
-OCAML
-	HOST : stump
-	BREF : functional
-	BODY
-		{stump}
-
-RACKET
-	HOST : stump
-	BREF : fancy scheme
-	BODY
-		{stump}
-
-ESOLANGS
-	HOST : programming
-	BREF : programming language designed to experiment with weird ideas, be a joke, or suck to write in
-	BODY
-		Esolangs are programming languages designed to experiment with weird ideas, be a joke, or suck to write in. There are many interesting ones! 
-		Here are some I have written about, and some resource to explore:
-	LINKS
-		Esolang Wiki : https://esolangs.org/wiki/Main_Page
-
-BRAINFUCK
-	HOST : esolangs
-	BREF : funny simple ESOLANG
-	BODY
-		Brainfuck is a super simple {esolangs esolang}, designed in the 80s to have the smallest possible compiler.
-		It is based around an array of 30k byte-sized cells, and a pointer into that array (basically the index that the "brainfuck machine" is currently at). It can be helpful to think about the language as a little machine that runs on a track around 30k little whiteboards, where you can change the instructions the machine follows.
-		In brainfuck, code and data are stored seperatly, i.e. a Harvard Architecture vs. a Von Neumann Architecture. 
-
-		There are 8 main operations, and a common ASCII representation of that code.
-		| Instruction | Code | What it does! |
-		| Increment Memory Pointer | `>` | Basically, moves the "brainfuck machine" to the right along the track of the memory array. |
-		| Decrement Memory Pointer | `<` | Same as incrementing, but moving to the left. |
-		| Incease value at pointer | `+` | Increases the value at the place the machine is. |
-		| Decrease value at pointer | `-` | Decreases the value at the place the machine is. |
-		| Start loop | `[` | This tells the brainfuck machine to start a loop. It doesn't do anything to the current memory cell, or the position the "machine" is, but it will when you close the loop |
-		| End/Check loop | `]` | When the brainfuck machine hits this, it will check if the current value (number on the whiteboard), and if it's not zero, start the instructions back at where you started the loop |
-		| Read character in | `,` | The machine will write the ascii value of an inputted character on the current cell. | 
-		| Output character | `.` | Write the current cell out as the ascii character represented by the number. |
-
-
-
-
-
-
-; ----------- PROJECTS ---------
-
-PROJECTS
-	HOST : INDEX
-	BREF : Things I have built [WIP]
-	BODY
-		This is {stump a work in progress}
-
-SOFTWARE
-	HOST : projects
-	BREF : Software, squishy, squishy ware.
-	BODY
-		I write software primarily in {C89 C}, Golang, {Python}, and Crystal.
-		Writing software is something I love, because of how accessible it is. All you need is a keyboard, a screen, and a computing device; from a chromebook to a top of the line gaming PC. The vast majority of good programmming software is free and open source, which makes a great ecosystem for begineers.
-
 ICBINF
-	HOST : projects
+	HOST : programming
 	BREF : I CAN'T BELIEVE ITS NOT FORTH
 	BODY
+		I CAN'T BELIEVE ITS NOT {FORTH}! is a forth-like stack-based language, with a web UI and a goal of being used to make little widgets everywhere.
 		{^html icbinf}
+	LINKS
+		Source : https://git.sr.ht/~arcade/icbinf
 
 FUCC
-	HOST : software
+	HOST : programming
 	BREF : An optimizing Brainfuck Compiler
 	BODY
 		This is an optimizing {brainfuck} compiler, writen in {ocaml}.
 		I use basic compiler techniques, like loop unwrapping and offloading the work to a C compiler
+	LINKS
+		Source : https://git.sr.ht/~arcade/fucc
 
 SUPER16
-	HOST : software
+	HOST : programming
 	BREF : A small, broken, ISA
 	BODY
 		I am pretty sure that this isn't turing complete.
@@ -237,11 +156,110 @@ SUPER16
 		Source : https://github.com/l3gacyb3ta/super16
 
 CORGI
-	HOST : software
+	HOST : programming
 	BREF : A CLI for doggo.ninja
 	BODY
 		This is a CLI for my friend {https://kognise.dev/ Kognise's} service {https://doggo.ninja}.
 		It is written in {Python}.
+
+PLT
+	HOST : programming
+	BREF : Beep boop language
+	BODY
+		I really love computing languages! There's just so much diversity.
+
+C89
+	HOST : PLT
+	BREF : The ANSI C Programming Language
+	BODY
+		C is a programming language first implemented in 1972, is a general purpose programming language with wide hardware support, and many different compilers:
+		{^list c compilers}
+
+		C is also at the core of the Linux opperating system, as is it at the core of most developer tools. 
+		C is a language that rides the line of complexity and simplicity well.
+
+		### Hello World in C
+		{^code helloworld.c}
+
+	LINKS
+		Wikipedia : https://en.wikipedia.org/wiki/C_(programming_language)
+
+PYTHON
+	HOST : PLT
+	BREF : Sssss snake language
+	BODY
+		Python is a modern-ish semi-compiled scripting language. I like to use python to protype larger projects, but it is not something I try to use as a main part of a project.
+		Python also happens to have its main implementation written in {c89 C}.
+
+		### Hello World in Python
+		> print("Hello World")
+
+OCAML
+	HOST : stump
+	BREF : functional
+	BODY
+		{stump}
+
+FORTH
+	HOST : stump
+	BREF : stack-based squishies
+	BODY
+		{stump}
+
+RACKET
+	HOST : stump
+	BREF : fancy scheme
+	BODY
+		{stump}
+
+ESOLANGS
+	HOST : PLT
+	BREF : programming language designed to experiment with weird ideas, be a joke, or suck to write in
+	BODY
+		Esolangs are programming languages designed to experiment with weird ideas, be a joke, or suck to write in. There are many interesting ones! 
+		Here are some I have written about, and some resource to explore:
+	LINKS
+		Esolang Wiki : https://esolangs.org/wiki/Main_Page
+
+BRAINFUCK
+	HOST : esolangs
+	BREF : funny simple ESOLANG
+	BODY
+		Brainfuck is a super simple {esolangs esolang}, designed in the 80s to have the smallest possible compiler.
+		It is based around an array of 30k byte-sized cells, and a pointer into that array (basically the index that the "brainfuck machine" is currently at). It can be helpful to think about the language as a little machine that runs on a track around 30k little whiteboards, where you can change the instructions the machine follows.
+		In brainfuck, code and data are stored seperatly, i.e. a Harvard Architecture vs. a Von Neumann Architecture. 
+
+		There are 8 main operations, and a common ASCII representation of that code.
+		| Instruction | Code | What it does! |
+		| Increment Memory Pointer | `>` | Basically, moves the "brainfuck machine" to the right along the track of the memory array. |
+		| Decrement Memory Pointer | `<` | Same as incrementing, but moving to the left. |
+		| Incease value at pointer | `+` | Increases the value at the place the machine is. |
+		| Decrease value at pointer | `-` | Decreases the value at the place the machine is. |
+		| Start loop | `[` | This tells the brainfuck machine to start a loop. It doesn't do anything to the current memory cell, or the position the "machine" is, but it will when you close the loop |
+		| End/Check loop | `]` | When the brainfuck machine hits this, it will check if the current value (number on the whiteboard), and if it's not zero, start the instructions back at where you started the loop |
+		| Read character in | `,` | The machine will write the ascii value of an inputted character on the current cell. | 
+		| Output character | `.` | Write the current cell out as the ascii character represented by the number. |
+
+
+
+
+
+
+; ----------- PROJECTS ---------
+
+PROJECTS
+	HOST : INDEX
+	BREF : Things I have built [WIP]
+	BODY
+		This is {stump a work in progress}
+
+SOFTWARE
+	HOST : projects
+	BREF : Software, squishy, squishy ware.
+	BODY
+		I write software primarily in {C89 C}, Golang, {Python}, and Crystal.
+		Writing software is something I love, because of how accessible it is. All you need is a keyboard, a screen, and a computing device; from a chromebook to a top of the line gaming PC. The vast majority of good programmming software is free and open source, which makes a great ecosystem for begineers.
+
 
 ; --------- Writing -----------
 
