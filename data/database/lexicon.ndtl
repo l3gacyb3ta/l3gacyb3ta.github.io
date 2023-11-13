@@ -88,7 +88,7 @@ ICBINF
 		I CAN'T BELIEVE ITS NOT {FORTH}! is a forth-like stack-based language, with a web UI and a goal of being used to make little widgets everywhere.
 		{^html icbinf}
 	LINKS
-		Source : https://git.sr.ht/~arcade/icbinf
+		Source : https://git.sr.ht/~arcade/ICBINF
 
 FUCC
 	HOST : programming
