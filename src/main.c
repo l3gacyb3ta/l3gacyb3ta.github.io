@@ -870,8 +870,8 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			   "<meta property='og:type' content='website' />"
 			   "<meta property='og:description' content='%s' />"
 			   "<meta property='og:site_name' content='nchrs' />"
-			   "<meta property='og:url' content='https://nchrs.xyz/site/%s.html' />"
-			   "<meta property='og:image' content='https://nchrs.xyz/media/icon/nchrs_favicon.png' />",
+			   "<meta property='og:url' content='https://arcades.agency/site/%s.html' />"
+			   "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />",
 		t->bref,
 		t->name,
 		t->name,
