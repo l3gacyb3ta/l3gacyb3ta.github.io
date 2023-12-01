@@ -81,6 +81,18 @@ PROGRAMMING
 	BODY
 		Hello! This isn't much yet.
 
+DECEMBER ADVENTURE 2023
+	HOST : programming
+	BREF : It's my birth month :3
+	BODY
+		{^html calendar}
+
+DECEMBER FIRST
+	HOST : DECEMBER ADVENTURE 2023
+	BREF : Dec 1, 2023
+	BODY
+		Started work on a {lisp} for {stump duskos}! We've got a working repl so far.
+
 ICBINF
 	HOST : programming
 	BREF : I CAN'T BELIEVE ITS NOT FORTH

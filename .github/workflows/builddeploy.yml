@@ -28,7 +28,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/configure-pages@v3
     - name: media creation
-      run: ./batchVariants.sh
+      run: ./batchVariants.cc src/main.c -g -O0 -std=c89 -Wall -Wno-unknown-pragmas -o bin/aethopica 
     - name: create folders
       run: mkdir bin out out/links out/media
     - name: copy data
