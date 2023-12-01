@@ -72,7 +72,7 @@ REFERENCE
 	HOST : meta
 	BREF : Everything
 	BODY
-		Unlike some other site, this does _not_ contain all text possible to write. This is just all the text I have written.
+		Unlike {https://libraryofbabel.info/ some other sites}, this does _not_ contain all text possible to write. This is just all/most of the text I have written.
 
 ; Programming, for software!
 PROGRAMMING
@@ -85,13 +85,20 @@ DECEMBER ADVENTURE 2023
 	HOST : programming
 	BREF : It's my birth month :3
 	BODY
+		# D E C E M B E R  A D V E N T U R E
+
 		{^html calendar}
+
+		## Hopeful goals:
+		+ Basic {lisp} implemented on {duskos}
+		+ Build an introspective system in that lisp!
+		+ Run that system exclusively on my computer for 1 day.
 
 DECEMBER FIRST
 	HOST : DECEMBER ADVENTURE 2023
 	BREF : Dec 1, 2023
 	BODY
-		Started work on a {lisp} for {stump duskos}! We've got a working repl so far.
+		Started work on a {lisp} for {duskos}! We've got a working repl so far.
 
 ICBINF
 	HOST : programming
@@ -216,6 +223,20 @@ OCAML
 FORTH
 	HOST : stump
 	BREF : stack-based squishies
+	BODY
+		{stump}
+
+DUSKOS
+	HOST : forth
+	BREF : cool forth based OS
+	BODY
+		{stump}
+	LINKS
+		Website : http://duskos.org/
+
+LISP
+	HOST : stump
+	BREF : an elegant weapon for a more civalized age
 	BODY
 		{stump}
 
