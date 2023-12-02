@@ -509,8 +509,8 @@ CARYOPHYLLUS
 		(Remind {arcade me} to upload a picture) 
 
 NOW
-	HOST : stump
+	HOST : arcade
 	BREF : What I'm doing!
 	BODY
-		Subscribe using the Neon Kiosk (LINK TODO)
+		Subscribe {https://journal.miso.town/atom?url=https://arcades.agency/now.html here}!
 		{^html now}
