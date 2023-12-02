@@ -100,6 +100,14 @@ DECEMBER FIRST
 	BODY
 		Started work on a {lisp} for {duskos}! We've got a working repl so far.
 
+DECEMBER SECOND
+	HOST : DECEMBER ADVENTURE 2023
+	BREF : Dec 2, 2023
+	BODY
+		String parsing is working now! Still missing the first character tho, which is wierd. I'm going to debug some more.
+		Enjoy some {C} (the current repl evironment):
+		{^code lispDec2.c}
+
 ICBINF
 	HOST : programming
 	BREF : I CAN'T BELIEVE ITS NOT FORTH
