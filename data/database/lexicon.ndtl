@@ -105,7 +105,7 @@ DECEMBER SECOND
 	BREF : Dec 2, 2023
 	BODY
 		String parsing is working now! Still missing the first character tho, which is wierd. I'm going to debug some more.
-		Enjoy some {C} (the current repl evironment):
+		Enjoy some {c89 C} (the current repl evironment):
 		{^code lispDec2.c}
 
 ICBINF
