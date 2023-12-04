@@ -4,7 +4,7 @@ INDEX
 	HOST : INDEX
 	BREF : Main portal.
 	BODY
-		Welcome to aethopica! This is {arcade my} Memex, the extension of {mental my mind}. 
+		Welcome to aethopica! This is {arcade my} Memex, the extension of {NEURODIVERGENCE my mind}. 
 		Here's my {https://arcades.agency/media/Arcade.pdf Resumé}!
 
 
@@ -239,10 +239,55 @@ OCAML
 		{stump}
 
 FORTH
-	HOST : stump
+	HOST : PLT
 	BREF : stack-based squishies
 	BODY
-		{stump}
+		Forth is a stack based programming language from the 70s, but that still holds up 50 years later!
+
+		If you want to play along at home, install a forth of your choice! The GNU project has {https://www.gnu.org/software/gforth/ gforth}, one of the few FOSS ANSI Forth implementations.
+		Or, better yet, use {http://www.call-with-current-continuation.org/uf/uf.html UF}, which is a forth implementation for {UXN}!
+
+		Stacks are the core concept in Forth, and similar languages. They're also known as LIFO (Last-In, First-Out) structures, because that's how they work! 
+
+		## Intro to the stack and basic Forth :>
+
+		You interact with the stack by pushing data onto it! This is the easiest operation in forth, you just write your data.
+
+		`1 2 3` pushes 1, 2, and 3 onto the stack!
+
+		Now, `.` pops the top item off of the stack, and prints it out for you.
+		What do you think `. . .` would print now?
+
+		`1 2 3 . . .` returns `3 2 1 ok`! It's backwards because that's how stacks work, Last In, First Out! The `ok` is the forth implementation telling you that it's ready for more input.
+
+		If we want to do anything with the stack, we use words! Words are what forth calls any operations. Words also have "arrity", which is their effect on the stack.
+
+		For example, `+` could be notated as `( a b - c )`. This tells us that it takes in 2 things on the stack, and returns one. 
+
+		All math in forth is in {https://en.wikipedia.org/wiki/Reverse_Polish_notation Reverse Polish Notation}, where you put operators after their operands. For example, 1 + 1 is 1 1 +. Because of this, you don't need parentheses, because all order of operations is defined by reading left to right.
+
+		Heres a more complex example of how to rewrite math in RPN: (1 + 5) / ((2 * 9) - 3) becomes 1 5 + 2 9 * 3 - /. While this might seem more complex at first, it's equivalent to the first equation, without a need for parentheses.
+
+		## Building your own words
+
+		For now, we've only used things built into forth. Forth can let you define your own words tho! And it's super easy too!
+
+		Forth has a "compile mode" which you can enter by using the word `:` and exit by using `;`. After `:` you have to give your new word a name, but after that, you just write forth!
+
+		Here's a word that squares a number: `: square ( n - n^2 ) dup * ;`
+
+		This is a pretty simple definition.
+
+		+ It starts by entering compile mode (`:`) and then gives the word a name (`square`).
+		+ It then has an arrity comment. These don't do anything in the actual compiler, but they're very useful for us forth operators.
+		+ We then use `dup` which duplicates the top of the stack. Multiplying the number by itself, it squares it!
+		+ Done with our word, we exit compile mode with `;`
+
+		Chuck Moore is a personal hero `<3`
+	LINKS
+		UF (Uxn Forth) : http://www.call-with-current-continuation.org/uf/uf.html
+		GForth (GNU Forth) : https://www.gnu.org/software/gforth/
+		RPN : https://wiki.c2.com/?PostfixNotation
 
 DUSKOS
 	HOST : forth
@@ -251,6 +296,13 @@ DUSKOS
 		{stump}
 	LINKS
 		Website : http://duskos.org/
+
+UXN
+	HOST : stump
+	BREF : super cool little VM
+	BODY
+		Love ya, Devine `<3`
+		{stump}
 
 LISP
 	HOST : stump
@@ -394,7 +446,7 @@ LANGUAGES
 	BREF : Systems of communication.
 	BODY
 		Languages are amazing, they are so versitile in their uses and yet so diverse in their implementation, human and machine alike.
-		I personally prefer machine languages, because they follow much stricter rules (grammar and syntax), but human ones are also a {mental special interest}.
+		I personally prefer machine languages, because they follow much stricter rules (grammar and syntax), but human ones are also a {NEURODIVERGENCE special interest}.
 
 FRENCH
 	HOST : Languages
@@ -424,14 +476,14 @@ STUMP
 	BODY
 		STUMP is the host for some lexicon entries that I have not yet completed, so if you found this, congrats!
 
-MENTAL
+NEURODIVERGENCE
 	HOST : arcade
-	BREF : How our brains can break
+	BREF : How our brains can be different
 	BODY
 		I have {ADHD}, {depression}, and probably some form of {autism}.
 
 ADHD
-	HOST : mental
+	HOST : NEURODIVERGENCE
 	BREF : Attention Deficit Hyperactivity Disorder, aka. my superpower and curse.
 	BODY
 		ADHD is something I have struggled with since I was a small child, at least if my parents are to trust (which I think they are).
@@ -445,13 +497,13 @@ ADHD
 		ADHD is also comorbid with {autism ASD} in a lot of cases.
 
 AUTISM
-	HOST : mental
+	HOST : NEURODIVERGENCE
 	BREF : Autism Spectrum Disorder
 	BODY
 		I have not been dignosed with any ASD, but based on some preliminary self-analysis, I probably have some form. It also is comorbid with {ADHD}, which I do have a clinical diagnosis for.
 
 DEPRESSION
-	HOST : mental
+	HOST : NEURODIVERGENCE
 	BREF : The Big Sad
 	BODY
 		Depression is characterized by my depressive episodes. During these times I shut down and start losing motivation, start closing social connections.
