@@ -27,7 +27,7 @@ main cite { display:block;font-size:0.9em;margin-left:2.2em;margin-bottom:2em;co
 main cite:before { content:"— " }
 main table { width:100%;margin-bottom:10px;border:1px solid lightgray;border-spacing:0;text-align:left }
 main table td { padding:2px 6px 2px 6px;border:1px solid lightgray;vertical-align:top }
-main pre, main code { font-size:14px;background-color:lightgray }
+main pre, main code { font-size:14px;background-color:lightgray; width: 150%; }
 main pre { padding:8px;white-space:pre-wrap;word-wrap:break-word }
 main pre table { margin:0 }
 main pre table tr td:first-child { font-weight:bold }

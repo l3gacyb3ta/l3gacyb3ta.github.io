@@ -74,6 +74,8 @@ REFERENCE
 	BODY
 		Unlike {https://libraryofbabel.info/ some other sites}, this does _not_ contain all text possible to write. This is just all/most of the text I have written.
 
+		{^html search}
+
 ; Programming, for software!
 PROGRAMMING
 	HOST : INDEX
@@ -106,7 +108,15 @@ DECEMBER SECOND
 	BODY
 		String parsing is working now! Still missing the first character tho, which is wierd. I'm going to debug some more.
 		Enjoy some {c89 C} (the current repl evironment):
-		{^code lispDec2.c}
+		{^code decemberAdventure/lispDec2.c}
+
+DECEMBER THIRD
+	HOST : December adventure 2023
+	BREF : Dec 3, 2023
+	BODY
+		Today I didn't do much, but I did get to take a practice {https://www.act.org ACT} test, which for my non-american-teenager friends is just a fancy standardized test, which despite my {ADHD} I actually enjoy quite a lot.
+		I also set up a new desk! It's fancy and motorized, so I can stand at it and not hurt my body any more than necessary.
+		{^img stuff/desk.jpg}
 
 ICBINF
 	HOST : programming
@@ -299,7 +309,7 @@ SOFTWARE
 	HOST : projects
 	BREF : Software, squishy, squishy ware.
 	BODY
-		I write software primarily in {C89 C}, Golang, {Python}, and Crystal.
+		I write software primarily in {C89 C}, Golang, {Python}, and Javascript.
 		Writing software is something I love, because of how accessible it is. All you need is a keyboard, a screen, and a computing device; from a chromebook to a top of the line gaming PC. The vast majority of good programmming software is free and open source, which makes a great ecosystem for begineers.
 
 
@@ -514,3 +524,5 @@ NOW
 	BODY
 		Subscribe {https://journal.miso.town/atom?url=https://arcades.agency/now.html here}!
 		{^html now}
+	LINKS
+		Have your own html journal! : https://journal.miso.town/
