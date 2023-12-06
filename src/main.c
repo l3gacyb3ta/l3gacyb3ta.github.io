@@ -780,7 +780,7 @@ fpnav(FILE *f, Term *t)
 	if(!t->parent->parent)
 		error("Missing parent", t->parent->name);
 	fputs("<nav>", f);
-	fputs("<a href='index.html'><img alt='site logo' src='../media/icon/nebula_favicon.png' alt='" NAME "' height='100' /></a> <p style='float:right;'>the softest paw <span style='color:red;'>can be a claw</span></p>", f);
+	fputs("<a href='index.html'><img alt='site logo' src='../media/icon/nebula_favicon.png' alt='" NAME "' height='100' /></a> <a href='https://video.liberta.vip/w/3x126HTsBuQctbHnWw6o9e' style='float:right;'>the softest paw <span style='color:red;'>can be a claw</span></a>", f);
 	if(t->parent->parent->name == t->parent->name)
 		fpnavsub(f, t->parent->parent, t);
 	else
