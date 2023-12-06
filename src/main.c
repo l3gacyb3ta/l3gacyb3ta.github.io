@@ -780,7 +780,7 @@ fpnav(FILE *f, Term *t)
 	if(!t->parent->parent)
 		error("Missing parent", t->parent->name);
 	fputs("<nav>", f);
-	fputs("<a href='index.html'><img alt='site logo' src='../media/icon/nebula_favicon.png' alt='" NAME "' height='100' /></a>", f);
+	fputs("<a href='index.html'><img alt='site logo' src='../media/icon/nebula_favicon.png' alt='" NAME "' height='100' /></a> <p style='float:right;'>the softest paw <span style='color:red;'>can be a claw</span></p>", f);
 	if(t->parent->parent->name == t->parent->name)
 		fpnavsub(f, t->parent->parent, t);
 	else
@@ -869,7 +869,7 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			   "<meta property='og:title' content='%s' />"
 			   "<meta property='og:type' content='website' />"
 			   "<meta property='og:description' content='%s' />"
-			   "<meta property='og:site_name' content='nchrs' />"
+			   "<meta property='og:site_name' content='nebula' />"
 			   "<meta property='og:url' content='https://arcades.agency/site/%s.html' />"
 			   "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />",
 		t->bref,
