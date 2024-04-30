@@ -5,9 +5,10 @@
 
 ; Languages
 HUMAN LANGUAGES
-	English (American) : Fluent
+	<a href="english.html">{English}</a> (American) : Fluent
 	<a href="french.html">{French}</a> (Belgian) : Fluent
 	<a href="german.html">{German}</a> (Hoch) : Fluent
+	<a href="conlangs.html">{Toki Pona}</a> : Basic
 	Spanish : Basic
 
 C compilers
@@ -20,4 +21,7 @@ C compilers
 German Certifications
 	AP Test : Reading, Listening, Presentation. Got a 5/5 on this! Mostly exciting for college credit
 	DSD I : Writing, Reading, Listening, Essay, Pre-prepared Presentation, and a Spontaneous Presentation. This is enough to get the Georgia seal of biliteracy, and to cut my school requirements for Germany down a lot. Equivalent to a B2 CEFR level.
-	DSD II : Same as the DSD I, just more advanced. I haven't finished this one yet, but I feel good about it.
+	DSD II : Same as the DSD I, just more advanced. I have completed this one at a CEFR C1 Level.
+
+Spelling Reforms
+	I before E except after C : I try to follow this rule 100% consistently, for example wierd instead of wierd

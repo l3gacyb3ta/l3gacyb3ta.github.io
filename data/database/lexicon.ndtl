@@ -339,9 +339,9 @@ RACKET
 
 ESOLANGS
 	HOST : PLT
-	BREF : programming language designed to experiment with weird ideas, be a joke, or suck to write in
+	BREF : programming language designed to experiment with wierd ideas, be a joke, or suck to write in
 	BODY
-		Esolangs are programming languages designed to experiment with weird ideas, be a joke, or suck to write in. There are many interesting ones! 
+		Esolangs are programming languages designed to experiment with wierd ideas, be a joke, or suck to write in. There are many interesting ones! 
 		Here are some I have written about, and some resource to explore:
 	LINKS
 		Esolang Wiki : https://esolangs.org/wiki/Main_Page
@@ -488,6 +488,30 @@ GERMAN
 		I continue my German education at the {https://www.germanschoolatlanta.com/ German School of Atlanta}
 
 		{^list german certifications}
+
+CONLANGS
+	HOST : Languages
+	BREF : Making stuff!
+	BODY
+		Conlangs are artificial human-constructed languages. I emphasize the "artificial" part, because _technically_ all languages are human-constructed. 
+		Some of my favorites are Toki Pona, a minimal language that only has around 120 words, designed to create positive thinking, and Ithkuil, a far more complex language designed to express complex philiosophical concepts.
+	LINKS
+		Ithkuil : https://www.ithkuil.net/
+		Toki Pona : https://tokipona.org/
+
+ENGLISH
+	HOST : Languages
+	BREF : Supprisingly good
+	BODY
+		English is actually quite nice! Per-letter, English is actually one of, if not the, most efficient languages! Obviously this is flawed, as you can only really compare to other languages that use a latin-derived alphabet. And if you measure by speaking time, almost all languages are the same information rate! Some just speak faster than English.
+
+		# Spelling Reform
+		Spelling reforms are something that have been attempted many times over, and some have stuck!
+		For example, one of the most successful ones in English was Noah Webster's, of Webster's Dictionary fame. He is why American English spells `labor` without the `u`, and `center` not `centre`.
+
+		My personal spelling reform and method is simple. I just use it! And you can too.
+		Current substitions I make: 
+		{^list spelling reforms}
 
 ; ###############----------- STUMPS ---------------################
 
