@@ -394,11 +394,11 @@ fppict(FILE *f, char *filename, char *caption, int header, int link)
 int
 fpcss(FILE *f)
 {
-	File *fcss;
+	FILE *fcss;
 	fcss = getfile("links/", "main", "css", "r");
 	if(!fcss)
 		return error("Can't find main.css", "links/main.css");
-	while((c = fgetc(fp)) != EOF)
+	while((c = fgetc(fcss)) != EOF)
 		fputc(c, f);
 	return 1;
 }
