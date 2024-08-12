@@ -399,7 +399,8 @@ fpcss(FILE *f)
 	if(!fcss)
 		return error("Can't find main.css", "links/main.css");
 	while((c = fgetc(fp)) != EOF)
-		fputc(c, f)
+		fputc(c, f);
+	return 1;
 }
 
 int
