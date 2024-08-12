@@ -392,6 +392,17 @@ fppict(FILE *f, char *filename, char *caption, int header, int link)
 }
 
 int
+fpcss(FILE *f)
+{
+	File *fcss;
+	fcss = getfile("links/", "main", "css", "r");
+	if(!fcss)
+		return error("Can't find main.css", "links/main.css");
+	while((c = fgetc(fp)) != EOF)
+		fputc(c, f)
+}
+
+int
 fpinclude(FILE *f, char *file, int type)
 {
 	int lines = 0;
@@ -864,7 +875,7 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			   "<meta name='author' content='" PROPERNAME "' />"
 			   "<meta name='viewport' content='width=device-width, initial-scale=1' />"
 			   "<link rel='shortcut icon' type='image/png' href='../media/icon/nebula_favicon.png' />"
-			   "<link rel='stylesheet' type='text/css' href='../links/main.css' />"
+/*			   "<link rel='stylesheet' type='text/css' href='../links/main.css' />" */
 			   "<title>%s: " NAME "</title>"
 			   "<meta property='og:title' content='%s' />"
 			   "<meta property='og:type' content='website' />"
@@ -877,6 +888,9 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 		t->name,
 		t->bref,
 		t->filename);
+	fputs("<style>", f);
+	fpcss(f);
+	fputs("</style>", f);
 	fputs("</head>", f);
 	fputs("<body>", f);
 	fpnav(f, t);
