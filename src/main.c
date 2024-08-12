@@ -744,7 +744,11 @@ fpportal(FILE *f, Glossary *glo, Lexicon *lex, Term *t, int text, int img)
 {
 	int i;
 	char caption[256], imgpath[256];
+	if(img)
+		fprintf(f, "<div id='portal'><ul>");
 	for(i = 0; i < t->children_len; ++i) {
+		if(img)
+			fprintf(f, "<li>");
 		Term *tc = t->children[i];
 		if(tc->name == t->name)
 			continue;
@@ -764,7 +768,11 @@ fpportal(FILE *f, Glossary *glo, Lexicon *lex, Term *t, int text, int img)
 			fprintf(f, "<sub>%s</sub>", tc->bref);
 		if(text)
 			fpbodypart(f, glo, lex, tc);
+		if(img)
+			fprintf(f, "</li>")
 	}
+	if (img)
+		fprintf(f, "</ul></div>");
 }
 
 void

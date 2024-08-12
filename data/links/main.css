@@ -19,7 +19,6 @@ main h2 { margin-top:20px;text-transform:uppercase }
 main h3 { text-transform:capitalize }
 main sub { display:block;margin-bottom:1.2em;font-size:1em;font-style:italic;color:#666666 }
 main p { max-width:620px; }
-/* main a[target="_blank"] { background: url('../media/icon/arrow_up_right.svg') center right no-repeat;background-size:10px;padding:0 11px 3px 0 } */
 main a, footer a { text-decoration:underline } 
 main a:hover, nav a:hover, footer a:hover { background-color:#0a0a0a;color:#FDF6E3 } 
 main q { font-size:1.2em;font-style:italic;line-height:1.4em;;max-width:500px;display:block;margin:30px 0px 0px 10px; }
@@ -37,3 +36,7 @@ footer { padding:0 20px }
 footer img { width:1em;margin-bottom:-2px; }
 footer section > * { display:inline-block;margin-right:5px; }
 footer section img { width:30px;margin-bottom:-10px; }
+.portal > ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); grid-gap: 1rem; }
+.portal > ul > li { padding-left: 1em;border-left: 1px solid #E2E2E2; }
+.portal > ul > li > figure { max-height: 220px;position: relative; }
+.portal > ul > li > figure > img { max-width: 100%; }
