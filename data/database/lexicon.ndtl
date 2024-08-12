@@ -23,6 +23,16 @@ ARCADE
 
 		{^list human languages}
 
+PORTFOLIO
+	HOST : arcade
+	BREF : A list of my projects and accomplishments
+	TYPE : img_portal
+	BODY
+		I have made a fair number of projects, and I do a fair number of things!
+		For example, here are the languages I speak.
+
+		{^list human languages}
+
 HISTORY
 	HOST : arcade
 	BREF : Where I come from
@@ -140,7 +150,7 @@ DECEMBER SIXTH
 		I also added my new motto to the site! It's up and to the right :>
 
 ICBINF
-	HOST : programming
+	HOST : PORTFOLIO
 	BREF : I CAN'T BELIEVE ITS NOT FORTH
 	BODY
 		I CAN'T BELIEVE ITS NOT {FORTH}! is a forth-like stack-based language, with a web UI and a goal of being used to make little widgets everywhere.
@@ -149,11 +159,11 @@ ICBINF
 		Source : https://git.sr.ht/~arcade/ICBINF
 
 FUCC
-	HOST : programming
+	HOST : PORTFOLIO
 	BREF : An optimizing Brainfuck Compiler
 	BODY
 		This is an optimizing {brainfuck} compiler, writen in {ocaml}.
-		I use basic compiler techniques, like loop unwrapping and offloading the work to a C compiler
+		I use basic compiler techniques, like loop unwrapping and some simple peep-hole optimizations, as well as offloading the work to a C compiler ;)
 	LINKS
 		Source : https://git.sr.ht/~arcade/fucc
 
@@ -372,30 +382,24 @@ BRAINFUCK
 
 ; ----------- PROJECTS ---------
 
-PROJECTS
-	HOST : INDEX
-	BREF : Things I have built [WIP]
-	BODY
-		This is {stump a work in progress}
-
-SOFTWARE
-	HOST : projects
+Languages I know
+	HOST : PORTFOLIO
 	BREF : Software, squishy, squishy ware.
 	BODY
-		I write software primarily in {C89 C}, Golang, {Python}, and Javascript.
+		I write software primarily in {Rust}, {C89 C}, Golang, {Python}, and Javascript.
 		Writing software is something I love, because of how accessible it is. All you need is a keyboard, a screen, and a computing device; from a chromebook to a top of the line gaming PC. The vast majority of good programmming software is free and open source, which makes a great ecosystem for begineers.
 
 
 ; --------- Writing -----------
 
-WRITING
-	HOST : projects
-	BREF : Words on a screen
-	BODY
-		Wow! I have written words!
+; WRITING
+; 	HOST : projects
+; 	BREF : Words on a screen
+; 	BODY
+; 		Wow! I have written words!
 
 GOBLINS
-	HOST : writing
+	HOST : PORTFOLIO
 	BREF : Spritely's Goblins and How They're Gonna Steal The World
 	BODY
 		{^html goblins}
@@ -405,8 +409,8 @@ GOBLINS
 		Christine : https://dustycloud.org/
 
 ZOMBIE 
-	HOST : writing
-	BREF : Zombie Authors
+	HOST : PORTFOLIO
+	BREF : Zombie Authors Essay
 	BODY
 		So, for this whole thing to work, I'm gonna have to introduce you to Mr. Barthes.
 		Roland Barthes was 20th century french literary theorist, someone who talks about how books *work*.
