@@ -745,7 +745,7 @@ fpportal(FILE *f, Glossary *glo, Lexicon *lex, Term *t, int text, int img)
 	int i;
 	char caption[256], imgpath[256];
 	if(img)
-		fprintf(f, "<div id='portal'><ul>");
+		fprintf(f, "<div class='portal'><ul>");
 	for(i = 0; i < t->children_len; ++i) {
 		if(img)
 			fprintf(f, "<li>");
