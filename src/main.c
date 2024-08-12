@@ -391,6 +391,7 @@ fppict(FILE *f, char *filename, char *caption, int header, int link)
 	return 1;
 }
 
+/* Should inline your css */
 int
 fpcss(FILE *f)
 {
