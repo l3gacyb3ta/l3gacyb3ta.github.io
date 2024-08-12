@@ -7,7 +7,7 @@ nav ul { padding:5px;margin:0 5px 0 0;float:left;font-size:14px }
 nav ul li { list-style-type:none;white-space:pre } 
 nav ul li a:hover { background:#0a0a0a;color:#ffffff } 
 figure { margin:0;margin-bottom:10px }
-figure img { margin:0;display:block }
+figure img { margin:0;display:block;max-width:30%; }
 figcaption { font-style:italic;color:#666666 }
 header img { width:100%;max-width:100%; }
 header figcaption { font-size:0.9em;margin:6px 0px 0px 8px; }

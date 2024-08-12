@@ -377,9 +377,9 @@ fppict(FILE *f, char *filename, char *caption, int header, int link)
 		fprintf(f, "<video autoplay loop src='%s%s%s' type='video/mp4'></video>", path, name, ext);
 	else {
 		if(count > 1) {
-			fprintf(f, "<a href='%s%s%s'>", path, name, ext);
+			/* fprintf(f, "<a href='%s%s%s'>", path, name, ext); */
 			fprintf(f, "<img srcset='%s' sizes='(max-width: 480px) 240px, 680px' src='%s%s%s' alt='' loading='lazy'>", srcset, path, name, ext);
-			fputs("</a>", f);
+			/* fputs("</a>", f); */
 		} else
 			fprintf(f, "<img src='../media/%s' width='auto' alt='' loading='lazy'/>", filename);
 	}
