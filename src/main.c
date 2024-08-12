@@ -769,7 +769,7 @@ fpportal(FILE *f, Glossary *glo, Lexicon *lex, Term *t, int text, int img)
 		if(text)
 			fpbodypart(f, glo, lex, tc);
 		if(img)
-			fprintf(f, "</li>")
+			fprintf(f, "</li>");
 	}
 	if (img)
 		fprintf(f, "</ul></div>");
