@@ -396,6 +396,7 @@ int
 fpcss(FILE *f)
 {
 	FILE *fcss;
+	char c;
 	fcss = getfile("links/", "main", "css", "r");
 	if(!fcss)
 		return error("Can't find main.css", "links/main.css");
