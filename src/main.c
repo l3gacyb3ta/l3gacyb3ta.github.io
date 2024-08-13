@@ -9,7 +9,7 @@
 
 #define NAME "aethopica"
 #define PROPERNAME "Arcade Wise"
-#define YEAR "2023"
+#define YEAR "2024"
 #define OUTPUT_LOC "../out/"
 
 #ifdef LOCALRUN
@@ -252,7 +252,7 @@ fpRFC2822(FILE *f, time_t t, int time)
 		tm->tm_mday,
 		months[tm->tm_mon],
 		tm->tm_year + 1900,
-		time ? " 00:00:00 +0100" : "");
+		time ? " 00:00:00 -0600" : "");
 }
 
 #pragma mark - Fprint
@@ -745,7 +745,7 @@ fpportal(FILE *f, Glossary *glo, Lexicon *lex, Term *t, int text, int img)
 	int i;
 	char caption[256], imgpath[256];
 	if(img)
-		fprintf(f, "<div class='portal'><ul>");
+		fprintf(f, "<div class=\"portal\"><ul>");
 	for(i = 0; i < t->children_len; ++i) {
 		if(img)
 			fprintf(f, "<li>");
