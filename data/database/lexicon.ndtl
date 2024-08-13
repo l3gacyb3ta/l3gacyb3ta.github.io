@@ -167,8 +167,17 @@ FUCC
 	LINKS
 		Source : https://git.sr.ht/~arcade/fucc
 
+FOLK
+	HOST : PORTFOLIO
+	BREF : Projected AR as a more human computer
+	BODY
+		Folk is a system for making computing more human. Currently written in a little language called {https://www.tcl.tk/about/language.html Tcl}, which has very powerful string processing routines.
+	LINKS
+		Best intro so far : https://folk.computer/notes/tableshots
+		Website : https://folk.computer/start
+
 SUPER16
-	HOST : programming
+	HOST : PORTFOLIO
 	BREF : A small, broken, ISA
 	BODY
 		I am pretty sure that this isn't turing complete.
@@ -225,11 +234,13 @@ SUPER16
 		Source : https://github.com/l3gacyb3ta/super16
 
 CORGI
-	HOST : programming
+	HOST : PORTFOLIO
 	BREF : A CLI for doggo.ninja
 	BODY
 		This is a CLI for my friend {https://kognise.dev/ Kognise's} service {https://doggo.ninja}.
 		It is written in {Python}.
+	LINKS
+		Source : https://github.com/l3gacyb3ta/corgi
 
 PLT
 	HOST : programming
