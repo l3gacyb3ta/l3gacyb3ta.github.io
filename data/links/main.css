@@ -1,6 +1,6 @@
 
 * { box-sizing:border-box;text-decoration:none;color:#000 }
-body { font-size:16px;font-family:sans-serif;margin:0;padding:0;color:#0a0a0a;background-color:#ffffff;width:960px;max-width:100% }
+body { font-size:16px;font-family:sans-serif;margin:0;padding:0;color:#0a0a0a;background-color:#ffffff;width:calc(100vw/3);max-width:100% }
 nav { width:100%;padding:20px;display:inline-block;font-family: monospace; } 
 nav img { float:left;margin-right:20px; }
 nav ul { padding:5px;margin:0 5px 0 0;float:left;font-size:14px } 
@@ -11,8 +11,7 @@ figure img { margin:0;display:block;max-width:30%; }
 figcaption { font-style:italic;color:#666666 }
 header img { width:100%;max-width:100%; }
 header figcaption { font-size:0.9em;margin:6px 0px 0px 8px; }
-main { margin-bottom:30px;padding:0 20px;max-width:720px;clear:both }
-main { line-height:1.5em; }
+main { margin-bottom:30px;padding:0 20px;max-width:75%;clear:both;margin-left:auto;margin-right:auto;line-height:1.5em; }
 main h1, main h2, main h3, main h4 { line-height:1.2em;margin-bottom:0.1em }
 main h1 { font-weight:normal }
 main h2 { margin-top:20px;text-transform:uppercase }
