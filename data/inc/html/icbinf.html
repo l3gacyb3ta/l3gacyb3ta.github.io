@@ -1,6 +1,11 @@
 <p>Currently, it isn&#39;t well documented, but look at all the <code>builtin.ts</code> files to see the avaliable
     builtin functions.</p>
-<h2 id="demo"><a href="https://arcades.agency/ICBINF/?loadfile=https://doggo.ninja/VoPUzO.icbinf">Demo</a></h2>
+
+<a href="https://arcades.agency/ICBINF/"><button
+        style="border-radius:0.5rem;padding:0.5rem;border:1px solid lightgray; background-color: black; color:white">
+        <h2>Demo!</h2>
+    </button></a>
+
 <h2 id="examples">Examples</h2>
 <h3 id="loop">Loop</h3>
 <pre><code>( start stop )
@@ -23,4 +28,41 @@ loop
 
 &quot;Hello &quot; #name #get kv  ( &quot;Hello &quot; &quot;Arcade&quot; )
 concat .
+</code></pre>
+
+<h3>A full-blown color picker!</h3>
+<pre><code>
+: red! ( n - ) #red #set kv ; : red@ ( - n ) #red #get kv ; 
+( creates two functions, one to set the red value in the KV, and one to read it, using traditional forth syntax )
+: green! ( n - ) #green #set kv ; : green@ ( - n ) #green #get kv ; ( the same for green )
+: blue! ( n - ) #blue #set kv ; : blue@ ( - n ) #blue #get kv ; ( and for blue )
+: rgb! ( r g b - ) blue! green! red! ; : rgb@ ( - r g b ) red@ green@ blue@ ; ( this sets them and reads them all )
+: redSlider! red! renderSquare ; : greenSlider! green! renderSquare ; : blueSlider! blue! renderSquare ;
+( the slider functions will recieve a value from the ICBINF runtime, 
+and then store that value, and render the square again )
+
+
+Square #square id ( create the square )
+Slider #redSlider id ( create the red slider )
+Slider #greenSlider id ( create the green slider )
+Slider #blueSlider id ( create the blue slider )
+4 VStack ( Stack all of the elements vertically )
+render ( render the elements to the DOM )
+
+: renderSquare ( - )
+    "rgb(" red@ 255 * round concat "," concat ( css_ - )
+            blue@ 255 * round concat "," concat ( css_ - )
+            green@ 255 * round concat ")" concat ( css_done - )
+    #background-color swap ( #background-color css_done - )
+    #square #set-style ui ;
+( this word generates the correct css code, and applies it to the square )
+
+
+0 red! 0 green! 0 blue! renderSquare ( initially it's black )
+
+
+#blueSlider! #blueSlider #attach ui
+#redSlider! #redSlider #attach ui
+#greenSlider! #greenSlider #attach ui
+( this attaches the slider controller words to their UI elements )
 </code></pre>
