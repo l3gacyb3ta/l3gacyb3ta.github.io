@@ -38,3 +38,4 @@ footer section img { width:30px;margin-bottom:-10px; }
 .portal > ul { display:grid;grid-template-columns:repeat(auto-fit,minmax(calc(720px/2.5),1fr));grid-gap:1rem;list-style-type:none;width:calc(100vw/2); }
 .portal > ul > li { padding-left:1em;border-left: 1px solid #E2E2E2; }
 .portal > ul > li > figure > img { max-width:100%; }
+.portal > ul > li > figure > figcaption { float:bottom; }
