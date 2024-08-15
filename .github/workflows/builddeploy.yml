@@ -38,12 +38,12 @@ jobs:
       run: ./batchVariants.sh
     - name: cache media
       if: steps.cache-media-restore.outputs.cache-hit != 'true'
-      id: cache-primes-save
+      id: cache-media-save
       uses: actions/cache/save@v4
       with:
         path: |
           data/media/*
-        key: ${{ steps.cache-media-restore.outputs.cache-primary-key }}
+        key: media-cache-${{ hashFiles('data/original_media/*') }}
     - name: create folders
       run: mkdir bin out out/links out/media
     - name: copy data
