@@ -10,7 +10,7 @@ figure img { margin:0;display:block;max-width:30%; }
 figcaption { font-style:italic;color:#666666 }
 header img { width:100%;max-width:100%; }
 header figcaption { font-size:0.9em;margin:6px 0px 0px 8px; }
-main { margin-bottom:30px;padding:0 20px;max-width:minmax(75%,720px);clear:both;margin-left:auto;margin-right:auto;line-height:1.5em; }
+main { margin-bottom:30px;padding:0 20px;max-width:800px;clear:both;margin-left:auto;margin-right:auto;line-height:1.5em; }
 main h1, main h2, main h3, main h4 { line-height:1.2em;margin-bottom:0.1em }
 main h1 { font-weight:normal }
 main h2 { margin-top:20px;text-transform:uppercase }
@@ -35,7 +35,8 @@ footer hr { width:calc(100vw*0.90); }
 footer img { width:1em;margin-bottom:-2px; }
 footer section > * { display:inline-block;margin-right:5px; }
 footer section img { width:30px;margin-bottom:-10px; }
-.portal > ul { display:grid;grid-template-columns:repeat(auto-fit,minmax(calc(720px/2.5),1fr));grid-gap:1rem;list-style-type:none;width:calc(100vw/2); }
+.portal > ul { display:grid;grid-template-columns:repeat(auto-fit,minmax(calc(720px/2),1fr));grid-gap:1rem;list-style-type:none;width:calc(100vw/2); }
 .portal > ul > li { padding-left:1em;border-left: 1px solid #E2E2E2; }
 .portal > ul > li > figure { display:flex;flex-direction:column;justify-content:space-between;height:80%; }
 .portal > ul > li > figure > img { max-width:100%; }
+@media only screen and (max-width:600px) { .portal>ul { padding:0;width:100%; } }
