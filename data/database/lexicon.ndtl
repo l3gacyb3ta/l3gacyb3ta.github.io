@@ -29,9 +29,8 @@ PORTFOLIO
 	TYPE : img_portal
 	BODY
 		I have made a fair number of projects, and I do a fair number of things!
-		For example, here are the languages I speak.
-
-		{^list human languages}
+		If you want to reach out, here's my info card! (It's h-card compliant :3)
+		{^html hcard}
 
 HISTORY
 	HOST : arcade
