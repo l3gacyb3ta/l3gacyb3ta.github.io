@@ -60,8 +60,22 @@ HISTORY
 		| Deutsch-Französische Grundschule Stuttgart-Sillenbuch | Aug, 2016 |
 		| Wagenburg Gymnasium | Aug, 2018 |
 		| Crabapple Middle School | Aug, 2021 |
-		| Innovation Academy | < Current > |
+		| {School Innovation Academy} | < Current > |
 
+SCHOOL
+	HOST : HISTORY
+	BREF : Education
+	BODY
+		School is a place I go, currently! I don't think it's the best, but it works well enough for most people.
+
+PGAS
+	HOST : SCHOOL
+	BREF : Programming, Games, Apps, and Society
+	BODY
+		So far, one of my favorite classes in school. It's focused on how programming and society interact, and how the industry works. 
+
+		Here are a few of the projects I've made in the class:
+		* {GREAT SUBTERRANIAN REALMS A Zork-like, Myst-inspired point-and-click game proof of concept}
 
 META
 	HOST : about
@@ -179,8 +193,8 @@ GREAT SUBTERRANIAN REALMS
 	HOST : PORTFOLIO
 	BREF : A 3D Zork-like game
 	BODY
-		For {TODO Programming, Games, Apps, and Society} I have to make quite a few projects. This is my first!
-		I have always loved the game {Zork https://en.wikipedia.org/wiki/Zork}. It's a surprisingly competent and expansive text-based adventure game that reacts to a very wide array of commands and subtle interactions.
+		For {PGAS Programming, Games, Apps, and Society} I have to make quite a few projects. This is my first!
+		I have always loved the game {https://en.wikipedia.org/wiki/Zork Zork}. It's a surprisingly competent and expansive text-based adventure game that reacts to a very wide array of commands and subtle interactions.
 
 		# Inspiration
 		I was inspired aesthetically by the classic point and click game {https://en.wikipedia.org/wiki/Myst Myst}, which was made up of pre-rendered scenes in a {https://en.wikipedia.org/wiki/HyperCard HyperCard} game. However, computers now can render Myst-like graphics in real-time!
