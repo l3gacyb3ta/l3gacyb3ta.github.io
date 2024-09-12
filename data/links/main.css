@@ -40,3 +40,14 @@ footer section img { width:30px;margin-bottom:-10px; }
 .portal > ul > li > figure { display:flex;flex-direction:column;justify-content:space-between;height:80%; }
 .portal > ul > li > figure > img { max-width:100%; }
 @media only screen and (max-width:600px) { .portal>ul { padding:0;width:100%; } }
+@media (min-width:2500px),(min-resolution: 192dpi) { body {width:640px;}}
+@media (prefers-color-scheme:dark) {
+  * { color:#EEE }
+	body { background:#171717 }
+	body a:hover, main a:hover > * { background-color:#171717;color:#EEE;text-decoration:none }
+	img[src*="svg"], img[src*="jpg"] { background:white;filter:invert(1) hue-rotate(180deg) }
+	main sub, figcaption{ color:#bbb }
+	main pre, main article  { background:black }
+	main code { border:1px solid white;border-radius:4px;background-color:black }
+	main table { border-style:solid }
+}

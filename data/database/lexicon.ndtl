@@ -179,10 +179,21 @@ GREAT SUBTERRANIAN REALMS
 	HOST : PORTFOLIO
 	BREF : A 3D Zork-like game
 	BODY
-		TODO add more info about how the games work
+		For {TODO Programming, Games, Apps, and Society} I have to make quite a few projects. This is my first!
+		I have always loved the game {Zork https://en.wikipedia.org/wiki/Zork}. It's a surprisingly competent and expansive text-based adventure game that reacts to a very wide array of commands and subtle interactions.
+
+		# Inspiration
+		I was inspired aesthetically by the classic point and click game {https://en.wikipedia.org/wiki/Myst Myst}, which was made up of pre-rendered scenes in a {https://en.wikipedia.org/wiki/HyperCard HyperCard} game. However, computers now can render Myst-like graphics in real-time!
+		Interactivity-wise, I was inspired by Source Engine games like {https://www.stanleyparable.com/ The Stanley Parable} and {https://en.wikipedia.org/wiki/Superliminal Superliminal}, with their minimal UI and primarily click-based puzzles.
+
+		# Issues in adaptation
+		Primarily, there's so much of it! The game is just huge, and has a ton of really cool environments and characters to interact with. Plus, being text and verb based, it can do a lot more with a lot less than a 3D point and click game would be able to do with its core mechanics.
+		Secondarily, the game doesn't occupy Euclidean space? If you try and map out the actual spaces you can visit in the original game, you'll end up with something that cannot be represented as just a grid of squares that have a North, South, East, and West, it's more of a network of interconnected spaces, almost reminiscent of the psychogeography of the {PHILIOSOPHY Situationists}.
+		Third, I'm not great at modelling yet :)
+		Finally, I only had a couple weeks to work on this during school hours, so there isn't much content, sadly.
 	LINKS
 		Source : https://github.com/l3gacyb3ta/GreatSubterranianRealms
-		Windows Build! : https://doggo.ninja/CsoDKD.exe
+		Windows Build (350Mb, watch out) : https://doggo.ninja/CsoDKD.exe
 
 SUPER16
 	HOST : PORTFOLIO
