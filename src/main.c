@@ -316,6 +316,7 @@ fpopengraphpic(FILE *f, char *filename, char *caption)
 {
 	char path[64], name[64], ext[16], final[256], buf[256];
 	int split, i, count = 0, isVideo = 0;
+	FILE *img;
 
 	scpy(filename, name, slen(filename) + 1);
 	split = scin(name, '/');
@@ -340,11 +341,20 @@ fpopengraphpic(FILE *f, char *filename, char *caption)
 		return 1;
 
 	final[0] = '\0';
-	scat(final, "/media/");
+	scat(final, "media/");
 	scat(final, name);
 	scat(final, "-900.png");
 
-	fprintf(f, "<meta property='og:image' content='%s' />", final);
+	img = getfile(path, name, ext, "r");
+	if (img) {
+		fprintf(f, "<meta property='og:image' content='https://arcades.agency/media/%s' />", final);
+		fprintf(f, "<meta property='og:image:alt' content='%s' />", caption);
+		fprintf(f, "<meta property='og:image:type' content='image/png' />");
+	} else {
+		fprintf(f, "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />");
+		fprintf(f, "<meta property='og:image:alt' content='The " NAME " favicon' />");
+		fprintf(f, "<meta property='og:image:type' content='image/png' />");
+	}
 	return 1;
 }
 
@@ -929,14 +939,11 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			   "<meta property='og:description' content='%s' />"
 			   "<meta property='og:site_name' content='" NAME "' />"
 			   "<meta property='og:url' content='https://arcades.agency/%s.html' />"
-			//    "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />",
 			   "<meta property='og:locale' content='en_US' />",
 		t->bref,
 		t->name,
 		t->name,
-		t->bref,
-		t->filename);
-	imgpath[0] = '\0';
+		t->bref, 
 	scat(imgpath, "headers/");
 	scat(imgpath, t->filename);
 	fpopengraphpic(f, imgpath, t->bref);
