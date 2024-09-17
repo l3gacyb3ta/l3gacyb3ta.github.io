@@ -947,7 +947,7 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 		t->filename );
 	scat(imgpath, "headers/");
 	scat(imgpath, t->filename);
-	fpopengraphpic(f, imgpath, t->bref);
+	/* fpopengraphpic(f, imgpath, t->bref); */
 	fputs("<style>", f);
 	fpcss(f);
 	fputs("</style>", f);
