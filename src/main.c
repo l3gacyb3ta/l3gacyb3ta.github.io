@@ -943,7 +943,8 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 		t->bref,
 		t->name,
 		t->name,
-		t->bref )
+		t->bref,
+		t->filename );
 	scat(imgpath, "headers/");
 	scat(imgpath, t->filename);
 	fpopengraphpic(f, imgpath, t->bref);
