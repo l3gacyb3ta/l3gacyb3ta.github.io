@@ -336,15 +336,12 @@ fpopengraphpic(FILE *f, char *filename, char *caption)
 		ext[0] = '\0';
 		scat(ext, ".jpg");
 	}
-
 	if(scmp(ext, ".mp4"))
 		return 1;
-
 	final[0] = '\0';
-	scat(final, "media/");
+	scat(final, "headers/");
 	scat(final, name);
 	scat(final, "-900.png");
-
 	img = getfile(path, name, ext, "r");
 	if (img) {
 		fprintf(f, "<meta property='og:image' content='https://arcades.agency/media/%s' />", final);
@@ -352,7 +349,7 @@ fpopengraphpic(FILE *f, char *filename, char *caption)
 		fprintf(f, "<meta property='og:image:type' content='image/png' />");
 	} else {
 		fprintf(f, "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />");
-		fprintf(f, "<meta property='og:image:alt' content='The " NAME " favicon' />");
+		fprintf(f, "<meta property='og:image:alt' content='the " NAME " favicon' />");
 		fprintf(f, "<meta property='og:image:type' content='image/png' />");
 	}
 	return 1;
@@ -428,7 +425,7 @@ fppict(FILE *f, char *filename, char *caption, int header, int link)
 			fprintf(f, "<img srcset='%s' sizes='(max-width: 480px) 240px, 680px' src='%s%s%s' alt='' loading='lazy'>", srcset, path, name, ext);
 			/* fputs("</a>", f); */
 		} else
-			fprintf(f, "<img src='../media/%s' width='auto' alt='' loading='lazy'/>", filename);
+			fprintf(f, "<img src='/media/%s' width='auto' alt='' loading='lazy'/>", filename);
 	}
 	if(caption)
 		fprintf(f, "<figcaption>%s</figcaption>", caption);
@@ -849,7 +846,7 @@ fpnav(FILE *f, Term *t)
 	if(!t->parent->parent)
 		error("Missing parent", t->parent->name);
 	fputs("<nav>", f);
-	fputs("<a href='index.html'><img alt='site logo' src='../media/icon/nebula_favicon.png' alt='" NAME "' height='100' /></a> <a href='https://video.liberta.vip/w/3x126HTsBuQctbHnWw6o9e' style='float:right;'>the softest paw <span style='color:red;'>can be a claw</span></a>", f);
+	fputs("<a href='index.html'><img alt='site logo' src='/media/icon/nebula_favicon.png' alt='" NAME "' height='100' /></a> <a href='https://video.liberta.vip/w/3x126HTsBuQctbHnWw6o9e' style='float:right;'>the softest paw <span style='color:red;'>can be a claw</span></a>", f);
 	if(t->parent->parent->name == t->parent->name)
 		fpnavsub(f, t->parent->parent, t);
 	else
@@ -1000,19 +997,26 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			   "<meta name='description' content='%s' />"
 			   "<meta name='author' content='" PROPERNAME "' />"
 			   "<meta name='viewport' content='width=device-width, initial-scale=1' />"
-			   "<link rel='shortcut icon' type='image/png' href='../media/icon/nebula_favicon.png' />"
+			   "<link rel='shortcut icon' type='image/png' href='/media/icon/nebula_favicon.png' />"
 			   "<title>%s: " NAME "</title>"
 			   "<meta property='og:title' content='%s' />"
 			   "<meta property='og:type' content='website' />"
 			   "<meta property='og:description' content='%s' />"
 			   "<meta property='og:site_name' content='" NAME "' />"
-			   "<meta property='og:url' content='https://arcades.agency/%s.html' />"
-			   "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />",
+			   "<meta property='og:url' content='https://arcades.agency/%s.html' />",
 		t->bref,
 		t->name,
 		t->name,
 		t->bref,
 		t->filename);
+	
+	imgpath[0] = '\0';
+	scat(imgpath, "headers/");
+	scat(imgpath, t->filename);
+	if (t->caption)
+		fpopengraphpic(f, imgpath, t->caption);
+	else
+		fpopengraphpic(f, imgpath, t->bref);
 	fputs("<style>", f);
 	fpcss(f);
 	fputs("</style>", f);
