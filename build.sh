@@ -2,19 +2,15 @@
 
 set -e
 
-rm -f bin/aethopica
-rm -rf out
-mkdir out
-mkdir out/links out/media 
+./batchVariants.sh
 
-cp -r data/links/* out/links
-cp -r data/media/* out/media
+rm -rf bin out out/links out/media
+mkdir bin out out/links out/media
 
+cp -r data/media/* out/media && cp -r data/links/* out/links
 
 cc src/main.c -g -O0 -std=c89 -Wall -Wno-unknown-pragmas -o bin/aethopica 
 
-cd data
-
-../bin/aethopica
+cd data && ../bin/aethopica
 
 # rm -f ./bin/aethopica
