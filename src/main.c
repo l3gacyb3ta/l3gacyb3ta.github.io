@@ -929,7 +929,7 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			   "<meta property='og:description' content='%s' />"
 			   "<meta property='og:site_name' content='" NAME "' />"
 			   "<meta property='og:url' content='https://arcades.agency/%s.html' />"
-			   "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />",
+			//    "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />",
 			   "<meta property='og:locale' content='en_US' />",
 		t->bref,
 		t->name,
