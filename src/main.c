@@ -312,6 +312,42 @@ fplist(FILE *f, Glossary *glo, char *target)
 }
 
 int
+fpopengraphpic(FILE *f, char *filename, char *caption)
+{
+	char path[64], name[64], ext[16], final[256];
+
+	scpy(filename, name, slen(filename) + 1);
+	split = scin(name, '/');
+	path[0] = '\0';
+	buf[0] = '\0';
+	scat(path,  "media/");
+	while(split != -1) {
+		scat(path, sstr(name, buf, 0, split + 1));
+		sstr(name, name, split + 1, slen(name) - split);
+		split = scin(name, '/');
+	}
+	split = scin(name, '.');
+	if(split > 0) {
+		sstr(name, ext, split, slen(name) - split);
+		sstr(name, name, 0, split);
+	} else {
+		ext[0] = '\0';
+		scat(ext, ".jpg");
+	}
+
+	if(scmp(ext, ".mp4"))
+		return 1;
+
+	final[0] = '\0';
+	scat(final, "/media/");
+	scat(final, name);
+	scat(final, "-900.png");
+
+	fprintf(f, "<meta property='og:image' content='%s' />", final);
+	return 1;
+}
+
+int
 fppict(FILE *f, char *filename, char *caption, int header, int link)
 {
 	FILE *img;
@@ -381,7 +417,7 @@ fppict(FILE *f, char *filename, char *caption, int header, int link)
 			fprintf(f, "<img srcset='%s' sizes='(max-width: 480px) 240px, 680px' src='%s%s%s' alt='' loading='lazy'>", srcset, path, name, ext);
 			/* fputs("</a>", f); */
 		} else
-			fprintf(f, "<img src='../media/%s' width='auto' alt='' loading='lazy'/>", filename);
+			fprintf(f, "<img src='/media/%s' width='auto' alt='' loading='lazy'/>", filename);
 	}
 	if(caption)
 		fprintf(f, "<figcaption>%s</figcaption>", caption);
@@ -881,24 +917,28 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 	time(&now);
 	fputs("<!DOCTYPE html><html lang='en'>", f);
 	fputs("<head>", f);
-	fprintf(f, "<meta charset='utf-8'>"
+	fprintf(f, "<meta charset='utf-8' />"
 			   "<meta name='description' content='%s' />"
 			   "<meta name='author' content='" PROPERNAME "' />"
 			   "<meta name='viewport' content='width=device-width, initial-scale=1' />"
 			   "<link rel='shortcut icon' type='image/png' href='../media/icon/nebula_favicon.png' />"
-/*			   "<link rel='stylesheet' type='text/css' href='../links/main.css' />" */
 			   "<title>%s: " NAME "</title>"
 			   "<meta property='og:title' content='%s' />"
 			   "<meta property='og:type' content='website' />"
 			   "<meta property='og:description' content='%s' />"
-			   "<meta property='og:site_name' content='nebula' />"
-			   "<meta property='og:url' content='https://arcades.agency/site/%s.html' />"
+			   "<meta property='og:site_name' content='" NAME "' />"
+			   "<meta property='og:url' content='https://arcades.agency/%s.html' />"
 			   "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />",
+			   "<meta property='og:locale' content='en_US' />"
 		t->bref,
 		t->name,
 		t->name,
 		t->bref,
 		t->filename);
+	imgpath[0] = '\0';
+	scat(imgpath, "headers/");
+	scat(imgpath, t->filename);
+	fpopengraphpic(f, imgpath, t->bref);
 	fputs("<style>", f);
 	fpcss(f);
 	fputs("</style>", f);
@@ -914,9 +954,6 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 		scat(sub, t->date);
 	else if(t->caption)
 		scat(sub, t->caption);
-	imgpath[0] = '\0';
-	scat(imgpath, "headers/");
-	scat(imgpath, t->filename);
 	fppict(f, imgpath, sub, 1, 0);
 	fputs("<main>", f);
 	fpbody(f, glo, lex, t);
