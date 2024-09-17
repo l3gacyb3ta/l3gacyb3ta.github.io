@@ -428,7 +428,7 @@ fppict(FILE *f, char *filename, char *caption, int header, int link)
 			fprintf(f, "<img srcset='%s' sizes='(max-width: 480px) 240px, 680px' src='%s%s%s' alt='' loading='lazy'>", srcset, path, name, ext);
 			/* fputs("</a>", f); */
 		} else
-			fprintf(f, "<img src='/media/%s' width='auto' alt='' loading='lazy'/>", filename);
+			fprintf(f, "<img src='../media/%s' width='auto' alt='' loading='lazy'/>", filename);
 	}
 	if(caption)
 		fprintf(f, "<figcaption>%s</figcaption>", caption);
@@ -923,7 +923,7 @@ fpreference(FILE *f, Lexicon *lex)
 void
 fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 {
-	char sub[256], imgpath[256];
+	/* char sub[256], imgpath[256];
 	time_t now;
 	time(&now);
 	fputs("<!DOCTYPE html><html lang='en'>", f);
@@ -945,9 +945,74 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 		t->name,
 		t->bref,
 		t->filename );
+	//fpopengraphpic(f, imgpath, t->bref);
+
+	fputs("</head>", f);
+	fputs("<body>", f);
+	fpnav(f, t);
+	sub[0] = '\0';
+	if(t->date && t->caption) {
+		scat(sub, t->date);
+		scat(sub, " | ");
+		scat(sub, t->caption);
+	} else if(t->date)
+		scat(sub, t->date);
+	else if(t->caption)
+		scat(sub, t->caption);
 	scat(imgpath, "headers/");
 	scat(imgpath, t->filename);
-	/* fpopengraphpic(f, imgpath, t->bref); */
+	fppict(f, imgpath, sub, 1, 0);
+	fputs("<main>", f);
+	fpbody(f, glo, lex, t);
+	if(t->type) {
+		if(scmp(t->type, "text_portal"))
+			fpportal(f, glo, lex, t, 1, 0);
+		if(scmp(t->type, "img_portal"))
+			fpportal(f, glo, lex, t, 0, 1);
+		if(scmp(t->type, "full_portal"))
+			fpportal(f, glo, lex, t, 1, 1);
+	} else
+		fpportal(f, glo, lex, t, 0, 0);
+	if(scmp(t->name, "reference"))
+		fpreference(f, lex);
+	fplinks(f, t);
+	fpincoming(f, t);
+	fputs("</main>", f);
+	fputs("<footer>", f);
+	fprintf(f, "<img alt='back to top' src='../media/icon/arrow_up.svg' /> <a href='#'>Back to top</a> | last edit: <em>%s</em>", ctime(&now));
+	fputs("<hr />", f);
+	fputs("<section>", f);
+	fputs("<a href='https://creativecommons.org/licenses/by-nc-sa/4.0'><img alt='creative commons' src='../media/icon/cc.svg' /></a>", f);
+	fputs("<a href='http://webring.xxiivv.com/#arcade'><img alt='merveilles rotunde logo' src='../media/icon/rotonde.svg' /></a>", f);
+	fputs("<a href='https://lieu.cblgh.org/'><img alt='lieu logo' src='../media/icon/lieu.svg' /></a>", f);
+	fputs("<p>" PROPERNAME " &copy; " YEAR " <a href='license.html'>CC-BY-NC-SA 4.0</a></p>", f);
+	fputs("</section>", f);
+	fputs("</footer>", f);
+	fputs("</body></html>", f);
+	fclose(f); */
+
+	char sub[256], imgpath[256];
+	time_t now;
+	time(&now);
+	fputs("<!DOCTYPE html><html lang='en'>", f);
+	fputs("<head>", f);
+	fprintf(f, "<meta charset='utf-8'>"
+			   "<meta name='description' content='%s' />"
+			   "<meta name='author' content='" PROPERNAME "' />"
+			   "<meta name='viewport' content='width=device-width, initial-scale=1' />"
+			   "<link rel='shortcut icon' type='image/png' href='../media/icon/nebula_favicon.png' />"
+			   "<title>%s: " NAME "</title>"
+			   "<meta property='og:title' content='%s' />"
+			   "<meta property='og:type' content='website' />"
+			   "<meta property='og:description' content='%s' />"
+			   "<meta property='og:site_name' content='" NAME "' />"
+			   "<meta property='og:url' content='https://arcades.agency/%s.html' />"
+			   "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />",
+		t->bref,
+		t->name,
+		t->name,
+		t->bref,
+		t->filename);
 	fputs("<style>", f);
 	fpcss(f);
 	fputs("</style>", f);
@@ -963,6 +1028,9 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 		scat(sub, t->date);
 	else if(t->caption)
 		scat(sub, t->caption);
+	imgpath[0] = '\0';
+	scat(imgpath, "headers/");
+	scat(imgpath, t->filename);
 	fppict(f, imgpath, sub, 1, 0);
 	fputs("<main>", f);
 	fpbody(f, glo, lex, t);
