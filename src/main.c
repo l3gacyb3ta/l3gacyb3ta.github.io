@@ -314,7 +314,7 @@ fplist(FILE *f, Glossary *glo, char *target)
 int
 fpopengraphpic(FILE *f, char *filename, char *caption)
 {
-	char path[64], name[64], ext[16], final[256];
+	char path[64], name[64], ext[16], final[256], buf[256];
 	int split, i, count = 0, isVideo = 0;
 
 	scpy(filename, name, slen(filename) + 1);
