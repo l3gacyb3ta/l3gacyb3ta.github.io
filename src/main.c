@@ -315,7 +315,7 @@ int
 fpopengraphpic(FILE *f, char *filename, char *caption)
 {
 	char path[64], name[64], ext[16], final[256], buf[256];
-	int split, i, count = 0, isVideo = 0;
+	int split;
 	FILE *img;
 
 	scpy(filename, name, slen(filename) + 1);
@@ -1147,11 +1147,12 @@ build(Glossary *glo, Lexicon *lex)
 	FILE *f;
 	int i;
 	printf("Building | ");
-	printf("%d pages ", lex->len);
+	printf("%d pages \n", lex->len);
 	for(i = 0; i < lex->len; ++i) {
 		f = getfile(OUTPUT_LOC, lex->terms[i].filename, ".html", "w");
 		if(!f)
 			return error("Could not open file", lex->terms[i].name);
+		printf("Building %s\r\033[K", (lex->terms[i]).filename);
 		fphtml(f, glo, lex, &lex->terms[i]);
 	}
 	return 1;
