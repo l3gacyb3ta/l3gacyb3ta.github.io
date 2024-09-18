@@ -4,8 +4,11 @@ INDEX
 	HOST : INDEX
 	BREF : Main portal.
 	BODY
-		Welcome to aethopica! This is {arcade my} Memex, the extension of {NEURODIVERGENCE my mind}. 
+		Welcome to aethopica! This is {arcade my (Arcade Wise)} Memex, a way to discover the {portfolio stuff I've done}!
 		Here's my {https://arcades.agency/media/Arcade.pdf Resumé}!
+
+		And if you want my contact info:
+		{^html hcard}
 
 		{^html george}
 
