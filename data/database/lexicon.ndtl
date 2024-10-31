@@ -215,12 +215,17 @@ GREAT SUBTERRANIAN REALMS
 BAD CHESS
 	HOST : PORTFOLIO
 	BREF : A chess model made to be bad at chess
+	TYPE : math
 	BODY
 		Another {PGAS Programming, Games, Apps, and Society} project! This one was a team project, with {https://sites.google.com/view/dlagoportfolio/about Daniel Lago} and Ricardo, please check them out :). 
 
 		# Inspiration
 		When we were brainstorming what we wanted to do for the project, I brought up a chess bot, specifically because I had just watched the Tom7 {https://www.youtube.com/watch?v=DpXy041BIlA 30 Chess Engines} video, which is awesome. Ricardo then suggested that we should make the bot as bad as possible, and that's where we began!
 
+		# Overview
+		The main principle behind the actual "AI" part of this project is that there's a model that takes in a custom $$x = 2 * 2$$
+
+		# Demo
 		{^img videos/chess.mp4}
 
 	LINKS

@@ -1047,6 +1047,8 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			fpportal(f, glo, lex, t, 0, 1);
 		if(scmp(t->type, "full_portal"))
 			fpportal(f, glo, lex, t, 1, 1);
+		if(scmp(t->type, "math"))
+			fputs("<script defer src='https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js' integrity='sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk' crossorigin='anonymous' onload='renderMathInElement(document.body);'></script>")
 	} else
 		fpportal(f, glo, lex, t, 0, 0);
 	if(scmp(t->name, "reference"))

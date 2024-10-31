@@ -30,6 +30,7 @@ main pre table { margin:0 }
 main pre table tr td:first-child { font-weight:bold }
 main code { padding:4px; }
 main article { white-space:pre-wrap;background-color:white;padding:16px }
+main video { width:75% }
 footer { padding:0 20px }
 footer hr { width:calc(100vw*0.90); }
 footer img { width:1em;margin-bottom:-2px; }
