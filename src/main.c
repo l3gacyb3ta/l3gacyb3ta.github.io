@@ -383,6 +383,8 @@ fppict(FILE *f, char *filename, char *caption, int header, int link)
 	}
 	if(scmp(ext, ".mp4"))
 		isVideo = 1;
+	if(scmp(ext, ".mkv"))
+		isVideo = 1;
 	img = getfile(path, name, ext, "r");
 	if(!img) {
 		if(!header && link)
