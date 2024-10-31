@@ -1022,6 +1022,11 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 	fputs("<style>", f);
 	fpcss(f);
 	fputs("</style>", f);
+	if(t->type && scmp(t->type, "math")) {
+		fputs("<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css' integrity='sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+' crossorigin='anonymous'>", f);
+		fputs("<script defer src='https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js' integrity='sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg' crossorigin='anonymous'></script>", f);
+		fputs("<script defer src='https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js' integrity='sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk' crossorigin='anonymous' onload='renderMathInElement(document.body);'></script>", f);
+	}
 	fputs("</head>", f);
 	fputs("<body>", f);
 	fpnav(f, t);
@@ -1047,8 +1052,6 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			fpportal(f, glo, lex, t, 0, 1);
 		if(scmp(t->type, "full_portal"))
 			fpportal(f, glo, lex, t, 1, 1);
-		if(scmp(t->type, "math"))
-			fputs("<script defer src='https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js' integrity='sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk' crossorigin='anonymous' onload='renderMathInElement(document.body);'></script>", f);
 	} else
 		fpportal(f, glo, lex, t, 0, 0);
 	if(scmp(t->name, "reference"))
