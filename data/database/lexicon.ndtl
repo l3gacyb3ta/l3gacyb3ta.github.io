@@ -223,7 +223,7 @@ BAD CHESS
 		When we were brainstorming what we wanted to do for the project, I brought up a chess bot, specifically because I had just watched the Tom7 {https://www.youtube.com/watch?v=DpXy041BIlA 30 Chess Engines} video, which is awesome. Ricardo then suggested that we should make the bot as bad as possible, and that's where we began!
 
 		# Overview
-		The main principle behind the actual "AI" part of this project is that there's a model that takes in a custom matrix $input$ that has the dimensions $(1, 768)$. The pieces are mapped like this $rook = [0,0,0,0,0,1]$, $pawn = [1,0,0,0,0,0]$.
+		The main principle behind the actual "AI" part of this project is that there's a model that takes in a custom matrix $input$ that has the dimensions $(1, 768)$. The pieces are mapped like this $rook = [0,0,0,0,0,1]$, $pawn = [1,0,0,0,0,0]$, etc.
 		The model then has the following architecture: 700 neurons, 800 neurons, 400 neurons, 20% dropout, 200 neurons, 1 neuron (output). All are using "relu" activation, that is a rectified linear, where $x = \begin{cases}0 &\text{if } x < 0 \\x &\text{if } x \ge 0 \end{cases}$. The activation function basically says that when the sum of weights and biases input to the neuron is less than zero, it outputs zero, and above zero it just outputs the sum.
 		We trained this model on a bunch of chess games from the {https://lichess.org/team/lichess-elite-database lichess elite database}, which is a compilation of games from people who have an ELO on lichess of 2400+. We ran those games through stockfish, the best chess engine "on the market" (it's open source), and used the board-evolution pairs as the x-y pairs for our algorithm. The accuracy wasn't perfect, and didn't get much better (it was stable around 1.5%), but with the way our algorithm worked, we needed to get close to the actual evaluation, not be perfectly on target.
 		The total training time took about 5 hours, and the preprocessing came out to about 2 hours.
@@ -231,8 +231,12 @@ BAD CHESS
 		# Demo
 		{^img videos/chess.mp4}
 
+		# Source code
+		I would love to release the source, but currently it's all kinds of janky and not-documented right now, as well as a mess, so I'll try to get it ready, and if you really want it, email me.
+
 	LINKS
 		Daniel's website : https://sites.google.com/view/dlagoportfolio/about
+		I would link Ricardo, but he doesn't have a web presence yet : #
 
 SUPER16
 	HOST : PORTFOLIO
