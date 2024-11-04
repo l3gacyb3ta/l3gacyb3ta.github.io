@@ -206,7 +206,7 @@ GREAT SUBTERRANIAN REALMS
 		# Issues in adaptation
 		Primarily, there's so much of it! The game is just huge, and has a ton of really cool environments and characters to interact with. Plus, being text and verb based, it can do a lot more with a lot less than a 3D point and click game would be able to do with its core mechanics.
 		Secondarily, the game doesn't occupy Euclidean space? If you try and map out the actual spaces you can visit in the original game, you'll end up with something that cannot be represented as just a grid of squares that have a North, South, East, and West, it's more of a network of interconnected spaces, almost reminiscent of the psychogeography of the {PHILIOSOPHY Situationists}.
-		Third, I'm not great at modelling yet :)
+		Third, I'm not great at modeling yet :)
 		Finally, I only had a couple weeks to work on this during school hours, so there isn't much content, sadly.
 	LINKS
 		Source : https://github.com/l3gacyb3ta/GreatSubterranianRealms
@@ -224,7 +224,10 @@ BAD CHESS
 
 		# Overview
 		The main principle behind the actual "AI" part of this project is that there's a model that takes in a custom matrix $input$ that has the dimensions $(1, 768)$. The pieces are mapped like this $rook = [0,0,0,0,0,1]$, $pawn = [1,0,0,0,0,0]$.
-		The model then has the following architecture: 700 neurons, 800 neurons, 400 neurons, 20% dropout, 200 neurons, 1 neuron (output). All are using "relu" activation, that is a rectified linear, where $x = \begin{cases}0 &\text{if } x < 0 \\x &\text{if } x /ge 0 \end{cases}$.
+		The model then has the following architecture: 700 neurons, 800 neurons, 400 neurons, 20% dropout, 200 neurons, 1 neuron (output). All are using "relu" activation, that is a rectified linear, where $x = \begin{cases}0 &\text{if } x < 0 \\x &\text{if } x \ge 0 \end{cases}$. The activation function basically says that when the sum of weights and biases input to the neuron is less than zero, it outputs zero, and above zero it just outputs the sum.
+		We trained this model on a bunch of chess games from the {https://lichess.org/team/lichess-elite-database lichess elite database}, which is a compilation of games from people who have an ELO on lichess of 2400+. We ran those games through stockfish, the best chess engine "on the market" (it's open source), and used the board-evolution pairs as the x-y pairs for our algorithm. The accuracy wasn't perfect, and didn't get much better (it was stable around 1.5%), but with the way our algorithm worked, we needed to get close to the actual evaluation, not be perfectly on target.
+		The total training time took about 5 hours, and the preprocessing came out to about 2 hours.
+
 		# Demo
 		{^img videos/chess.mp4}
 
