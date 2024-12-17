@@ -601,7 +601,12 @@ fptemplate(FILE *f, Glossary *glo, Lexicon *lex, Term *t, char *s)
 			ccat(buf, c);
 		else if(c != '{' && c != '}' && f)
 			fputc(c, f);
-		if(c == '{') {
+		if(c == '\') {
+			i++;
+			c = s[i];
+			fputc(c, f);
+		}
+		else if(c == '{') {
 			capture = 1;
 			buf[0] = '\0';
 		}
