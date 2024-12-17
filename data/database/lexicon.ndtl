@@ -175,6 +175,21 @@ ICBINF
 	LINKS
 		Source : https://git.sr.ht/~arcade/ICBINF
 
+LON TAWA
+	HOST : PORTFOLIO
+	BREF : Euler Method-based gravity simulation
+	TYPE : math
+	BODY
+		lon tawa ({conlangs Toki Pona} for "space simulation" lit. "sky play") is an Euler-method based simulator for gravity.
+
+		# Overview
+		The chewy center of the simulator is the time-integrator for gravity, which uses the Euler method. This is a really complex way to say "we apply the equations of gravity over and over again." To go in more in depth, Euler Integration is the simplest {https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods Runge-Kutta method}, which is a numerical algorithm for solving ordinary differential equations (the equation of gravity is a differential equation).
+		One downside of the Euler method is that over long periods of time, it will inevitably diverge from "ground truth," that is to say, what the equations would actually evaluate to.
+
+		The gravitational equation, as some of you might now, is $F_g = G \frac{m_1 m_2}{d^2}$.
+	LINKS
+		Source : https://github.com/l3gacyb3ta/lon-tawa.git
+
 FUCC
 	HOST : PORTFOLIO
 	BREF : An optimizing Brainfuck Compiler
