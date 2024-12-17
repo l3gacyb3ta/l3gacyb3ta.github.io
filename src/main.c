@@ -275,8 +275,11 @@ fptemplatelink(FILE *f, Lexicon *lex, Term *t, char *s)
 			fprintf(f, "<a href='%s' target='_blank'>[%s]</a>", target, name);
 	} else {
 		Term *tt = findterm(lex, target);
-		if(!tt)
+		if(!tt) {
+			if(scmp(t->type, "math"))
+				return 1;
 			return error("Unknown link", target);
+		}
 		if(f)
 			fprintf(f, "<a href='%s.html'>{%s}</a>", tt->filename, name);
 		else {
@@ -590,7 +593,12 @@ fptemplate(FILE *f, Glossary *glo, Lexicon *lex, Term *t, char *s)
 	len = slen(s);
 	for(i = 0; i < len; ++i) {
 		char c = s[i];
-		if(c == '}') {
+		if(c == '\\' && f) {
+			c = s[++i];
+			fputc(c, f);
+			continue;
+		}
+		if(c == '}' && capture) {
 			capture = 0;
 			if(buf[0] == '^' && f)
 				fpmodule(f, glo, buf);
@@ -601,11 +609,6 @@ fptemplate(FILE *f, Glossary *glo, Lexicon *lex, Term *t, char *s)
 			ccat(buf, c);
 		else if(c != '{' && c != '}' && f)
 			fputc(c, f);
-		if(c == '\\') {
-			i++;
-			c = s[i];
-			fputc(c, f);
-		}
 		else if(c == '{') {
 			capture = 1;
 			buf[0] = '\0';
