@@ -184,9 +184,26 @@ LON TAWA
 
 		# Overview
 		The chewy center of the simulator is the time-integrator for gravity, which uses the Euler method. This is a really complex way to say "we apply the equations of gravity over and over again." To go in more in depth, Euler Integration is the simplest {https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods Runge-Kutta method}, which is a numerical algorithm for solving ordinary differential equations (the equation of gravity is a differential equation).
-		One downside of the Euler method is that over long periods of time, it will inevitably diverge from "ground truth," that is to say, what the equations would actually evaluate to.
+		One downside of the Euler method is that over long periods of time, it will inevitably diverge from "ground truth," that is to say, what the equations would actually evaluate to. It also does not conserve kinetic energy, which RK4 would.
 
-		The gravitational equation, as some of you might now, is $F_g = G \\frac\{m_1 m_2\}\{d^2\}$.
+		The gravitational equation, as some of you might now, is $F_g = G \\frac\{m_1 m_2\}\{d^2\}$. The $G$ here is the gravitational constant, which is approximately $6.6743 * 10^\{-11\} \\space m^3 \\space kg^\{-1\} s^\{-2\}$. The unit on that may seem wierd, "meters cubed per kilometer per second per second?" This is because it represents the force of gravity between two objects in 3d space (the $m^3$ comes from that $d^2$ in the equation), and it's a force in Newtons, which can be written down in the SI system as $kg \\space m \\space s^\{-2\}$. 
+		Now that we have the gravitational equation, it's pretty simple to simulate gravity! Here are the steps:
+		+ For each object in the world, loop through every other object:
+		+ Calculating the force and direction of gravity, adding that to the net force
+		+ Now apply $F = ma$ and our time step, creating the final force on the object
+		+ Add the force to the velocity
+		+ Add the velocity to the position
+		+ Repeat!
+
+		# Controls
+		| *Key*         | *Action* |
+		| `Tab`         | Toggle pause | 
+		| `1-9 + SPACE` | Create an object with 1-9 times the mass of Earth |
+		| `\\`          | Toggle the per-object vectors. Red is the force of gravity, and green will show how much faster the velocity is than the force of gravity |
+		| `]`           | Toggle the gravity field, shows the direction of gravity all over the screen |
+		| `Left Click`  | When on an object, show the stats for that object | 
+		| `Right Click` | Clear object selection | 
+
 	LINKS
 		Source : https://github.com/l3gacyb3ta/lon-tawa.git
 
