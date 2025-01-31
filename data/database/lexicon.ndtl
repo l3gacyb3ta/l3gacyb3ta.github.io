@@ -176,6 +176,12 @@ ICBINF
 		Source : https://git.sr.ht/~arcade/ICBINF
 
 LON TAWA
+	HOST : STUMP
+	BREF : Redirect
+	BODY 
+		{^html redirect}
+
+GRAVITY
 	HOST : PORTFOLIO
 	BREF : Euler Method-based gravity simulation
 	TYPE : math
