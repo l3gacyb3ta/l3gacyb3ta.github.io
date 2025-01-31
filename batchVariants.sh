@@ -20,7 +20,7 @@ MAXWIDTH=1200
 COLORS=8
 
 #imagemagick prefix
-IMPREFIX=""
+IMPREFIX="magick"
 
 
 function resize () {
