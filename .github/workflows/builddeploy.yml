@@ -26,7 +26,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: mfinelli/setup-imagemagick@v6
     - uses: actions/configure-pages@v3
     - uses: actions/cache@v4
       id: cache-media-restore
@@ -34,6 +33,9 @@ jobs:
         path: |
           data/media/*
         key: media-cache-${{ hashFiles('data/original_media/*') }}
+    - name: install imagemagick
+      if: steps.cache-media-restore.outputs.cache-hit != 'true'
+      uses: mfinelli/setup-imagemagick@v6
     - name: media creation
       if: steps.cache-media-restore.outputs.cache-hit != 'true'
       run: ./batchVariants.sh
