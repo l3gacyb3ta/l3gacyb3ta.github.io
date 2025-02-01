@@ -647,6 +647,12 @@ STUMP
 	BODY
 		STUMP is the host for some lexicon entries that I have not yet completed, so if you found this, congrats!
 
+BANNED BOOKS
+	HOST : STUMP
+	BREF : [WIP] Deduped ALA Banned Books List
+	BODY
+		{^html bndbks}
+
 NEURODIVERGENCE
 	HOST : arcade
 	BREF : How our brains can be different
