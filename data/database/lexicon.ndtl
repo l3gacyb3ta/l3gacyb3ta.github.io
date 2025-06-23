@@ -10,6 +10,7 @@ INDEX
 		And if you want my contact info:
 		{^html hcard}
 
+		{^html buttons}
 		{^html george}
 
 ABOUT
@@ -25,6 +26,8 @@ ARCADE
 		{^html hcard}
 
 		{^list human languages}
+
+		{^html buttons}
 
 PORTFOLIO
 	HOST : arcade
