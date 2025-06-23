@@ -2,9 +2,9 @@ name: AUTOBUILD
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "buttons" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "buttons" ]
 
 permissions:
   contents: read
