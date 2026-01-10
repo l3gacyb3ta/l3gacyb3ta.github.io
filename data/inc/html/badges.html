@@ -1,20 +1,62 @@
 <style>
-    #buttons a {
-        display: inline-block
-    }
+  #buttons a {
+    display: inline-block;
+  }
 </style>
 
+<script>
+  fetch(
+    `https://api.are.na/v2/channels/gnd-game/contents?per=100`,
+    {
+      headers: {
+        Authorization: "Bearer cXwelD08nW-1AsuICtEEZ_pj4gCSZAmwpVwxDwfJCQs",
+      },
+    }
+  ).then((x) => {
+    x.json().then((jn) => {
+      let item = Math.floor(Math.random() * 100);
+      let image = document.getElementById("arena-image");
+
+      image.src = jn.contents[item].image.square.url;
+
+      document.getElementById(
+        "arena-imagelink"
+      ).href = `https://www.are.na/block/${jn.contents[item].id}`;
+    });
+  });
+</script>
 
 <fieldset>
-    <legend>A random picture from my are.na</legend>
-    <iframe src="https://arcades.agency/arena-widget/?channel=gnd-game&size=square"></iframe>
+  <legend>A random picture from my are.na</legend>
+  <a id="arena-imagelink">
+    <img id="arena-image" />
+  </a>
 </fieldset>
 
-<div id="buttons" style="a>* {display:inline-block}">
-    <a href="http://wysiwygarchives.com/"><img src="http://doggo.ninja/V2zWQy.gif" alt="The Wysiswyg Archives"/></a>
-    <a href="http://dogspit.nekoweb.org/"><img src="http://i.imgur.com/0pnWFCL.png" alt="... dogspit ..."/></a>
-    <a href="http://www.slsknet.org/news/"><img src="http://doggo.ninja/Hrp7Ri.gif" alt="File Sharing / Is Killing the RIAA / And it's fun!"/></a>
-    <a href="http://theanarchistlibrary.org/"><img src="http://hellnet.work/8831/img/buttons/SunsetStrip_Backstage_5513_anarchynow.gif" alt="Get Anarchy... Now!"/></a>
-    
-    <a ><img src="http://doggo.ninja/cyds3D.gif" alt="Transgender Flag"/></a>
+<div
+  id="buttons"
+  style="
+    a > * {
+      display: inline-block;
+    }
+  "
+>
+  <a href="http://wysiwygarchives.com/"
+    ><img src="http://doggo.ninja/V2zWQy.gif" alt="The Wysiswyg Archives"
+  /></a>
+  <a href="http://dogspit.nekoweb.org/"
+    ><img src="http://i.imgur.com/0pnWFCL.png" alt="... dogspit ..."
+  /></a>
+  <a href="http://www.slsknet.org/news/"
+    ><img
+      src="http://doggo.ninja/Hrp7Ri.gif"
+      alt="File Sharing / Is Killing the RIAA / And it's fun!"
+  /></a>
+  <a href="http://theanarchistlibrary.org/"
+    ><img
+      src="http://hellnet.work/8831/img/buttons/SunsetStrip_Backstage_5513_anarchynow.gif"
+      alt="Get Anarchy... Now!"
+  /></a>
+
+  <a><img src="http://doggo.ninja/cyds3D.gif" alt="Transgender Flag" /></a>
 </div>
