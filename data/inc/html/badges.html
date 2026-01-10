@@ -5,14 +5,7 @@
 </style>
 
 <script>
-  fetch(
-    `https://api.are.na/v2/channels/gnd-game/contents?per=100`,
-    {
-      headers: {
-        Authorization: "Bearer cXwelD08nW-1AsuICtEEZ_pj4gCSZAmwpVwxDwfJCQs",
-      },
-    }
-  ).then((x) => {
+  fetch(`https://api.are.na/v2/channels/gnd-game/contents?per=100`).then((x) => {
     x.json().then((jn) => {
       let item = Math.floor(Math.random() * 100);
       let image = document.getElementById("arena-image");
@@ -24,7 +17,7 @@
   });
 </script>
 
-<fieldset>
+<fieldset style="width:min-content">
   <legend>A random picture from my are.na</legend>
   <a id="arena-imagelink">
     <img id="arena-image" />
