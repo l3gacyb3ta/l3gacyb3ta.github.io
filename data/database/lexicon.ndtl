@@ -229,7 +229,7 @@ HOBART
 	HOST : PORTFOLIO
 	BREF : A nano-forum in Rust
 	BODY
-		I wanted some practice writing "real" "production-grade" "software", so I took on the project of writing something that would have authentication, database access, and decent UX, all in {Rust} and plain HTML/CSS.
+		I wanted some practice writing "real" "production-grade" "software", so I took on the project of writing something that would have authentication, database access, and decent UX, all in Rust and plain HTML/CSS.
 		Notably, all the CSS in the project is either in a `<style>` tag or directly on elements, and no page loads anything except itself. The project is also entirely no-JS.
 
 		# Architecture
