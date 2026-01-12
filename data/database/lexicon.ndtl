@@ -225,6 +225,25 @@ FUCC
 	LINKS
 		Source : https://git.sr.ht/~arcade/fucc
 
+HOBART
+	HOST : PORTFOLIO
+	BREF : A nano-forum in Rust
+	BODY
+		I wanted some practice writing "real" "production-grade" "software", so I took on the project of writing something that would have authentication, database access, and decent UX, all in {Rust} and plain HTML/CSS.
+		Notably, all the CSS in the project is either in a `<style>` tag or directly on elements, and no page loads anything except itself. The project is also entirely no-JS.
+
+		# Architecture
+		The database schema is simple. There are 4 tables, `users`, `profiles`, `threads`, and `posts`. `users` is for the most basic authentication information, and contains the {https://en.wikipedia.org/wiki/Argon2 argon2} hash of the user's password.
+		`profiles` contains the extra profile information, like bio and a cool little thing I call "custom color," which lets you set a background color for you user badge.
+		`threads` and `posts` are closely related. The idea is that `posts` are contained in `threads`, both of which can be created by users.
+
+		# Future work
+		+ Currently, every time the database is accessed, a connection is opened and closed. That is not ideal, and implementing a database connection layer would be very useful.
+		+ There are no administrative tools, which makes this software not practical at all to use for any real-world public environment. However, an admin field exists on `users`.
+		+ Fun tools, like formatted text, image uploads, polls, subforums, would be nice.
+	LINKS
+		Source : https://git.sr.ht/~arcade/hobart
+
 FOLK
 	HOST : PORTFOLIO
 	BREF : Projected AR as a more human computer
