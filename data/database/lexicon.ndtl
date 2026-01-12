@@ -241,6 +241,7 @@ HOBART
 		+ Currently, every time the database is accessed, a connection is opened and closed. That is not ideal, and implementing a database connection layer would be very useful.
 		+ There are no administrative tools, which makes this software not practical at all to use for any real-world public environment. However, an admin field exists on `users`.
 		+ Fun tools, like formatted text, image uploads, polls, subforums, would be nice.
+		+ Support for databases that aren't SQLite would be cool!
 	LINKS
 		Source : https://git.sr.ht/~arcade/hobart
 
