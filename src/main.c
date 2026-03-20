@@ -9,7 +9,7 @@
 
 #define NAME "aethopica"
 #define PROPERNAME "Arcade Wise"
-#define YEAR "2024"
+#define YEAR "2026"
 #define OUTPUT_LOC "../out/"
 
 #ifdef LOCALRUN

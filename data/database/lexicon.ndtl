@@ -61,18 +61,19 @@ HISTORY
 		## Education history
 
 		| *School* | *Date I Left / Graduated* |
-		| Homeschool Pensa->Norfolk | Aug, 2014 |
-		| École du Bonheur | Aug, 2015 |
-		| Deutsch-Französische Grundschule Stuttgart-Sillenbuch | Aug, 2016 |
-		| Wagenburg Gymnasium | Aug, 2018 |
-		| Crabapple Middle School | Aug, 2021 |
-		| {School Innovation Academy} | < Current > |
+		| Homeschool Pensacola, FL, USA->Norfolk, VA, USA | Aug, 2014 |
+		| École du Bonheur, Bruxells, BE | Aug, 2015 |
+		| Deutsch-Französische Grundschule Stuttgart-Sillenbuch, Stuttgart, DE | Aug, 2016 |
+		| Wagenburg Gymnasium, Stuttgart, DE | Aug, 2018 |
+		| Crabapple Middle School, Roswell, GA, USA | May, 2021 |
+		| Innovation Academy, Alpharetta, GA, USA | May, 2025 |
+		| Cornell College, Mount Vernon, IA, USA | Currently attending |
 
 SCHOOL
 	HOST : HISTORY
 	BREF : Education
 	BODY
-		School is a place I go, currently! I don't think it's the best, but it works well enough for most people.
+		Currently I attend {http://cornellcolege.edu/ Cornell College} (not THE Cornell, though we had the name first). I'm majoring in Computer Science and {German}.
 
 PGAS
 	HOST : SCHOOL
@@ -81,7 +82,7 @@ PGAS
 		So far, one of my favorite classes in school. It's focused on how programming and society interact, and how the industry works. 
 
 		Here are a few of the projects I've made in the class:
-		* {GREAT_SUBTERRANIAN_REALMS A Zork-like, Myst-inspired point-and-click game proof of concept}
+		* {GREAT_SUBTERRANEAN_REALMS A Zork-like, Myst-inspired point-and-click game proof of concept}
 		* {BAD_CHESS A chess AI that is supposed to be bad}
 
 META
@@ -220,7 +221,8 @@ FUCC
 	HOST : PORTFOLIO
 	BREF : An optimizing Brainfuck Compiler
 	BODY
-		This is an optimizing {brainfuck} compiler, writen in {ocaml}.
+		This is an optimizing {brainfuck} compiler, writen in {ocaml}. This was mainly a project to experiment with ocaml, and also learn some about simple optimizers.
+		It compiles to {C89 C}, which can then obviously be compiled to other languages using your preference of C compiler.
 		I use basic compiler techniques, like loop unwrapping and some simple peep-hole optimizations, as well as offloading the work to a C compiler ;)
 	LINKS
 		Source : https://git.sr.ht/~arcade/fucc
@@ -229,7 +231,7 @@ HOBART
 	HOST : PORTFOLIO
 	BREF : A nano-forum in Rust
 	BODY
-		I wanted some practice writing "real" "production-grade" "software", so I took on the project of writing something that would have authentication, database access, and decent UX, all in Rust and plain HTML/CSS.
+		I wanted some practice writing "real" "production-grade" "software", and I wanted a project for the weekend, so I took on the project of writing something that would have authentication, database access, and decent UX, all in Rust and plain HTML/CSS.
 		Notably, all the CSS in the project is either in a `&lt;style&gt;` tag or directly on elements, and no page loads anything except itself. The project is also entirely no-JS.
 
 		# Architecture
@@ -254,7 +256,7 @@ FOLK
 		Best intro so far : https://folk.computer/notes/tableshots
 		Website : https://folk.computer/start
 
-GREAT SUBTERRANIAN REALMS
+GREAT SUBTERRANEAN REALMS
 	HOST : PORTFOLIO
 	BREF : A 3D Zork-like game
 	BODY
@@ -380,7 +382,8 @@ PLT
 	HOST : programming
 	BREF : Beep boop language
 	BODY
-		I really love computing languages! There's just so much diversity.
+		I really love computing languages! There's just so much diversity in method, approach, whatever you can think of.
+		It's what I'm currently {school studying}, alongside {German}. 
 
 C89
 	HOST : PLT
@@ -521,10 +524,6 @@ BRAINFUCK
 		| Output character | `.` | Write the current cell out as the ascii character represented by the number. |
 
 
-
-
-
-
 ; ----------- PROJECTS ---------
 
 Languages I know
@@ -623,7 +622,7 @@ FRENCH
 	BREF : Oh-hon-hon🇫🇷
 	BODY
 		French is a language I learned while {history living in belgium}.
-		French is a heavily gendered language (eww), with an interesting adjective order that I'm sure exists in other languages, but havent seen for myself.
+		French is a heavily gendered language, with an interesting adjective order that I'm sure exists in other languages, but havent seen for myself.
 		In most cases, in french, the adjective comes after the nice.
 		> English: The green cat
 		> French: Le chat vert (The cat green)
@@ -632,9 +631,9 @@ GERMAN
 	HOST : Languages
 	BREF : Aber ja, Gunter.
 	BODY
-		German is my favorite natural language, despite its lack of gender neutral pronouns.
-		I learned German while in {history Stuttgart}.
-		I continue my German education at the {https://www.germanschoolatlanta.com/ German School of Atlanta}
+		German is my favorite natural language (as opposed to a {conlangs conlang}). I learned German while in {history Stuttgart}, and attending school at a French-German elementary- and high-school.
+		I continued my German education at the {https://www.germanschoolatlanta.com/ German School of Atlanta}, where I attained a Level 2 {https://en.wikipedia.org/wiki/Deutsches_Sprachdiplom_Stufe_I_and_II <abbr title="Deutches Sprachdiplom">DSD</abbr>}, at a level which corresponds effectively to a C1 in the <abbr title="Common European Framework of Reference for Languages">CEFR</abbr>.
+		Now I'm {school majoring} in German at Cornell College in Iowa!
 
 		{^list german certifications}
 
@@ -643,7 +642,7 @@ CONLANGS
 	BREF : Making stuff!
 	BODY
 		Conlangs are artificial human-constructed languages. I emphasize the "artificial" part, because _technically_ all languages are human-constructed. 
-		Some of my favorites are Toki Pona, a minimal language that only has around 120 words, designed to create positive thinking, and Ithkuil, a far more complex language designed to express complex philiosophical concepts.
+		Some of my favorites are Toki Pona, a minimal language that only has around 120 words, designed to create positive thinking, and Ithkuil, a far more complex language designed to express complex philiosophical concepts. Both of these follow from believing in at least weak version of the {https://en.wikipedia.org/wiki/Linguistic_relativity Sapir–Whorf hypothesis}.
 	LINKS
 		Ithkuil : https://www.ithkuil.net/
 		Toki Pona : https://tokipona.org/
@@ -674,6 +673,7 @@ BANNED BOOKS
 	HOST : STUMP
 	BREF : [WIP] Deduped ALA Banned Books List
 	BODY
+		A list of books, deduplicated, that have been banned in some fashion. Compiled for my mom.
 		{^html bndbks}
 
 NEURODIVERGENCE
@@ -768,9 +768,11 @@ CARYOPHYLLUS
 	HOST : inventory
 	BREF : A top of lap
 	BODY
-		As much as I hate {anarchism apple}, they do make a damn fine laptop.
-		I primarily use asahi linux, but heavily modified macos is also good. I am a big fan of stickers, so the back is is covered in them.
-		(Remind {arcade me} to upload a picture) 
+		As much as I dislike Apple, they do make a damn fine laptop.
+		I use Asahi Linux, but macOS is also good, and my time is split 50/50 between them. I am a big fan of stickers, so the back is is covered in them.
+		(Remind {arcade me} to upload a picture)
+	LINKS
+		Asahi Linux : https://asahilinux.org/
 
 NOW
 	HOST : arcade
