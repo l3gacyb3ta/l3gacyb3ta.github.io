@@ -99,7 +99,10 @@ META
 
 		This is a fork of {https://nchrs.xyz/site/meta.html nchrs}, which itself is a fork of {https://wiki.xxiivv.com/site/oscean.html oscean}, back when oscean was still an ANSI C program.
 		My fork has some custom features, such as a much more customizible `main.c` and is stripped in a couple places where I didn't need features anymore. It also includes some minor cosmetic changes, currently mostly on links.
+		The site now also has an extensive Github Action that will build the media and site itself for me, including conditional caching and other fancy features.
 		I have also reverted back the codebase back to {C89} compatible, from C99, so that I can build it on some retro devices as a benchmark.
+	LINKS
+		source code : https://github.com/l3gacyb3ta/l3gacyb3ta.github.io
 
 ; The index contains an auto-generated part, where it lists all terms.
 REFERENCE
