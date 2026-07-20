@@ -33,7 +33,7 @@ jobs:
         key: media-cache-${{ hashFiles('data/original_media/*') }}
     - name: install imagemagick
       if: steps.cache-media-restore.outputs.cache-hit != 'true'
-      uses: mfinelli/setup-imagemagick@v6
+      uses: mfinelli/setup-imagemagick@v8
     - name: media creation
       if: steps.cache-media-restore.outputs.cache-hit != 'true'
       run: ./batchVariants.sh
