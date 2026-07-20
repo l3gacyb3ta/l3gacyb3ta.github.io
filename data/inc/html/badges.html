@@ -5,16 +5,27 @@
 </style>
 
 <script>
-  fetch(`https://api.are.na/v2/channels/gnd-game/contents?per=100`).then((x) => {
-    x.json().then((jn) => {
-      let item = Math.floor(Math.random() * 100);
-      let image = document.getElementById("arena-image");
-      image.src = jn.contents[item].image.square.url;
-      document.getElementById(
-        "arena-imagelink"
-      ).href = `https://www.are.na/block/${jn.contents[item].id}`;
-    });
-  });
+  (async () => {
+    const blocks = [];
+    let page = 1;
+    let totalPages = 1;
+    do {
+      const res = await fetch(
+        `https://api.are.na/v2/channels/gnd-game/contents?per=100&page=${page}`
+      );
+      const jn = await res.json();
+      blocks.push(...jn.contents);
+      totalPages = jn.total_pages;
+      page++;
+    } while (page <= totalPages);
+
+    const images = blocks.filter((b) => b.image && b.image.square);
+    const item = images[Math.floor(Math.random() * images.length)];
+    document.getElementById("arena-image").src = item.image.square.url;
+    document.getElementById(
+      "arena-imagelink"
+    ).href = `https://www.are.na/block/${item.id}`;
+  })();
 </script>
 
 <fieldset style="max-width:80%">
