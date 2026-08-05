@@ -787,3 +787,31 @@ NOW
 		{^html now}
 	LINKS
 		Have your own html journal! : https://journal.miso.town/
+LOG
+	HOST : INDEX
+	BREF : Raw lab notes, served fresh.
+	BODY
+		The log is where I put what I've done with my time, rather than catagorizing and writing like the rest of the site. Don't expect polished, fact-checked work, but hopefully expect something cool.
+
+		An entry should take ten minutes to write:
+		+ Trying: what I was trying to do
+		+ Happened: what actually happened
+		+ Means: what I think it means, concretely or metaphorically
+		+ Next: What I do next
+
+		"House rules":
+		+ At least one entry should go in per week, if I don't, you can {arcade yell} at me :P 
+		+ Write down what I'd have said out loud if someone was in the room
+		+ No meta-website work unless I've kept the log up to date!!!
+		+ Maybe things will come out and into the wider website, but that'll take a bit.
+		+ Potentially, one longer-form piece a "quarter" 
+
+LOG AUGUST 2026
+	HOST : LOG
+	BREF : August 2026
+	BODY
+		## 2026-08-04
+		+ Trying: I'm working on "what if {https://dynamicland.org/2024/FAQ/#Realtalk_concepts realtalk} and {https://en.wikipedia.org/wiki/Datalog Datalog} had a baby and it was a note-taking app. I wanted to make something in the system now that it works decently well.
+		+ Happened:  The traditional "family tree" things have been surprisingly fun to play with, especially with the interactive "why" command.
+		+ Means: I think this means that the magic of this system is the magic of realtalk, when parts that weren't designed for eachother come together real well
+		+ Next: Find a workflow for this that actually is improved by using Lamplight, as I'm calling it.
