@@ -976,6 +976,7 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			   "<meta name='author' content='" PROPERNAME "' />"
 			   "<meta name='viewport' content='width=device-width, initial-scale=1' />"
 			   "<link rel='shortcut icon' type='image/png' href='/media/icon/nebula_favicon.png' />"
+			   "<link rel='alternate' type='application/rss+xml' title='" NAME "' href='" DOMAIN "rss.xml' />"
 			   "<title>%s: " NAME "</title>"
 			   "<meta property='og:title' content='%s' />"
 			   "<meta property='og:type' content='website' />"
@@ -1050,6 +1051,127 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 	fputs("</footer>", f);
 	fputs("</body></html>", f);
 	fclose(f);
+}
+
+#pragma mark - Feed
+
+void
+fpxmlescape(FILE *f, char *s)
+{
+	int i = 0;
+	char c;
+	while((c = s[i++])) {
+		if(c == '&')
+			fputs("&amp;", f);
+		else if(c == '<')
+			fputs("&lt;", f);
+		else if(c == '>')
+			fputs("&gt;", f);
+		else
+			fputc(c, f);
+	}
+}
+
+void
+fpjsonescape(FILE *f, char *s)
+{
+	int i = 0;
+	char c;
+	while((c = s[i++])) {
+		if(c == '"' || c == '\\')
+			fprintf(f, "\\%c", c);
+		else if((unsigned char)c < 0x20)
+			fprintf(f, "\\u%04x", c);
+		else
+			fputc(c, f);
+	}
+}
+
+int
+build_rss(Lexicon *lex)
+{
+	FILE *f;
+	int i;
+	char buf[32];
+	Term *t, *tc;
+	buf[0] = '\0';
+	scat(buf, "blog");
+	t = findterm(lex, buf);
+	if(!t) {
+		printf("Warning: No blog term, skipping rss.xml\n");
+		return 1;
+	}
+	f = getfile(OUTPUT_LOC, "rss", ".xml", "w");
+	if(!f)
+		return error("Could not open file", "rss.xml");
+	fputs("<?xml version='1.0' encoding='UTF-8'?>", f);
+	fputs("<rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom'><channel>", f);
+	fputs("<title>" NAME "</title>", f);
+	fputs("<link>" DOMAIN "</link>", f);
+	fputs("<atom:link href='" DOMAIN "rss.xml' rel='self' type='application/rss+xml'/>", f);
+	fputs("<description>", f);
+	fpxmlescape(f, t->bref);
+	fputs("</description>", f);
+	fputs("<lastBuildDate>", f);
+	fpRFC2822(f, time(NULL), 1);
+	fputs("</lastBuildDate>", f);
+	for(i = 0; i < t->children_len; ++i) {
+		tc = t->children[i];
+		fputs("<item><title>", f);
+		fpxmlescape(f, tc->name);
+		fputs("</title>", f);
+		fprintf(f, "<link>" DOMAIN "%s.html</link>", tc->filename);
+		fprintf(f, "<guid isPermaLink='true'>" DOMAIN "%s.html</guid>", tc->filename);
+		fputs("<pubDate>", f);
+		fpRFC2822(f, ymdtotime(tc->date), 1);
+		fputs("</pubDate>", f);
+		fputs("<description>", f);
+		fpxmlescape(f, tc->bref);
+		fputs("</description>", f);
+		fputs("</item>", f);
+	}
+	fputs("</channel></rss>\n", f);
+	fclose(f);
+	return 1;
+}
+
+/* the index scripts/sync-atproto.mjs syndicates from */
+int
+build_posts_json(Lexicon *lex)
+{
+	FILE *f;
+	int i;
+	char buf[32];
+	Term *t, *tc;
+	buf[0] = '\0';
+	scat(buf, "blog");
+	t = findterm(lex, buf);
+	if(!t)
+		return 1;
+	f = getfile(OUTPUT_LOC, "posts", ".json", "w");
+	if(!f)
+		return error("Could not open file", "posts.json");
+	fprintf(f, "{\"site\": \"%.*s\", \"posts\": [", (int)sizeof(DOMAIN) - 2, DOMAIN);
+	for(i = 0; i < t->children_len; ++i) {
+		tc = t->children[i];
+		if(i > 0)
+			fputs(",", f);
+		fputs("\n{\"rkey\": \"", f);
+		fpjsonescape(f, tc->filename);
+		fputs("\", \"title\": \"", f);
+		fpjsonescape(f, tc->name);
+		fputs("\", \"path\": \"/", f);
+		fpjsonescape(f, tc->filename);
+		fputs(".html\", \"publishedAt\": \"", f);
+		fprintf(f, "%sT00:00:00Z", tc->date);
+		fputs("\", \"description\": \"", f);
+		fpjsonescape(f, tc->bref);
+		fputs("\"}", f);
+	}
+	fputs("\n]}\n", f);
+	fclose(f);
+	printf("Feeding  | posts:%d\n", t->children_len);
+	return 1;
 }
 
 #pragma mark - Parse
@@ -1291,6 +1413,13 @@ main(void)
 	start = clock();
 	if(!build(&all_lists, &all_terms)) {
 		error("Failure", "Building");
+		return 1;
+	}
+	printf("[%.2fms]\n", clockoffset(start));
+
+	start = clock();
+	if(!build_rss(&all_terms) || !build_posts_json(&all_terms)) {
+		error("Failure", "Feeding");
 		return 1;
 	}
 	printf("[%.2fms]\n", clockoffset(start));
