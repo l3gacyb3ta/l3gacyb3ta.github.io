@@ -71,11 +71,11 @@ I design programs that get teenagers to ship real software, and I build the infr
   - *Entropy*: ship a project built on randomization, we send you a custom dice set (made by me!): 15 teen makers
     across 5 countries, 48 tracked build-hours in a short two-week run. I designed the incentive
     mechanics end to end, with wonderful art help from my coworker Nick Do. 
-  - *Tape to Tape*: teens compose original tracks in Sonic Pi, I'll release on a real Bandcamp
+  - *Tape to Tape*: teens compose original tracks in Sonic Pi, I released on a real Bandcamp
     album. Designed the per-hour payout mechanism so participants get a stake in what they make.
   - Build the infrastructure each program runs on: Astro sites on Cloudflare Pages, GitHub
     App–based repo provisioning, Vercel and Fillout API integrations, DNS automation via
-    pull request, and custom review UIs for judging submissions, and all that's for a smaller program.
+    pull request, and custom review UIs for judging submissions, and all that's just for a smaller program.
 ]
 
 #entry[Systems Administrator][Cornell College CS Department][Oct 2025 to May 2026 - Mount Vernon, IA][
@@ -100,7 +100,7 @@ I design programs that get teenagers to ship real software, and I build the infr
 
 #entry[Lamplight][personal, "build out loud"][2026][
   A note-taking app + Realtalk-style reactive rules with Datalog: notes as facts,
-  queries as views, explainable by default, and a replacement for the wallpaper!
+  queries as views, explainable by default. Most reinvent-the-wheel projects reinvent the whole OS, Lamplight reinvents the wallpaper!
   Working prototype currently; developed in public at #link("https://arcades.agency/log.html")[arcades.agency/log].
 ]
 
