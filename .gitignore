@@ -1,3 +1,5 @@
 bin/*
 data/media/*
 out
+
+**/.DS_Store
