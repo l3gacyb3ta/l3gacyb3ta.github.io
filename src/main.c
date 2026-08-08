@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 #define STRMEM 4096 * 96
 #define GLOMEM 100
 #define LEXMEM 500
 #define LOGMEM 4096 * 4
-#define ITEMS 64
+#define ITEMS 256
 
 #define NAME "aethopica"
 #define PROPERNAME "Arcade Wise"
@@ -106,6 +107,10 @@ char *
 push(Block *b, char *s)
 {
 	int i = 0, o = b->len;
+	if(b->len + slen(s) + 1 >= STRMEM) {
+		error("STRMEM overflow, raise STRMEM", s);
+		exit(1);
+	}
 	while(s[i])
 		b->data[b->len++] = s[i++];
 	b->data[b->len++] = '\0';
@@ -283,6 +288,8 @@ fptemplatelink(FILE *f, Lexicon *lex, Term *t, char *s)
 		if(f)
 			fprintf(f, "<a href='%s.html'>{%s}</a>", tt->filename, name);
 		else {
+			if(tt->incoming_len >= ITEMS)
+				return errorid("Incoming overflow, raise ITEMS", tt->name, tt->incoming_len);
 			tt->incoming[tt->incoming_len++] = t;
 			t->outgoing_len++;
 		}
@@ -1164,12 +1171,16 @@ parse_lexicon(FILE *fp, Block *block, Lexicon *lex)
 			catch_body = ssin(line, "BODY") >= 0;
 			catch_link = ssin(line, "LINK") >= 0;
 		} else if(depth == 2 && len > 3) {
-			if(catch_body)
+			if(catch_body) {
+				if(t->body_len >= ITEMS)
+					return errorid("Body overflow, raise ITEMS", t->name, t->body_len);
 				t->body[t->body_len++] = push(block, sstr(line, buf, 2, len - 2));
-			else if(catch_link) {
+			} else if(catch_link) {
 				key_len = scin(line, ':') - 3;
 				if(key_len < 0)
 					return errorid("Invalid link", line, count);
+				if(t->link.len >= ITEMS)
+					return errorid("Links overflow, raise ITEMS", t->name, t->link.len);
 				t->link.keys[t->link.len] = push(block, sstr(line, buf, 2, key_len));
 				val_len = len - key_len - 3;
 				t->link.vals[t->link.len++] = push(block, sstr(line, buf, key_len + 5, val_len));
@@ -1223,6 +1234,8 @@ link(Glossary *glo, Lexicon *lex)
 			return error("Missing parent", t->host);
 		if(!t->bref && !t->type)
 			return error("Missing bref", t->name);
+		if(t->parent->children_len >= ITEMS)
+			return errorid("Children overflow, raise ITEMS", t->parent->name, t->parent->children_len);
 		t->parent->children[t->parent->children_len++] = t;
 	}
 	return 1;
@@ -1268,18 +1281,24 @@ main(void)
 	printf("Building %s...\n", NAME);
 
 	start = clock();
-	if(!parse(&block, &all_lists, &all_terms))
-		return error("Failure", "Parsing");
+	if(!parse(&block, &all_lists, &all_terms)) {
+		error("Failure", "Parsing");
+		return 1;
+	}
 	printf("[%.2fms]\n", clockoffset(start));
 
 	start = clock();
-	if(!link(&all_lists, &all_terms))
-		return error("Failure", "Linking");
+	if(!link(&all_lists, &all_terms)) {
+		error("Failure", "Linking");
+		return 1;
+	}
 	printf("[%.2fms]\n", clockoffset(start));
 
 	start = clock();
-	if(!build(&all_lists, &all_terms))
-		return error("Failure", "Building");
+	if(!build(&all_lists, &all_terms)) {
+		error("Failure", "Building");
+		return 1;
+	}
 	printf("[%.2fms]\n", clockoffset(start));
 
 	start = clock();
