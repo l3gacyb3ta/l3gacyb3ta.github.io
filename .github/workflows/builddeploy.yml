@@ -48,7 +48,7 @@ jobs:
     - name: create folders
       run: mkdir bin out out/links out/media
     - name: copy data
-      run: cp -r data/media/* out/media && cp -r data/links/* out/links
+      run: cp -r data/media/* out/media && cp -r data/links/* out/links && cp -r data/static/. out/
     - name: compile
       run: cc src/main.c -g -O0 -std=c89 -Wall -Wno-unknown-pragmas -o bin/aethopica 
     - name: build site
@@ -60,3 +60,14 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v5
+    - name: sync atproto
+      continue-on-error: true
+      env:
+        ATPROTO_HANDLE: ${{ secrets.ATPROTO_HANDLE }}
+        ATPROTO_APP_PASSWORD: ${{ secrets.ATPROTO_APP_PASSWORD }}
+        ATPROTO_PDS_URL: ${{ secrets.ATPROTO_PDS_URL }}
+      run: |
+        if [ -z "$ATPROTO_HANDLE" ] || [ -z "$ATPROTO_APP_PASSWORD" ]; then
+          echo "atproto secrets absent, skipping sync"; exit 0
+        fi
+        node scripts/sync-atproto.mjs
