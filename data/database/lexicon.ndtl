@@ -810,6 +810,12 @@ LOG AUGUST 2026
 	HOST : LOG
 	BREF : August 2026
 	BODY
+		## 2026-08-07
+		+ Trying: I wanted to load a real big note.
+		+ Happened: It overflowed :( So I did a big bug-fix pass
+		+ Means: Probably should let the Lamplight engine settle and play with it some more.
+		+ Next: More bug finding!
+
 		## 2026-08-06
 		+ Trying: To Sleep
 		+ Happened: Didn't sleep, {https://www.goodreads.com/book/show/60806778-the-deluge book} too good :P
