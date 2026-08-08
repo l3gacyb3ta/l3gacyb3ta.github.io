@@ -81,6 +81,7 @@ int   ssin(char *s, char *ss) { int a = 0, b = 0; while(s[a]) { if(s[a] == ss[b]
 char *strm(char *s) { char *end; while(cisp(*s)) s++; if(*s == 0) return s; end = s + slen(s) - 1; while(end > s && cisp(*end)) end--; end[1] = '\0'; return s; } /* string trim */
 int   surl(char *s) { return ssin(s, "://") >= 0 || ssin(s, "../") >= 0; } /* string is url */
 char *sstr(char *src, char *dst, int from, int to) { int i; char *a = (char *)src + from, *b = (char *)dst; for(i = 0; i < to; i++) b[i] = a[i]; dst[to] = '\0'; return dst; }
+int   sgt(char *a, char *b) { int i = 0; while(a[i] && a[i] == b[i]) i++; return a[i] > b[i]; } /* string greater-than */
 char *ccat(char *dst, char c) { int len = slen(dst); dst[len] = c; dst[len + 1] = '\0'; return dst; } /* char concatenate */
 char *scat(char *dst, const char *src) { char *ptr = dst + slen(dst); while(*src) { *ptr++ = *src++; } *ptr = '\0'; return dst; } /* string concatenate */
 /* clang-format on */
@@ -245,10 +246,38 @@ itotime(int i)
 	return ymdstrtime(year, month, day);
 }
 
+/* strictly YYYY-MM-DD */
+int
+validymd(char *s)
+{
+	int i;
+	if(slen(s) != 10)
+		return 0;
+	for(i = 0; i < 10; i++) {
+		if(i == 4 || i == 7) {
+			if(s[i] != '-')
+				return 0;
+		} else if(!cinu(s[i]))
+			return 0;
+	}
+	if(sint(s + 5, 2) < 1 || sint(s + 5, 2) > 12)
+		return 0;
+	if(sint(s + 8, 2) < 1 || sint(s + 8, 2) > 31)
+		return 0;
+	return 1;
+}
+
+/* nudged to local noon so the UTC calendar date can't shift */
+time_t
+ymdtotime(char *s)
+{
+	return ymdstrtime(sint(s, 4), sint(s + 5, 2), sint(s + 8, 2)) + 43200;
+}
+
 void
 fpRFC2822(FILE *f, time_t t, int time)
 {
-	struct tm *tm = localtime(&t);
+	struct tm *tm = gmtime(&t);
 	char *days[7] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 	char *months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	fprintf(f,
@@ -257,7 +286,7 @@ fpRFC2822(FILE *f, time_t t, int time)
 		tm->tm_mday,
 		months[tm->tm_mon],
 		tm->tm_year + 1900,
-		time ? " 00:00:00 -0600" : "");
+		time ? " 00:00:00 GMT" : "");
 }
 
 #pragma mark - Fprint
@@ -826,7 +855,7 @@ fpportal(FILE *f, Glossary *glo, Lexicon *lex, Term *t, int text, int img)
 			scat(imgpath, tc->filename);
 			fppict(f, imgpath, caption, 0, 0);
 		} else
-			fprintf(f, "<sub>%s</sub>", tc->bref);
+			fprintf(f, "<sub>%s</sub>", caption);
 		if(text)
 			fpbodypart(f, glo, lex, tc);
 		if(img)
@@ -937,74 +966,6 @@ fpreference(FILE *f, Lexicon *lex)
 void
 fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 {
-	/* char sub[256], imgpath[256];
-	time_t now;
-	time(&now);
-	fputs("<!DOCTYPE html><html lang='en'>", f);
-	fputs("<head>", f);
-	fprintf(f, "<meta charset='utf-8' />"
-			   "<meta name='description' content='%s' />"
-			   "<meta name='author' content='" PROPERNAME "' />"
-			   "<meta name='viewport' content='width=device-width, initial-scale=1' />"
-			   "<link rel='shortcut icon' type='image/png' href='../media/icon/nebula_favicon.png' />"
-			   "<title>%s: " NAME "</title>"
-			   "<meta property='og:title' content='%s' />"
-			   "<meta property='og:type' content='website' />"
-			   "<meta property='og:description' content='%s' />"
-			   "<meta property='og:site_name' content='" NAME "' />"
-			   "<meta property='og:url' content='https://arcades.agency/%s.html' />"
-			   "<meta property='og:locale' content='en_US' />",
-		t->bref,
-		t->name,
-		t->name,
-		t->bref,
-		t->filename );
-	//fpopengraphpic(f, imgpath, t->bref);
-
-	fputs("</head>", f);
-	fputs("<body>", f);
-	fpnav(f, t);
-	sub[0] = '\0';
-	if(t->date && t->caption) {
-		scat(sub, t->date);
-		scat(sub, " | ");
-		scat(sub, t->caption);
-	} else if(t->date)
-		scat(sub, t->date);
-	else if(t->caption)
-		scat(sub, t->caption);
-	scat(imgpath, "headers/");
-	scat(imgpath, t->filename);
-	fppict(f, imgpath, sub, 1, 0);
-	fputs("<main>", f);
-	fpbody(f, glo, lex, t);
-	if(t->type) {
-		if(scmp(t->type, "text_portal"))
-			fpportal(f, glo, lex, t, 1, 0);
-		if(scmp(t->type, "img_portal"))
-			fpportal(f, glo, lex, t, 0, 1);
-		if(scmp(t->type, "full_portal"))
-			fpportal(f, glo, lex, t, 1, 1);
-	} else
-		fpportal(f, glo, lex, t, 0, 0);
-	if(scmp(t->name, "reference"))
-		fpreference(f, lex);
-	fplinks(f, t);
-	fpincoming(f, t);
-	fputs("</main>", f);
-	fputs("<footer>", f);
-	fprintf(f, "<img alt='back to top' src='../media/icon/arrow_up.svg' /> <a href='#'>Back to top</a> | last edit: <em>%s</em>", ctime(&now));
-	fputs("<hr />", f);
-	fputs("<section>", f);
-	fputs("<a href='https://creativecommons.org/licenses/by-nc-sa/4.0'><img alt='creative commons' src='../media/icon/cc.svg' /></a>", f);
-	fputs("<a href='http://webring.xxiivv.com/#arcade'><img alt='merveilles rotunde logo' src='../media/icon/rotonde.svg' /></a>", f);
-	fputs("<a href='https://lieu.cblgh.org/'><img alt='lieu logo' src='../media/icon/lieu.svg' /></a>", f);
-	fputs("<p>" PROPERNAME " &copy; " YEAR " <a href='license.html'>CC-BY-NC-SA 4.0</a></p>", f);
-	fputs("</section>", f);
-	fputs("</footer>", f);
-	fputs("</body></html>", f);
-	fclose(f); */
-
 	char sub[256], imgpath[256];
 	time_t now;
 	time(&now);
@@ -1057,7 +1018,8 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 	imgpath[0] = '\0';
 	scat(imgpath, "headers/");
 	scat(imgpath, t->filename);
-	fppict(f, imgpath, sub, 1, 0);
+	if(!fppict(f, imgpath, sub, 1, 0) && sub[0])
+		fprintf(f, "<header><figure><figcaption>%s</figcaption></figure></header>", sub);
 	fputs("<main>", f);
 	fpbody(f, glo, lex, t);
 	if(t->type) {
@@ -1067,6 +1029,8 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			fpportal(f, glo, lex, t, 0, 1);
 		if(scmp(t->type, "full_portal"))
 			fpportal(f, glo, lex, t, 1, 1);
+		if(scmp(t->type, "blog_portal"))
+			fpportal(f, glo, lex, t, 0, 0);
 	} else
 		fpportal(f, glo, lex, t, 0, 0);
 	if(scmp(t->name, "reference"))
@@ -1218,6 +1182,29 @@ parse(Block *block, Glossary *glo, Lexicon *lex)
 	return 1;
 }
 
+/* sort a blog's posts newest-first; YYYY-MM-DD sorts as a plain string */
+int
+sortposts(Term *t)
+{
+	int i, j;
+	Term *tc;
+	for(i = 0; i < t->children_len; ++i) {
+		tc = t->children[i];
+		if(!tc->type || !scmp(tc->type, "post"))
+			return error("Blog child is not a post", tc->name);
+	}
+	for(i = 1; i < t->children_len; ++i) {
+		tc = t->children[i];
+		j = i - 1;
+		while(j >= 0 && sgt(tc->date, t->children[j]->date)) {
+			t->children[j + 1] = t->children[j];
+			j--;
+		}
+		t->children[j + 1] = tc;
+	}
+	return 1;
+}
+
 int
 link(Glossary *glo, Lexicon *lex)
 {
@@ -1237,6 +1224,13 @@ link(Glossary *glo, Lexicon *lex)
 		if(t->parent->children_len >= ITEMS)
 			return errorid("Children overflow, raise ITEMS", t->parent->name, t->parent->children_len);
 		t->parent->children[t->parent->children_len++] = t;
+		if(t->type && scmp(t->type, "post") && (!t->date || !validymd(t->date)))
+			return error("Post needs DATE : YYYY-MM-DD", t->name);
+	}
+	for(i = 0; i < lex->len; ++i) {
+		Term *t = &lex->terms[i];
+		if(t->type && scmp(t->type, "blog_portal") && !sortposts(t))
+			return 0;
 	}
 	return 1;
 }

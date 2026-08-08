@@ -833,3 +833,18 @@ LOG AUGUST 2026
 		+ Happened:  The traditional "family tree" things have been surprisingly fun to play with, especially with the interactive "why" command.
 		+ Means: I think this means that the magic of this system is the magic of realtalk, when parts that weren't designed for eachother come together real well
 		+ Next: Find a workflow for this that actually is improved by using Lamplight, as I'm calling it.
+
+BLOG
+	HOST : INDEX
+	BREF : Longform writing, published on my own terms.
+	TYPE : blog_portal
+	BODY
+		Longer, more polished pieces than the {LOG log}. Subscribe with {https://arcades.agency/rss.xml RSS}!
+
+HELLO WORLD
+	HOST : BLOG
+	BREF : A blog type for aethopica, with RSS and atproto syndication
+	TYPE : post
+	DATE : 2026-08-08
+	BODY
+		This site now has a blog! Posts are plain lexicon terms with a *post* type and a date, the index sorts itself newest-first, and the generator emits an RSS feed. Each post also gets mirrored to the atmosphere as a {https://standard.site standard.site} document, so it can show up wherever atproto readers roam.
