@@ -12,6 +12,8 @@
 #define PROPERNAME "Arcade Wise"
 #define YEAR "2026"
 #define OUTPUT_LOC "../out/"
+#define ATPROTO_DID "did:plc:gjlqo5sdyxhu7csyvqekbely"
+#define PUBLICATION_URI "at://" ATPROTO_DID "/site.standard.publication/self"
 
 #ifdef LOCALRUN
 #define DOMAIN "http://localhost:8000/"
@@ -988,7 +990,12 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 		t->name,
 		t->bref,
 		t->filename);
-	
+	/* atproto discovery: Bluesky's crawler reads these to render
+	   enhanced cards for shared links */
+	fputs("<link rel='site.standard.publication' href='" PUBLICATION_URI "' />", f);
+	if(t->type && scmp(t->type, "post"))
+		fprintf(f, "<link rel='site.standard.document' href='at://" ATPROTO_DID "/site.standard.document/%s' />", t->filename);
+
 	imgpath[0] = '\0';
 	scat(imgpath, "headers/");
 	scat(imgpath, t->filename);
