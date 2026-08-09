@@ -810,6 +810,12 @@ LOG AUGUST 2026
 	HOST : LOG
 	BREF : August 2026
 	BODY
+		## 2026-08-08
+		+ Trying: I'm trying to make the lamplight layouting engine feel really intuitive.
+		+ Happened: I think this is the kind of thing that needs to be prototyped with paper, I just can't use words to say how it should feel.
+		+ Means: Determinisitic masonary algorithms are needed, but I want to keep them as dumb as possible, so I need to figure out what the real constraints are...
+		+ Next: Prototype it with paper, and figure out what I'm actually doing when I play with it.
+
 		## 2026-08-07
 		+ Trying: I wanted to load a real big note.
 		+ Happened: It overflowed :( So I did a big bug-fix pass
