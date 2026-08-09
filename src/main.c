@@ -927,7 +927,9 @@ fpnav(FILE *f, Term *t)
 	if(!t->parent->parent)
 		error("Missing parent", t->parent->name);
 	fputs("<nav>", f);
-	fputs("<a href='index.html'><img alt='site logo' src='/media/icon/nebula_favicon.png' alt='" NAME "' height='100' /></a> <a href='https://video.liberta.vip/w/3x126HTsBuQctbHnWw6o9e' style='float:right;'>the softest paw <span style='color:red;'>can be a claw</span></a>", f);
+	/* the inline style opts the sigil out of main.css's dark-mode svg
+	   inversion; the svg flips its own ink with prefers-color-scheme */
+	fputs("<a href='index.html'><img alt='site logo' src='/media/icon/sigil.svg' alt='" NAME "' height='100' style='background:transparent;filter:none' /></a> <a href='https://video.liberta.vip/w/3x126HTsBuQctbHnWw6o9e' style='float:right;'>the softest paw <span style='color:red;'>can be a claw</span></a>", f);
 	if(t->parent->parent->name == t->parent->name)
 		fpnavsub(f, t->parent->parent, t);
 	else
@@ -1012,7 +1014,9 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 	fputs("' />"
 		  "<meta name='author' content='" PROPERNAME "' />"
 		  "<meta name='viewport' content='width=device-width, initial-scale=1' />"
-		  "<link rel='shortcut icon' type='image/png' href='/media/icon/nebula_favicon.png' />"
+		  "<link rel='icon' href='/media/icon/sigil.svg' type='image/svg+xml' />"
+		  "<link rel='icon' href='/favicon.ico' sizes='16x16 32x32 48x48' />"
+		  "<link rel='apple-touch-icon' href='/media/icon/apple-touch-icon.png' />"
 		  "<link rel='alternate' type='application/rss+xml' title='" NAME "' href='" DOMAIN "rss.xml' />",
 		f);
 	fputs("<title>", f);

@@ -30,7 +30,8 @@ jobs:
       with:
         path: |
           data/media/*
-        key: media-cache-${{ hashFiles('data/original_media/*') }}
+        # ** so changes inside headers/ and icon/ actually bust the cache
+        key: media-cache-${{ hashFiles('data/original_media/**') }}
     - name: install imagemagick
       if: steps.cache-media-restore.outputs.cache-hit != 'true'
       uses: mfinelli/setup-imagemagick@v8
@@ -44,7 +45,7 @@ jobs:
       with:
         path: |
           data/media/*
-        key: media-cache-${{ hashFiles('data/original_media/*') }}
+        key: media-cache-${{ hashFiles('data/original_media/**') }}
     - name: create folders
       run: mkdir bin out out/links out/media
     - name: copy data

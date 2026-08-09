@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="crispEdges">
+  <!-- arcade — pixel arch sigil · 8×8 grid, 1-bit · 2026 -->
+  <style>
+    path { fill: #0a0a0a; }
+    @media (prefers-color-scheme: dark) { path { fill: #eeeeee; } }
+  </style>
+  <path d="M16 0 H48 V8 H16 Z M8 8 H24 V16 H8 Z M40 8 H56 V16 H40 Z M0 16 H16 V64 H0 Z M48 16 H64 V64 H48 Z"/>
+</svg>

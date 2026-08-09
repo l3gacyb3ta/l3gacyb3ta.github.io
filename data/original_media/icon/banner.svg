@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 64" shape-rendering="crispEdges">
+  <!-- arcade — pixel colonnade banner · one glyph, stride 48, n=5 · 2026 -->
+  <style>
+    path { fill: #0a0a0a; }
+    @media (prefers-color-scheme: dark) { path { fill: #eeeeee; } }
+  </style>
+  <defs><path id="a" d="M16 0 H48 V8 H16 Z M8 8 H24 V16 H8 Z M40 8 H56 V16 H40 Z M0 16 H16 V64 H0 Z M48 16 H64 V64 H48 Z"/></defs>
+  <use href="#a" x="0"/>
+  <use href="#a" x="48"/>
+  <use href="#a" x="96"/>
+  <use href="#a" x="144"/>
+  <use href="#a" x="192"/>
+</svg>

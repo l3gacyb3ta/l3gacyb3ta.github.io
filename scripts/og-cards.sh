@@ -9,7 +9,7 @@ set -e
 
 OUT="${OUT:-out}"
 OG="$OUT/media/og"
-ICON="${ICON:-data/original_media/icon/nebula_favicon.png}"
+ICON="${ICON:-data/original_media/icon/icon-512.png}"
 SITE="arcades.agency"
 
 if command -v magick >/dev/null 2>&1; then IM=magick; else IM=convert; fi
@@ -36,7 +36,7 @@ card () {
     \( -size 1040x380 -background white -fill "$INK" -font "$SANS" \
        -pointsize "$size" -gravity northwest caption:"$title" \) \
     -gravity northwest -geometry +80+120 -composite \
-    \( "$ICON" -resize 56x56 \) -gravity northwest -geometry +80+494 -composite \
+    \( "$ICON" -filter point -resize 56x56 \) -gravity northwest -geometry +80+494 -composite \
     -font "$MONO" -pointsize 28 -fill "$FAINT" \
     -gravity northwest -annotate +156+508 "$SITE" \
     -gravity northeast -annotate +80+508 "$right" \
