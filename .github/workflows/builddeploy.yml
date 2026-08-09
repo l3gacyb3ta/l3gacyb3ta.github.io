@@ -53,6 +53,11 @@ jobs:
       run: cc src/main.c -g -O0 -std=c89 -Wall -Wno-unknown-pragmas -o bin/aethopica 
     - name: build site
       run: cd data && ../bin/aethopica
+    - name: og cards
+      run: |
+        command -v magick >/dev/null || command -v convert >/dev/null \
+          || sudo apt-get install -y --no-install-recommends imagemagick
+        ./scripts/og-cards.sh
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v5
       with:

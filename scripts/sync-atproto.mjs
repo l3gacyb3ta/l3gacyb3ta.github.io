@@ -20,6 +20,7 @@
  */
 
 import { readFileSync, existsSync } from "node:fs";
+import { createHash } from "node:crypto";
 
 const PUBLICATION = "site.standard.publication";
 const DOCUMENT = "site.standard.document";
@@ -32,16 +33,16 @@ const dryRun = !!process.env.DRY_RUN;
 
 const index = JSON.parse(readFileSync("out/posts.json", "utf8"));
 
-async function xrpc(nsid, { params, body, jwt } = {}) {
+async function xrpc(nsid, { params, body, bodyBytes, contentType, jwt } = {}) {
   const url = new URL(`${pds}/xrpc/${nsid}`);
   for (const [k, v] of Object.entries(params || {})) url.searchParams.set(k, v);
   const res = await fetch(url, {
-    method: body ? "POST" : "GET",
+    method: body || bodyBytes ? "POST" : "GET",
     headers: {
-      ...(body ? { "content-type": "application/json" } : {}),
+      ...(bodyBytes ? { "content-type": contentType } : body ? { "content-type": "application/json" } : {}),
       ...(jwt ? { authorization: `Bearer ${jwt}` } : {}),
     },
-    body: body ? JSON.stringify(body) : undefined,
+    body: bodyBytes ?? (body ? JSON.stringify(body) : undefined),
   });
   if (!res.ok) {
     const err = new Error(`${nsid}: ${res.status} ${await res.text()}`);
@@ -49,6 +50,34 @@ async function xrpc(nsid, { params, body, jwt } = {}) {
     throw err;
   }
   return res.json();
+}
+
+/* CIDv1 (raw, sha2-256) as the PDS computes for blobs; lets us compare a
+   local image against a record's existing coverImage without re-uploading */
+function blobCid(bytes) {
+  const digest = createHash("sha256").update(bytes).digest();
+  const cid = Buffer.concat([Buffer.from([0x01, 0x55, 0x12, 0x20]), digest]);
+  const alpha = "abcdefghijklmnopqrstuvwxyz234567";
+  let bits = 0, value = 0, out = "";
+  for (const byte of cid) {
+    value = (value << 8) | byte;
+    bits += 8;
+    while (bits >= 5) { out += alpha[(value >>> (bits - 5)) & 31]; bits -= 5; }
+  }
+  if (bits > 0) out += alpha[(value << (5 - bits)) & 31];
+  return "b" + out;
+}
+
+function localImage(post) {
+  if (!post.image) return null;
+  const path = `out${post.image}`;
+  if (!existsSync(path)) return null;
+  const bytes = readFileSync(path);
+  if (bytes.length > 950_000) {
+    console.warn(`WARNING: ${path} exceeds the ~1MB coverImage limit, skipping`);
+    return null;
+  }
+  return { path, bytes, cid: blobCid(bytes) };
 }
 
 function documentFor(post, publicationUri) {
@@ -62,12 +91,13 @@ function documentFor(post, publicationUri) {
   };
 }
 
-/* fields we own; anything else on the record (coverImage, tags set by
-   another client, ...) is preserved and ignored in the comparison */
+/* fields we own; anything else on the record (tags set by another
+   client, ...) is preserved and ignored in the comparison */
 const MANAGED = ["site", "path", "title", "description", "publishedAt"];
 
 function sameManagedFields(existing, desired) {
-  return MANAGED.every((k) => existing[k] === desired[k]);
+  if (!MANAGED.every((k) => existing[k] === desired[k])) return false;
+  return existing.coverImage?.ref?.$link === desired.coverImage?.ref?.$link;
 }
 
 async function main() {
@@ -75,7 +105,14 @@ async function main() {
     console.log(`DRY RUN: would sync ${index.posts.length} post(s) for ${index.site}`);
     console.log(JSON.stringify({
       publication: { $type: PUBLICATION, url: index.site, name: "aethopica" },
-      documents: index.posts.map((p) => ({ rkey: p.rkey, ...documentFor(p, "at://<did>/site.standard.publication/<rkey>") })),
+      documents: index.posts.map((p) => {
+        const img = localImage(p);
+        return {
+          rkey: p.rkey,
+          ...documentFor(p, "at://<did>/site.standard.publication/<rkey>"),
+          coverImage: img ? `${img.path} (${img.bytes.length} bytes, ${img.cid})` : "(none)",
+        };
+      }),
     }, null, 2));
     return;
   }
@@ -137,6 +174,23 @@ async function main() {
       existing = res.value;
     } catch (e) {
       if (e.status !== 400 && e.status !== 404) throw e;
+    }
+    const img = localImage(post);
+    if (img) {
+      if (existing?.coverImage?.ref?.$link === img.cid) {
+        desired.coverImage = existing.coverImage;
+      } else {
+        const up = await xrpc("com.atproto.repo.uploadBlob", {
+          bodyBytes: img.bytes,
+          contentType: "image/png",
+          jwt,
+        });
+        desired.coverImage = up.blob;
+        console.log(`uploaded ${img.path} (${img.bytes.length} bytes)`);
+      }
+    } else if (existing?.coverImage) {
+      /* no local image: keep whatever the record already has */
+      desired.coverImage = existing.coverImage;
     }
     if (existing && sameManagedFields(existing, desired)) {
       unchanged++;

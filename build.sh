@@ -11,6 +11,8 @@ cp -r data/media/* out/media && cp -r data/links/* out/links && cp -r data/stati
 
 cc src/main.c -g -O0 -std=c89 -Wall -Wno-unknown-pragmas -o bin/aethopica 
 
-cd data && ../bin/aethopica
+(cd data && ../bin/aethopica)
+
+./scripts/og-cards.sh
 
 # rm -f ./bin/aethopica

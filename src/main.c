@@ -352,47 +352,80 @@ fplist(FILE *f, Glossary *glo, char *target)
 	return 1;
 }
 
-int
-fpopengraphpic(FILE *f, char *filename, char *caption)
+void
+fpxmlescape(FILE *f, char *s)
 {
-	char path[64], name[64], ext[16], final[256], buf[256];
-	int split;
-	FILE *img;
+	int i = 0;
+	char c;
+	while((c = s[i++])) {
+		if(c == '&')
+			fputs("&amp;", f);
+		else if(c == '<')
+			fputs("&lt;", f);
+		else if(c == '>')
+			fputs("&gt;", f);
+		else
+			fputc(c, f);
+	}
+}
 
-	scpy(filename, name, slen(filename) + 1);
-	split = scin(name, '/');
-	path[0] = '\0';
-	buf[0] = '\0';
-	scat(path,  "media/");
-	while(split != -1) {
-		scat(path, sstr(name, buf, 0, split + 1));
-		sstr(name, name, split + 1, slen(name) - split);
-		split = scin(name, '/');
+void
+fpjsonescape(FILE *f, char *s)
+{
+	int i = 0;
+	char c;
+	while((c = s[i++])) {
+		if(c == '"' || c == '\\')
+			fprintf(f, "\\%c", c);
+		else if((unsigned char)c < 0x20)
+			fprintf(f, "\\u%04x", c);
+		else
+			fputc(c, f);
 	}
-	split = scin(name, '.');
-	if(split > 0) {
-		sstr(name, ext, split, slen(name) - split);
-		sstr(name, name, 0, split);
+}
+
+/* for single-quoted html attribute values */
+void
+fpattrescape(FILE *f, char *s)
+{
+	int i = 0;
+	char c;
+	while((c = s[i++])) {
+		if(c == '&')
+			fputs("&amp;", f);
+		else if(c == '<')
+			fputs("&lt;", f);
+		else if(c == '>')
+			fputs("&gt;", f);
+		else if(c == '\'')
+			fputs("&#39;", f);
+		else
+			fputc(c, f);
+	}
+}
+
+/* served og image: real header art when it exists, the post's generated
+   title card otherwise (scripts/og-cards.sh), a default card for the rest */
+int
+fpogimage(FILE *f, Term *t)
+{
+	FILE *img = getfile("media/headers/", t->filename, "-900.png", "r");
+	if(img) {
+		fclose(img);
+		fprintf(f, "<meta property='og:image' content='" DOMAIN "media/headers/%s-900.png' />", t->filename);
 	} else {
-		ext[0] = '\0';
-		scat(ext, ".jpg");
+		if(t->type && scmp(t->type, "post"))
+			fprintf(f, "<meta property='og:image' content='" DOMAIN "media/og/%s.png' />", t->filename);
+		else
+			fputs("<meta property='og:image' content='" DOMAIN "media/og/default.png' />", f);
+		fputs("<meta property='og:image:width' content='1200' />"
+			  "<meta property='og:image:height' content='630' />",
+			f);
 	}
-	if(scmp(ext, ".mp4"))
-		return 1;
-	final[0] = '\0';
-	scat(final, "headers/");
-	scat(final, name);
-	scat(final, "-900.png");
-	img = getfile(path, name, ext, "r");
-	if (img) {
-		fprintf(f, "<meta property='og:image' content='https://arcades.agency/media/%s' />", final);
-		fprintf(f, "<meta property='og:image:alt' content='%s' />", caption);
-		fprintf(f, "<meta property='og:image:type' content='image/png' />");
-	} else {
-		fprintf(f, "<meta property='og:image' content='https://arcades.agency/media/icon/nebula_favicon.png' />");
-		fprintf(f, "<meta property='og:image:alt' content='the " NAME " favicon' />");
-		fprintf(f, "<meta property='og:image:type' content='image/png' />");
-	}
+	fputs("<meta property='og:image:type' content='image/png' />", f);
+	fputs("<meta property='og:image:alt' content='", f);
+	fpattrescape(f, t->caption ? t->caption : t->bref);
+	fputs("' />", f);
 	return 1;
 }
 
@@ -973,36 +1006,40 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 	time(&now);
 	fputs("<!DOCTYPE html><html lang='en'>", f);
 	fputs("<head>", f);
-	fprintf(f, "<meta charset='utf-8'>"
-			   "<meta name='description' content='%s' />"
-			   "<meta name='author' content='" PROPERNAME "' />"
-			   "<meta name='viewport' content='width=device-width, initial-scale=1' />"
-			   "<link rel='shortcut icon' type='image/png' href='/media/icon/nebula_favicon.png' />"
-			   "<link rel='alternate' type='application/rss+xml' title='" NAME "' href='" DOMAIN "rss.xml' />"
-			   "<title>%s: " NAME "</title>"
-			   "<meta property='og:title' content='%s' />"
-			   "<meta property='og:type' content='website' />"
-			   "<meta property='og:description' content='%s' />"
-			   "<meta property='og:site_name' content='" NAME "' />"
-			   "<meta property='og:url' content='https://arcades.agency/%s.html' />",
-		t->bref,
-		t->name,
-		t->name,
-		t->bref,
-		t->filename);
+	fputs("<meta charset='utf-8'>", f);
+	fputs("<meta name='description' content='", f);
+	fpattrescape(f, t->bref);
+	fputs("' />"
+		  "<meta name='author' content='" PROPERNAME "' />"
+		  "<meta name='viewport' content='width=device-width, initial-scale=1' />"
+		  "<link rel='shortcut icon' type='image/png' href='/media/icon/nebula_favicon.png' />"
+		  "<link rel='alternate' type='application/rss+xml' title='" NAME "' href='" DOMAIN "rss.xml' />",
+		f);
+	fputs("<title>", f);
+	fpxmlescape(f, t->name);
+	fputs(": " NAME "</title>", f);
+	fputs("<meta property='og:title' content='", f);
+	fpattrescape(f, t->name);
+	fputs("' />", f);
+	if(t->type && scmp(t->type, "post")) {
+		fputs("<meta property='og:type' content='article' />", f);
+		fprintf(f, "<meta property='article:published_time' content='%sT00:00:00Z' />", t->date);
+	} else
+		fputs("<meta property='og:type' content='website' />", f);
+	fputs("<meta property='og:description' content='", f);
+	fpattrescape(f, t->bref);
+	fputs("' />"
+		  "<meta property='og:site_name' content='" NAME "' />",
+		f);
+	fprintf(f, "<meta property='og:url' content='" DOMAIN "%s.html' />", t->filename);
+	fputs("<meta name='twitter:card' content='summary_large_image' />", f);
 	/* atproto discovery: Bluesky's crawler reads these to render
 	   enhanced cards for shared links */
 	fputs("<link rel='site.standard.publication' href='" PUBLICATION_URI "' />", f);
 	if(t->type && scmp(t->type, "post"))
 		fprintf(f, "<link rel='site.standard.document' href='at://" ATPROTO_DID "/site.standard.document/%s' />", t->filename);
 
-	imgpath[0] = '\0';
-	scat(imgpath, "headers/");
-	scat(imgpath, t->filename);
-	if (t->caption)
-		fpopengraphpic(f, imgpath, t->caption);
-	else
-		fpopengraphpic(f, imgpath, t->bref);
+	fpogimage(f, t);
 	fputs("<style>", f);
 	fpcss(f);
 	fputs("</style>", f);
@@ -1062,38 +1099,6 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 
 #pragma mark - Feed
 
-void
-fpxmlescape(FILE *f, char *s)
-{
-	int i = 0;
-	char c;
-	while((c = s[i++])) {
-		if(c == '&')
-			fputs("&amp;", f);
-		else if(c == '<')
-			fputs("&lt;", f);
-		else if(c == '>')
-			fputs("&gt;", f);
-		else
-			fputc(c, f);
-	}
-}
-
-void
-fpjsonescape(FILE *f, char *s)
-{
-	int i = 0;
-	char c;
-	while((c = s[i++])) {
-		if(c == '"' || c == '\\')
-			fprintf(f, "\\%c", c);
-		else if((unsigned char)c < 0x20)
-			fprintf(f, "\\u%04x", c);
-		else
-			fputc(c, f);
-	}
-}
-
 int
 build_rss(Lexicon *lex)
 {
@@ -1146,7 +1151,7 @@ build_rss(Lexicon *lex)
 int
 build_posts_json(Lexicon *lex)
 {
-	FILE *f;
+	FILE *f, *img;
 	int i;
 	char buf[32];
 	Term *t, *tc;
@@ -1173,6 +1178,13 @@ build_posts_json(Lexicon *lex)
 		fprintf(f, "%sT00:00:00Z", tc->date);
 		fputs("\", \"description\": \"", f);
 		fpjsonescape(f, tc->bref);
+		fputs("\", \"image\": \"", f);
+		img = getfile("media/headers/", tc->filename, "-900.png", "r");
+		if(img) {
+			fclose(img);
+			fprintf(f, "/media/headers/%s-900.png", tc->filename);
+		} else
+			fprintf(f, "/media/og/%s.png", tc->filename);
 		fputs("\"}", f);
 	}
 	fputs("\n]}\n", f);
