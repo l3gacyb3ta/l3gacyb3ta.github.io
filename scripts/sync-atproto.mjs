@@ -91,6 +91,38 @@ function documentFor(post, publicationUri) {
   };
 }
 
+/* publication presentation: the site's palette (data/links/main.css)
+   and the sigil as icon */
+const PUB_ICON = "data/original_media/icon/icon-512.png";
+
+function rgb(r, g, b) {
+  return { $type: "site.standard.theme.color#rgb", r, g, b };
+}
+
+const PUB_THEME = {
+  $type: "site.standard.theme.basic",
+  background: rgb(255, 255, 255),
+  foreground: rgb(10, 10, 10),
+  accent: rgb(10, 10, 10),
+  accentForeground: rgb(253, 246, 227),
+};
+
+function sameRgb(a, b) {
+  return !!a && !!b && a.r === b.r && a.g === b.g && a.b === b.b;
+}
+
+function sameTheme(a, b) {
+  return !!a && !!b &&
+    ["background", "foreground", "accent", "accentForeground"]
+      .every((k) => sameRgb(a[k], b[k]));
+}
+
+function samePublication(existing, desired) {
+  if (!["url", "name", "description"].every((k) => existing[k] === desired[k])) return false;
+  if (existing.icon?.ref?.$link !== desired.icon?.ref?.$link) return false;
+  return sameTheme(existing.basicTheme, desired.basicTheme);
+}
+
 /* fields we own; anything else on the record (tags set by another
    client, ...) is preserved and ignored in the comparison */
 const MANAGED = ["site", "path", "title", "description", "publishedAt"];
@@ -102,9 +134,12 @@ function sameManagedFields(existing, desired) {
 
 async function main() {
   if (dryRun) {
+    const icon = existsSync(PUB_ICON)
+      ? `${PUB_ICON} (${readFileSync(PUB_ICON).length} bytes, ${blobCid(readFileSync(PUB_ICON))})`
+      : "(none)";
     console.log(`DRY RUN: would sync ${index.posts.length} post(s) for ${index.site}`);
     console.log(JSON.stringify({
-      publication: { $type: PUBLICATION, url: index.site, name: "aethopica" },
+      publication: { $type: PUBLICATION, url: index.site, name: "aethopica", basicTheme: PUB_THEME, icon },
       documents: index.posts.map((p) => {
         const img = localImage(p);
         return {
@@ -123,32 +158,54 @@ async function main() {
   });
   const { did, accessJwt: jwt } = session;
 
-  /* publication: reuse whatever exists (it may have been made by another
-     standard.site client with theme/icon we shouldn't clobber) */
-  let publicationUri;
+  /* publication: managed fields are url/name/description/icon/basicTheme;
+     anything else another client set (preferences, ...) is preserved */
+  let publicationUri, pubRkey = "self", existingPub = null;
   const pubs = await xrpc("com.atproto.repo.listRecords", {
     params: { repo: did, collection: PUBLICATION, limit: 10 },
     jwt,
   });
   if (pubs.records.length > 0) {
     publicationUri = pubs.records[0].uri;
+    pubRkey = publicationUri.split("/").pop();
+    existingPub = pubs.records[0].value;
   } else {
+    publicationUri = `at://${did}/${PUBLICATION}/${pubRkey}`;
+  }
+  const desiredPub = {
+    $type: PUBLICATION,
+    url: index.site,
+    name: "aethopica",
+    description: "Arcade Wise's website",
+    basicTheme: PUB_THEME,
+  };
+  if (existsSync(PUB_ICON)) {
+    const bytes = readFileSync(PUB_ICON);
+    if (existingPub?.icon?.ref?.$link === blobCid(bytes)) {
+      desiredPub.icon = existingPub.icon;
+    } else {
+      const up = await xrpc("com.atproto.repo.uploadBlob", {
+        bodyBytes: bytes,
+        contentType: "image/png",
+        jwt,
+      });
+      desiredPub.icon = up.blob;
+      console.log(`uploaded publication icon (${bytes.length} bytes)`);
+    }
+  } else if (existingPub?.icon) {
+    desiredPub.icon = existingPub.icon;
+  }
+  if (!existingPub || !samePublication(existingPub, desiredPub)) {
     await xrpc("com.atproto.repo.putRecord", {
       body: {
         repo: did,
         collection: PUBLICATION,
-        rkey: "self",
-        record: {
-          $type: PUBLICATION,
-          url: index.site,
-          name: "aethopica",
-          description: "Arcade Wise's website",
-        },
+        rkey: pubRkey,
+        record: { ...(existingPub || {}), ...desiredPub },
       },
       jwt,
     });
-    publicationUri = `at://${did}/${PUBLICATION}/self`;
-    console.log(`created publication ${publicationUri}`);
+    console.log(`${existingPub ? "updated" : "created"} publication`);
   }
   console.log(`publication: ${publicationUri}`);
 
