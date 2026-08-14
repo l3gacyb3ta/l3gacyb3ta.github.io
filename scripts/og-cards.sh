@@ -46,7 +46,9 @@ card () {
 }
 
 # headercard DEST HEADER-IMG TITLE DATE
-# header art cover-cropped above a title bar: arch, title, date
+# header art cover-cropped above a title bar: arch, title, date.
+# text uses west/east gravity so everything shares the bar's centerline
+# (570): offset 255 = 570 - canvas middle (315)
 headercard () {
   local dest="$1" img="$2" title="$3" date="$4"
   $IM -size 1200x630 xc:white \
@@ -55,9 +57,9 @@ headercard () {
     -fill "$INK" -draw "rectangle 0,506 1200,510" \
     \( "$ICON" -filter point -resize 56x56 \) -gravity northwest -geometry +40+542 -composite \
     -font "$SANS" -pointsize 36 -fill "$INK" \
-    -gravity northwest -annotate +116+583 "$title" \
+    -gravity west -annotate +116+255 "$title" \
     -font "$MONO" -pointsize 28 -fill "$FAINT" \
-    -gravity northeast -annotate +40+579 "$date" \
+    -gravity east -annotate +40+259 "$date" \
     -quality 90 "$dest"
   echo "og card: $dest (header)"
 }
