@@ -239,7 +239,7 @@ async function main() {
       } else {
         const up = await xrpc("com.atproto.repo.uploadBlob", {
           bodyBytes: img.bytes,
-          contentType: "image/png",
+          contentType: img.path.endsWith(".png") ? "image/png" : "image/jpeg",
           jwt,
         });
         desired.coverImage = up.blob;

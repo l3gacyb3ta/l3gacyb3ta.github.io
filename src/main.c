@@ -404,25 +404,30 @@ fpattrescape(FILE *f, char *s)
 	}
 }
 
-/* served og image: real header art when it exists, the post's generated
-   title card otherwise (scripts/og-cards.sh), a default card for the rest */
+/* served og image: posts always get their generated card (which folds in
+   header art when it exists, scripts/og-cards.sh); other pages use their
+   header art directly, or the default card */
 int
 fpogimage(FILE *f, Term *t)
 {
-	FILE *img = getfile("media/headers/", t->filename, "-900.png", "r");
-	if(img) {
+	FILE *img;
+	if(t->type && scmp(t->type, "post")) {
+		fprintf(f, "<meta property='og:image' content='" DOMAIN "media/og/%s.jpg' />", t->filename);
+		fputs("<meta property='og:image:width' content='1200' />"
+			  "<meta property='og:image:height' content='630' />"
+			  "<meta property='og:image:type' content='image/jpeg' />",
+			f);
+	} else if((img = getfile("media/headers/", t->filename, "-900.png", "r"))) {
 		fclose(img);
 		fprintf(f, "<meta property='og:image' content='" DOMAIN "media/headers/%s-900.png' />", t->filename);
+		fputs("<meta property='og:image:type' content='image/png' />", f);
 	} else {
-		if(t->type && scmp(t->type, "post"))
-			fprintf(f, "<meta property='og:image' content='" DOMAIN "media/og/%s.png' />", t->filename);
-		else
-			fputs("<meta property='og:image' content='" DOMAIN "media/og/default.png' />", f);
-		fputs("<meta property='og:image:width' content='1200' />"
-			  "<meta property='og:image:height' content='630' />",
+		fputs("<meta property='og:image' content='" DOMAIN "media/og/default.jpg' />"
+			  "<meta property='og:image:width' content='1200' />"
+			  "<meta property='og:image:height' content='630' />"
+			  "<meta property='og:image:type' content='image/jpeg' />",
 			f);
 	}
-	fputs("<meta property='og:image:type' content='image/png' />", f);
 	fputs("<meta property='og:image:alt' content='", f);
 	fpattrescape(f, t->caption ? t->caption : t->bref);
 	fputs("' />", f);
@@ -1155,7 +1160,7 @@ build_rss(Lexicon *lex)
 int
 build_posts_json(Lexicon *lex)
 {
-	FILE *f, *img;
+	FILE *f;
 	int i;
 	char buf[32];
 	Term *t, *tc;
@@ -1183,12 +1188,7 @@ build_posts_json(Lexicon *lex)
 		fputs("\", \"description\": \"", f);
 		fpjsonescape(f, tc->bref);
 		fputs("\", \"image\": \"", f);
-		img = getfile("media/headers/", tc->filename, "-900.png", "r");
-		if(img) {
-			fclose(img);
-			fprintf(f, "/media/headers/%s-900.png", tc->filename);
-		} else
-			fprintf(f, "/media/og/%s.png", tc->filename);
+		fprintf(f, "/media/og/%s.jpg", tc->filename);
 		fputs("\"}", f);
 	}
 	fputs("\n]}\n", f);
