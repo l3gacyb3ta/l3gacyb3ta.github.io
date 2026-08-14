@@ -952,7 +952,7 @@ fplinks(FILE *f, Term *t)
 	int i;
 	if(t->link.len < 1)
 		return;
-	fputs("<h3>Links</h3><ul>", f);
+	fputs("<h3>Links</h3><ul id='links'>", f);
 	for(i = 0; i < t->link.len; ++i)
 		fprintf(f, "<li><a href='%s' target='_blank'>%s</a></li>", t->link.vals[i], t->link.keys[i]);
 	fputs("</ul>", f);

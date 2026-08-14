@@ -29,6 +29,7 @@ main pre { padding:8px;white-space:pre-wrap;word-wrap:break-word }
 main pre table { margin:0 }
 main pre table tr td:first-child { font-weight:bold }
 main li { margin-bottom: 0.5rem }
+main #links li { margin-bottom: 0 }
 main code { padding:4px; }
 main article { white-space:pre-wrap;background-color:white;padding:16px }
 main video { width:75% }
