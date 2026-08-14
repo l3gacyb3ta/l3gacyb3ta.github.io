@@ -1259,7 +1259,7 @@ parse_lexicon(FILE *fp, Block *block, Lexicon *lex)
 			continue;
 		if(lex->len >= LEXMEM)
 			return errorid("Increase memory", "Lexicon", lex->len);
-		if(len > 750)
+		if(len > 1000)
 			return errorid("Line is too long", line, len);
 		if(depth == 0) {
 			t = maketerm(&lex->terms[lex->len++], push(block, sstr(line, buf, 0, len)));
