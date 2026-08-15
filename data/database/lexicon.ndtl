@@ -880,7 +880,7 @@ LAMPLIGHT
 
 BLOG
 	HOST : INDEX
-	BREF : Longform writing, published on my own terms.
+	BREF : Longform writing!
 	TYPE : blog_portal
 	BODY
 		Long form writing, contrast to the {LOG log}. Subscribe with {https://arcades.agency/rss.xml RSS}!
