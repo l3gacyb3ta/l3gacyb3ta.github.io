@@ -711,6 +711,8 @@ fptag(FILE *f, Glossary *glo, Lexicon *lex, Term *t, char *s)
 		tag = 4;
 	else if(s[0] == '>' && s[1] == ' ')
 		tag = 5;
+	else if(s[0] == '^' && s[1] == ' ')
+		tag = 7;
 	else if(s[0] != '{' && s[0] != '<')
 		tag = 6;
 	else
@@ -774,6 +776,11 @@ fptag(FILE *f, Glossary *glo, Lexicon *lex, Term *t, char *s)
 		scat(buf, s);
 		scat(buf, "</p>");
 		break;
+	case 7:
+		scat(buf, "<aside>");
+		scat(buf, sstr(s, new, 2, len - 1));
+		scat(buf, "</aside>");
+		break;
 	default:
 		scpy(s, buf, len + 1);
 		break;
@@ -811,16 +818,19 @@ fptag(FILE *f, Glossary *glo, Lexicon *lex, Term *t, char *s)
 void
 fpbodypart(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 {
-	int i, list = 0, table = 0, code = 0, formatcode = 1, len;
+	int i, list = 0, table = 0, code = 0, formatcode = 1, len, sidenote;
 	for(i = 0; i < t->body_len; ++i) {
 		char *line = t->body[i];
 		len = slen(line);
+		/* sidenotes are list-transparent: they float in the margin
+		   without ending an open list */
+		sidenote = line[0] == '^' && line[1] == ' ' && formatcode;
 		if(line[0] == '+' && line[1] == ' ' && f && formatcode) {
 			if(!list) {
 				fputs("<ul>", f);
 				list = 1;
 			}
-		} else {
+		} else if(list && !sidenote) {
 			fputs("</ul>", f);
 			list = 0;
 		}
@@ -829,7 +839,7 @@ fpbodypart(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 				fputs("<table>", f);
 				table = 1;
 			}
-		} else {
+		} else if(table) {
 			fputs("</table>", f);
 			table = 0;
 		}
@@ -845,9 +855,13 @@ fpbodypart(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 			}
 			continue;
 		}
-		if(formatcode)
+		if(formatcode) {
+			if(sidenote && list && f)
+				fputs("<li style='list-style:none'>", f);
 			fptag(f, glo, lex, t, line);
-		else {
+			if(sidenote && list && f)
+				fputs("</li>", f);
+		} else {
 			fptemplate(f, glo, lex, t, line);
 			fputs("<br />", f);
 		}

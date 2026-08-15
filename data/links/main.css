@@ -16,6 +16,7 @@ main h1 { font-weight:normal }
 main h2 { margin-top:20px;text-transform:uppercase }
 main h3 { text-transform:capitalize }
 main sub { display:block;margin-bottom:1.2em;font-size:1em;font-style:italic;color:#666666 }
+main aside { float:right;clear:right;width:200px;margin-right:-40px;margin-bottom:0.8em;font-size:0.85em;line-height:1.5em;color:#666666 }
 main p { max-width:620px; }
 main a, footer a { text-decoration:underline } 
 main a:hover, nav a:hover, footer a:hover { background-color:#0a0a0a;color:#FDF6E3 } 
@@ -43,13 +44,14 @@ footer section img { width:30px;margin-bottom:-10px; }
 .portal > ul > li > figure { display:flex;flex-direction:column;justify-content:space-between;height:80%; }
 .portal > ul > li > figure > img { max-width:100%; }
 @media only screen and (max-width:600px) { .portal>ul { padding:0;width:100%; } }
+@media only screen and (max-width:900px) { main aside { float:none;clear:none;width:auto;margin:1em 0;border-left:2px solid #E2E2E2;padding-left:1em } }
 @media (min-width:2500px),(min-resolution: 192dpi) { body {width:640px;}}
 @media (prefers-color-scheme:dark) {
   * { color:#EEE }
 	body { background:#171717 }
 	body a:hover, main a:hover > * { background-color:#171717;color:#EEE;text-decoration:none }
 	img[src*="svg"], img[src*="jpg"] { background:white;filter:invert(1) hue-rotate(180deg) }
-	main sub, figcaption{ color:#bbb }
+	main sub, figcaption, main aside { color:#bbb }
 	main pre, main article  { background:black }
 	main code { border:1px solid white;border-radius:4px;background-color:black }
 	main table { border-style:solid }
