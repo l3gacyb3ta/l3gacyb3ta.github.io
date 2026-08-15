@@ -879,7 +879,12 @@ fpbodypart(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 void
 fpbody(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 {
-	fprintf(f, "<h1>%s</h1>", t->bref);
+	/* posts headline with their actual title; everywhere else the
+	   bref-as-h1 house style stands */
+	if(t->type && scmp(t->type, "post"))
+		fprintf(f, "<h1>%s</h1><sub>%s</sub>", t->name, t->bref);
+	else
+		fprintf(f, "<h1>%s</h1>", t->bref);
 	fpbodypart(f, glo, lex, t);
 }
 
