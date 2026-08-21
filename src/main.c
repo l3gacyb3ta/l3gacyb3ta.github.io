@@ -723,10 +723,14 @@ fptag(FILE *f, Glossary *glo, Lexicon *lex, Term *t, char *s)
 			++i;
 		if(s[i] == ' ') {
 			char c[16];
+			int k;
 			scat(buf, "<h");
 			sprintf(c, "%d", i);
 			scat(buf, c);
-			scat(buf, ">");
+			scat(buf, " id='");
+			for(k = i + 1; s[k]; ++k)
+				ccat(buf, cial(s[k]) || cinu(s[k]) || s[k] == '-' ? (char)clca(s[k]) : '_');
+			scat(buf, "'>");
 			scat(buf, sstr(s, new, i + 1, len));
 			scat(buf, "</h");
 			scat(buf, c);
@@ -1127,11 +1131,29 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 
 #pragma mark - Feed
 
-int
-build_rss(Lexicon *lex)
+/* copy a rendered fragment into the feed, xml-escaped */
+void
+fpxmlescapefile(FILE *dst, FILE *src)
 {
-	FILE *f;
-	int i;
+	int c;
+	while((c = fgetc(src)) != EOF) {
+		if(c == '&')
+			fputs("&amp;", dst);
+		else if(c == '<')
+			fputs("&lt;", dst);
+		else if(c == '>')
+			fputs("&gt;", dst);
+		else
+			fputc(c, dst);
+	}
+}
+
+/* feed caps out at the newest 60 log entries */
+int
+build_rss(Glossary *glo, Lexicon *lex)
+{
+	FILE *f, *tmp;
+	int i, j, k, list, count = 0;
 	char buf[32];
 	Term *t, *tc;
 	buf[0] = '\0';
@@ -1149,9 +1171,7 @@ build_rss(Lexicon *lex)
 	fputs("<title>" NAME "</title>", f);
 	fputs("<link>" DOMAIN "</link>", f);
 	fputs("<atom:link href='" DOMAIN "rss.xml' rel='self' type='application/rss+xml'/>", f);
-	fputs("<description>", f);
-	fpxmlescape(f, t->bref);
-	fputs("</description>", f);
+	fputs("<description>Longform writing and lab notes by " PROPERNAME "</description>", f);
 	fputs("<lastBuildDate>", f);
 	fpRFC2822(f, time(NULL), 1);
 	fputs("</lastBuildDate>", f);
@@ -1165,10 +1185,68 @@ build_rss(Lexicon *lex)
 		fputs("<pubDate>", f);
 		fpRFC2822(f, ymdtotime(tc->date), 1);
 		fputs("</pubDate>", f);
+		fputs("<category>blog</category>", f);
 		fputs("<description>", f);
 		fpxmlescape(f, tc->bref);
 		fputs("</description>", f);
 		fputs("</item>", f);
+	}
+	/* log entries: each ## YYYY-MM-DD heading in a month page becomes an
+	   item anchored to that heading, its lines rendered as the body */
+	buf[0] = '\0';
+	scat(buf, "log");
+	t = findterm(lex, buf);
+	if(!t) {
+		fputs("</channel></rss>\n", f);
+		fclose(f);
+		return 1;
+	}
+	for(i = t->children_len - 1; i >= 0 && count < 60; --i) {
+		tc = t->children[i];
+		for(j = 0; j < tc->body_len && count < 60; ++j) {
+			char *line = tc->body[j];
+			if(!(line[0] == '#' && line[1] == '#' && line[2] == ' ' && validymd(line + 3)))
+				continue;
+			tmp = tmpfile();
+			if(!tmp) {
+				fclose(f);
+				return error("Could not open tmpfile", "rss.xml");
+			}
+			list = 0;
+			for(k = j + 1; k < tc->body_len; ++k) {
+				char *bl = tc->body[k];
+				if(bl[0] == '#' && bl[1] == '#')
+					break;
+				if(bl[0] == '+' && bl[1] == ' ') {
+					if(!list) {
+						fputs("<ul>", tmp);
+						list = 1;
+					}
+				} else if(list) {
+					fputs("</ul>", tmp);
+					list = 0;
+				}
+				fptag(tmp, glo, lex, tc, bl);
+			}
+			if(list)
+				fputs("</ul>", tmp);
+			fputs("<item><title>log: ", f);
+			fpxmlescape(f, line + 3);
+			fputs("</title>", f);
+			fprintf(f, "<link>" DOMAIN "%s.html#%s</link>", tc->filename, line + 3);
+			fprintf(f, "<guid isPermaLink='true'>" DOMAIN "%s.html#%s</guid>", tc->filename, line + 3);
+			fputs("<pubDate>", f);
+			fpRFC2822(f, ymdtotime(line + 3), 1);
+			fputs("</pubDate>", f);
+			fputs("<category>log</category>", f);
+			fputs("<description>", f);
+			rewind(tmp);
+			fpxmlescapefile(f, tmp);
+			fputs("</description>", f);
+			fputs("</item>", f);
+			fclose(tmp);
+			count++;
+		}
 	}
 	fputs("</channel></rss>\n", f);
 	fclose(f);
@@ -1460,7 +1538,7 @@ main(void)
 	printf("[%.2fms]\n", clockoffset(start));
 
 	start = clock();
-	if(!build_rss(&all_terms) || !build_posts_json(&all_terms)) {
+	if(!build_rss(&all_lists, &all_terms) || !build_posts_json(&all_terms)) {
 		error("Failure", "Feeding");
 		return 1;
 	}
