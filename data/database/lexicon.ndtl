@@ -813,6 +813,12 @@ LOG AUGUST 2026
 	HOST : LOG
 	BREF : August 2026
 	BODY
+		## 2026-08-25
+		+ Trying: Doing some systems architecture for Half-Life today (a new YSWS)!
+		+ Happened: I forgot I don't have to split the backend and the frontend over two services, lmao that's funny.
+		+ Means: I should probably do this a bit more, just for practice!
+		+ Next: Launch page out by Friday??!??!??
+
 		## 2026-08-24
 		+ Trying: Today I'm trying out {https://gleam.run the Gleam programming language}!
 		+ Happened: I wrote a little Atproto stream follower (websockets & json parsing).
