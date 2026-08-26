@@ -813,6 +813,12 @@ LOG AUGUST 2026
 	HOST : LOG
 	BREF : August 2026
 	BODY
+		## 2026-08-26
+		+ Trying: Today I gave a little demo of {Lamplight} @ the {https://feelingof.com/meetups/ August Feeling Of Computing meetup}!
+		+ Happened: I got through most of it without stumbling too much, but I didn't get to everything I wanted to do.
+		+ Means: I should probably practice giving talks before I do them, and I neeeed to give more talks.
+		+ Next: MORE TALKS MORE WORK MORE WORK THAT GETS ME PAID
+
 		## 2026-08-25
 		+ Trying: Doing some systems architecture for Half-Life today (a new YSWS)!
 		+ Happened: I forgot I don't have to split the backend and the frontend over two services, lmao that's funny.
