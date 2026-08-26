@@ -1045,6 +1045,7 @@ fphtml(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 		  "<link rel='icon' href='/media/icon/sigil.svg' type='image/svg+xml' />"
 		  "<link rel='icon' href='/favicon.ico' sizes='16x16 32x32 48x48' />"
 		  "<link rel='apple-touch-icon' href='/media/icon/apple-touch-icon.png' />"
+		  "<link rel='me' href='https://sifa.id/p/arcades.agency'>"
 		  "<link rel='alternate' type='application/rss+xml' title='" NAME "' href='" DOMAIN "rss.xml' />",
 		f);
 	fputs("<title>", f);
