@@ -813,6 +813,12 @@ LOG AUGUST 2026
 	HOST : LOG
 	BREF : August 2026
 	BODY
+		## 2026-08-28
+		+ Trying: A lot of UI design today.
+		+ Happened: I am not good at UI design, picking colors, etc.
+		+ Means: I should probably practice this some more...
+		+ Next: I'm outsourcing to a coworker :P
+
 		## 2026-08-27
 		+ Trying: Today I actually got the drawterm thingy working!
 		+ Happened: It was because drawterm tries to derive a secstore address from your auth address, which just times out slowly. Just make it dial `-s tcp!127.0.0.1!1`
