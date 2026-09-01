@@ -895,14 +895,18 @@ fpbody(FILE *f, Glossary *glo, Lexicon *lex, Term *t)
 void
 fpportal(FILE *f, Glossary *glo, Lexicon *lex, Term *t, int text, int img)
 {
-	int i;
+	int i, idx, reverse;
 	char caption[256], imgpath[256];
+	/* text_portal children are appended oldest-last (new months are
+	   appended to the lexicon), so walk them newest-first */
+	reverse = t->type && scmp(t->type, "text_portal");
 	if(img)
 		fprintf(f, "<div class=\"portal\"><ul>");
 	for(i = 0; i < t->children_len; ++i) {
+		idx = reverse ? t->children_len - 1 - i : i;
 		if(img)
 			fprintf(f, "<li>");
-		Term *tc = t->children[i];
+		Term *tc = t->children[idx];
 		if(tc->name == t->name)
 			continue;
 		fprintf(f, "<h2><a href='%s.html'>%s</a></h2>", tc->filename, tc->name);
@@ -931,10 +935,12 @@ fpportal(FILE *f, Glossary *glo, Lexicon *lex, Term *t, int text, int img)
 void
 fpnavsub(FILE *f, Term *t, Term *target)
 {
-	int i;
+	int i, idx, reverse;
+	reverse = t->type && scmp(t->type, "text_portal");
 	fputs("<ul>", f);
 	for(i = 0; i < t->children_len; ++i) {
-		Term *tc = t->children[i];
+		idx = reverse ? t->children_len - 1 - i : i;
+		Term *tc = t->children[idx];
 		if(tc->name == t->name)
 			continue; /* Paradox */
 		if(tc->type && scmp(tc->type, "hidden"))
