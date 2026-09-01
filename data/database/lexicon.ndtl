@@ -955,3 +955,14 @@ WHAT ARCADE BELIEVES ABOUT COMPUTING
 
 		These are the ones I compiled! This is a living list, I'll keep it updated if I have more! Currently these principles are what's guiding the development of {lamplight Lamplight} partially, and my broader approach to computing generally.
 		If you want to watch me develop Lamplight, check out the {log log}, where I try to do a daily post of what I'm working on. That includes Lamplight!
+
+LOG SEPTEMBER 2026
+	HOST : LOG
+	BREF : September 2026 — newest first.
+	BODY
+		## 2026-09-01
+		+ Trying: Today I started following the classic {https://os.phil-opp.com/ Rust OS tutorial}, mostly to practice {https://devenv.sh/ devenv} and nix some more.
+		+ Happened: Got through the first couple chapters! It's cool, I get the interrupt tables a lot more than the last time I did this.
+		+ Means: Shout out to my friend Willow, OS-dev extraodinaire, she's the reason I understand that stuff.
+		+ Next: More work on half-life, maybe I'll do something fun with the OS.
+
