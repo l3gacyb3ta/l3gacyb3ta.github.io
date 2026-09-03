@@ -960,6 +960,12 @@ LOG SEPTEMBER 2026
 	HOST : LOG
 	BREF : September 2026 — newest first.
 	BODY
+		## 2026-09-02
+		+ Trying: Architecture. I like it a lot. Do I wanna do a carreer in it?
+		+ Happened: Read a lot of papers, played with some software.
+		+ Means: Probably not, I like the software stuff, I like building systems, I like looking at the art, idk if it's something I can do daily.
+		+ Next: Keep learning!
+
 		## 2026-09-01
 		+ Trying: Today I started following the classic {https://os.phil-opp.com/ Rust OS tutorial}, mostly to practice {https://devenv.sh/ devenv} and nix some more.
 		+ Happened: Got through the first couple chapters! It's cool, I get the interrupt tables a lot more than the last time I did this.
