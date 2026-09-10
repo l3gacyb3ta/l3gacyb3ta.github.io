@@ -951,7 +951,7 @@ WHAT ARCADE BELIEVES ABOUT COMPUTING
 		+ *Computation should be situated, and ambient when necessary*: Calm computing is when I know what is a computer and what isn't. This becomes more complicated when doing ambient computing or things like {folk folk.computer}, however folk and Dynamicland shaped systems are tied to a physical location, which keeps them situated. I.e. "I'm in the computing room, there's a computer here".
 		+ *Computation should be visible*: In folk.computer and {https://dynamicland.org/ Dynamicland}, the computation a page is doing is visible right on it. In {lamplight Lamplight}, every bit of code is placed in the same space as the text, on a note. Jupyter notebooks, for all their problems, also have computation living side by side with data. However, many systems that I love (Lisp Machines, Smalltalk, {https://www.inkandswitch.com/patchwork/ Patchwork}) haven't solved this, or hide the computation in a secondary layer "beneath" the interface and data. That's definitely better, and even Dynamicland has some hidden code (albiet printed out and stuck to a whiteboad).
 		+ *Paper is the bare-minimum*: Paper is so good! Paper lets you write, draw, situate it in space, shape it, make templates, resize it, etc. Any computer system that does less than paper is failing. And everything I've built is failing so far, and most things everyone else has built are failing.
-		+ *The iPad Mini is God's Chosen Machine*: It's just perfect. Small, but not teeny, A5 size is perfect. It's got nice bezzels to hold on to, and it has magnets for the pen! It fits in your bag, and maybe your pocket if you have cargo pants. I love it. However the software sucks so someone should do something about that. I'm taking a stab with Lamplight.
+		+ *The iPad Mini is God's Chosen Machine*: It's just perfect. Small, but not teeny, A5 size is perfect. It's got nice bezzels to hold on to, and it has magnets for the pen! It fits in your bag, and maybe your pocket if you have cargo pants. I love it. However the software sucks so someone should do something about that. I'm taking a stab with Lamplight. Notably, this isn't because it's an apple product, something similar from Samsung or any other company would be perfect too. Apple just has dominance on the tablet space.
 
 		These are the ones I compiled! This is a living list, I'll keep it updated if I have more! Currently these principles are what's guiding the development of {lamplight Lamplight} partially, and my broader approach to computing generally.
 		If you want to watch me develop Lamplight, check out the {log log}, where I try to do a daily post of what I'm working on. That includes Lamplight!
@@ -960,6 +960,14 @@ LOG SEPTEMBER 2026
 	HOST : LOG
 	BREF : September 2026 — newest first.
 	BODY
+		## 2026-09-10
+		+ Trying: Folk again! I was thinking about how to implement some sort of "dynamic download" of other people's "books". 
+		+ Happened: To this end, I was thinking that a set of "blanks" could be a good solution, and that eink panels would be a good type of blank. You can render code onto them, and tags, and have them be dynamicaly controlled by the system. I tried it out by putting an apriltag generator onto my XTEINK X3 running Crosspoint, which worked wonderfully!
+		^ Not super visible, but this is a time tracking token, showing about 6 min logged.
+		{^img journal/folk-time.jpg}
+		+ Means: I'm probably onto something. A lot of other design decisions to be made, and eink doodad with a tag is not new for folk.
+		+ Next: More thinking about this, plan some other features...
+	
 		## 2026-09-09
 		+ Trying: A lot of slack botting today, but I got some work in on a nicer shapes library for folk
 		+ Happened: Slack bots are wierd!
