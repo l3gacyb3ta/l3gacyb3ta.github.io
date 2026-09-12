@@ -960,6 +960,12 @@ LOG SEPTEMBER 2026
 	HOST : LOG
 	BREF : September 2026 — newest first.
 	BODY
+		## 2026-09-12
+		+ Trying: Today I decided to carpe the diem!
+		+ Happened: Got a battery for my camera, got some film developed, went to the Art Hop, got new pants, ate a good lunch (finally good Arnold Palmer up here!), read a book, and played some video games with friends.
+		+ Means: I should leave the apartment on the weekends more, don't let the comfy bed command me!
+		+ Next: Tomorrow I have a little project lined up, which is good, given the weather looks meh.
+
 		## 2026-09-10
 		+ Trying: Folk again! I was thinking about how to implement some sort of "dynamic download" of other people's "books". 
 		+ Happened: To this end, I was thinking that a set of "blanks" could be a good solution, and that eink panels would be a good type of blank. You can render code onto them, and tags, and have them be dynamicaly controlled by the system. I tried it out by putting an apriltag generator onto my XTEINK X3 running Crosspoint, which worked wonderfully!
