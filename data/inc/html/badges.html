@@ -11,7 +11,7 @@
     let totalPages = 1;
     do {
       const res = await fetch(
-        `https://api.are.na/v2/channels/gnd-game/contents?per=100&page=${page}`
+        `https://api.are.na/v2/channels/big-pile-o-stuff/contents?per=100&page=${page}`
       );
       const jn = await res.json();
       blocks.push(...jn.contents);
